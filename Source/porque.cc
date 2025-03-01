@@ -41,6 +41,7 @@ porque::porque(void):QMainWindow(nullptr)
   m_ui.tab->setMovable(true);
   m_ui.tab->setTabsClosable(true);
   m_ui.tool_bar->addAction(m_ui.action_Open_PDF_Files);
+  m_ui.tool_bar->addAction(m_ui.action_Settings);
   m_ui.tool_bar->setIconSize(QSize(50, 50));
   connect(m_ui.action_Open_PDF_Files,
 	  &QAction::triggered,
@@ -83,7 +84,8 @@ void porque::add_pdf_page(const QString &file_name)
 
   auto page = new porque_pdf_view(QUrl::fromLocalFile(file_name), this);
 
-  m_ui.tab->setTabToolTip(m_ui.tab->addTab(page, file_name), file_name);
+  m_ui.tab->setTabToolTip
+    (m_ui.tab->addTab(page, QIcon(":/porque.png"), file_name), file_name);
 }
 
 void porque::closeEvent(QCloseEvent *event)
@@ -97,6 +99,7 @@ void porque::prepare_icons(void)
 {
   m_ui.action_Open_PDF_Files->setIcon(QIcon(":/open-file.png"));
   m_ui.action_Quit->setIcon(QIcon(":/quit.png"));
+  m_ui.action_Settings->setIcon(QIcon(":/settings.png"));
 }
 
 void porque::process_terminal(void)

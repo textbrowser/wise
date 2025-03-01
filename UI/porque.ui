@@ -43,7 +43,14 @@
     </property>
     <addaction name="action_Screen_Mode"/>
    </widget>
+   <widget class="QMenu" name="menu_Edit">
+    <property name="title">
+     <string>&amp;Edit</string>
+    </property>
+    <addaction name="action_Settings"/>
+   </widget>
    <addaction name="menu_File"/>
+   <addaction name="menu_Edit"/>
    <addaction name="menuView"/>
   </widget>
   <widget class="QStatusBar" name="status_bar"/>
@@ -80,6 +87,11 @@
    </property>
    <property name="shortcut">
     <string>F11</string>
+   </property>
+  </action>
+  <action name="action_Settings">
+   <property name="text">
+    <string>&amp;Settings</string>
    </property>
   </action>
  </widget>
