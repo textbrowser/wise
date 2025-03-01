@@ -1,2 +1,1 @@
-# porque
-Splendid PDF browser.
+Splendid PDF reader on any device. Including Android.
