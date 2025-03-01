@@ -1,1 +1,1 @@
-Splendid PDF reader on any device. Including Android.
+Splendid PDF reader.
