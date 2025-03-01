@@ -43,9 +43,18 @@ porque_pdf_view::porque_pdf_view
   m_ui.splitter->setStretchFactor(0, 0);
   m_ui.splitter->setStretchFactor(1, 1);
   m_url = url;
+  prepare_table_of_contents();
 }
 
 porque_pdf_view::~porque_pdf_view()
 {
   m_document->deleteLater();
+}
+
+void porque_pdf_view::prepare_table_of_contents(void)
+{
+  m_ui.contents->clear();
+
+  for(int i = 0; i < m_document->pageCount(); i++)
+    m_ui.contents->addItem(m_document->pageLabel(i));
 }

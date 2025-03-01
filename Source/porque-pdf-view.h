@@ -46,6 +46,7 @@ class porque_pdf_view: public QWidget
   QPdfView *m_pdf_view;
   QUrl m_url;
   Ui_porque_pdf_view m_ui;
+  void prepare_table_of_contents(void);
 };
 
 #endif
