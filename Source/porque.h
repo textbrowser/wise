@@ -42,6 +42,11 @@ class porque: public QMainWindow
 
  private:
   Ui_porque m_ui;
+  void closeEvent(QCloseEvent *event);
+  void restore(void);
+
+ private slots:
+  void slot_quit(void);
 };
 
 #endif

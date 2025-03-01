@@ -56,6 +56,9 @@ int main(int argc, char *argv[])
 #endif
 
   QApplication application(argc, argv);
+
+  application.setWindowIcon(QIcon(":/porque.png"));
+
   QDir dir;
 
   dir.mkdir(porque::home_path());

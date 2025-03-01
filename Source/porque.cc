@@ -28,12 +28,18 @@
 #include "porque.h"
 
 #include <QDir>
+#include <QSettings>
 
 QString porque::PORQUE_VERSION_STRING = "2025.04.01";
 
 porque::porque(void):QMainWindow(nullptr)
 {
   m_ui.setupUi(this);
+  connect(m_ui.action_Quit,
+	  &QAction::triggered,
+	  this,
+	  &porque::slot_quit);
+  restore();
 }
 
 porque::~porque()
@@ -47,4 +53,22 @@ QString porque::home_path(void)
 #else
   return QDir::homePath() + QDir::separator() + ".porque";
 #endif
+}
+
+void porque::closeEvent(QCloseEvent *event)
+{
+  QMainWindow::closeEvent(event);
+  QSettings().setValue("geometry", saveGeometry());
+  QSettings().setValue("state", saveState());
+}
+
+void porque::restore(void)
+{
+  restoreGeometry(QSettings().value("geometry").toByteArray());
+  restoreState(QSettings().value("state").toByteArray());
+}
+
+void porque::slot_quit(void)
+{
+  close();
 }
