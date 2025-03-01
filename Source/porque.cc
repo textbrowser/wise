@@ -26,8 +26,10 @@
 */
 
 #include "porque.h"
+#include "porque-pdf-view.h"
 
 #include <QDir>
+#include <QFileDialog>
 #include <QSettings>
 
 QString porque::PORQUE_VERSION_STRING = "2025.04.01";
@@ -37,11 +39,16 @@ porque::porque(void):QMainWindow(nullptr)
   m_ui.setupUi(this);
   m_ui.tool_bar->addAction(m_ui.action_Open_PDF_Files);
   m_ui.tool_bar->setIconSize(QSize(50, 50));
+  connect(m_ui.action_Open_PDF_Files,
+	  &QAction::triggered,
+	  this,
+	  &porque::slot_open_pdf_files);
   connect(m_ui.action_Quit,
 	  &QAction::triggered,
 	  this,
 	  &porque::slot_quit);
   prepare_icons();
+  process_terminal();
   restore();
 }
 
@@ -58,6 +65,16 @@ QString porque::home_path(void)
 #endif
 }
 
+void porque::add_pdf_page(const QString &file_name)
+{
+  if(file_name.isEmpty())
+    return;
+
+  auto page = new porque_pdf_view(QUrl::fromLocalFile(file_name), this);
+
+  m_ui.tab->addTab(page, file_name);
+}
+
 void porque::closeEvent(QCloseEvent *event)
 {
   QMainWindow::closeEvent(event);
@@ -71,10 +88,54 @@ void porque::prepare_icons(void)
   m_ui.action_Quit->setIcon(QIcon(":/quit.png"));
 }
 
+void porque::process_terminal(void)
+{
+  QApplication::processEvents();
+  QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+
+  auto const list(QApplication::arguments());
+
+  for(int i = 1; i < list.size(); i++)
+    if(list.at(i).endsWith(".pdf", Qt::CaseInsensitive))
+      add_pdf_page(list.at(i));
+
+  QApplication::restoreOverrideCursor();
+}
+
 void porque::restore(void)
 {
   restoreGeometry(QSettings().value("geometry").toByteArray());
   restoreState(QSettings().value("state").toByteArray());
+}
+
+void porque::slot_open_pdf_files(void)
+{
+  QFileDialog dialog(this);
+
+  dialog.setAcceptMode(QFileDialog::AcceptOpen);
+  dialog.setDirectory(porque::home_path());
+  dialog.setFileMode(QFileDialog::ExistingFiles);
+  dialog.setLabelText(QFileDialog::Accept, tr("Select"));
+  dialog.setNameFilters(QStringList() << tr("PDF Files (*.pdf)"));
+  dialog.setOption(QFileDialog::DontUseNativeDialog);
+  dialog.setWindowIcon(windowIcon());
+  dialog.setWindowTitle(tr("Porque: Open PDF Files"));
+#ifdef Q_OS_ANDROID
+  dialog.showMaximized();
+#endif
+  QApplication::processEvents();
+
+  if(dialog.exec() == QDialog::Accepted)
+    {
+      QApplication::processEvents();
+
+      auto const list(dialog.selectedFiles());
+
+      for(int i = 0; i < list.size(); i++)
+	add_pdf_page(list.at(i));
+    }
+  else
+    QApplication::processEvents();
 }
 
 void porque::slot_quit(void)

@@ -42,11 +42,14 @@ class porque: public QMainWindow
 
  private:
   Ui_porque m_ui;
+  void add_pdf_page(const QString &file_name);
   void closeEvent(QCloseEvent *event);
   void prepare_icons(void);
+  void process_terminal(void);
   void restore(void);
 
  private slots:
+  void slot_open_pdf_files(void);
   void slot_quit(void);
 };
 

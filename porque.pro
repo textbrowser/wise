@@ -186,12 +186,15 @@ RCC_DIR = Temporary/rcc
 RESOURCES = Documentation/documentation.qrc Icons/icons.qrc
 UI_DIR = Temporary/ui
 
-FORMS += UI/porque.ui
+FORMS += UI/porque.ui \
+         UI/porque-pdf-view.ui
 HEADERS += Source/porque.h \
+           Source/porque-pdf-view.h \
            Source/porque-tab.h \
            Source/porque-tab-bar.h
 SOURCES += Source/porque.cc \
            Source/porque-main.cc \
+           Source/porque-pdf-view.cc \
            Source/porque-tab.cc \
            Source/porque-tab-bar.cc
 TRANSLATIONS =
