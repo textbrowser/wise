@@ -25,6 +25,8 @@
 ** PORQUE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include "porque.h"
+
 #include <QApplication>
 #include <QDir>
 #ifdef Q_OS_ANDROID
@@ -37,8 +39,6 @@
 #ifdef Q_OS_MACOS
 #include "CocoaInitializer.h"
 #endif
-
-#include "porque.h"
 
 int main(int argc, char *argv[])
 {

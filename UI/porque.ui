@@ -16,7 +16,7 @@
   <widget class="QWidget" name="central_widget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QTabWidget" name="tab"/>
+     <widget class="porque_tab" name="tab"/>
     </item>
    </layout>
   </widget>
@@ -68,6 +68,14 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>porque_tab</class>
+   <extends>QTabWidget</extends>
+   <header>porque-tab.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>tab</tabstop>
  </tabstops>

@@ -1,1 +1,2 @@
-Splendid PDF reader.
+Splendid PDF mosaic.
+
