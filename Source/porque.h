@@ -43,6 +43,7 @@ class porque: public QMainWindow
  private:
   Ui_porque m_ui;
   void closeEvent(QCloseEvent *event);
+  void prepare_icons(void);
   void restore(void);
 
  private slots:

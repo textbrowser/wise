@@ -35,10 +35,13 @@ QString porque::PORQUE_VERSION_STRING = "2025.04.01";
 porque::porque(void):QMainWindow(nullptr)
 {
   m_ui.setupUi(this);
+  m_ui.tool_bar->addAction(m_ui.action_Open_PDF_Files);
+  m_ui.tool_bar->setIconSize(QSize(50, 50));
   connect(m_ui.action_Quit,
 	  &QAction::triggered,
 	  this,
 	  &porque::slot_quit);
+  prepare_icons();
   restore();
 }
 
@@ -60,6 +63,12 @@ void porque::closeEvent(QCloseEvent *event)
   QMainWindow::closeEvent(event);
   QSettings().setValue("geometry", saveGeometry());
   QSettings().setValue("state", saveState());
+}
+
+void porque::prepare_icons(void)
+{
+  m_ui.action_Open_PDF_Files->setIcon(QIcon(":/open-file.png"));
+  m_ui.action_Quit->setIcon(QIcon(":/quit.png"));
 }
 
 void porque::restore(void)

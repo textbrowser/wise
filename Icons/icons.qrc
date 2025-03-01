@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
+	<file>open-file.png</file>
 	<file>porque.png</file>
+	<file>quit.png</file>
     </qresource>
 </RCC>
