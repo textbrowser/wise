@@ -37,6 +37,8 @@ QString porque::PORQUE_VERSION_STRING = "2025.04.01";
 porque::porque(void):QMainWindow(nullptr)
 {
   m_ui.setupUi(this);
+  m_ui.tab->setDocumentMode(false);
+  m_ui.tab->setTabsClosable(true);
   m_ui.tool_bar->addAction(m_ui.action_Open_PDF_Files);
   m_ui.tool_bar->setIconSize(QSize(50, 50));
   connect(m_ui.action_Open_PDF_Files,
@@ -47,6 +49,10 @@ porque::porque(void):QMainWindow(nullptr)
 	  &QAction::triggered,
 	  this,
 	  &porque::slot_quit);
+  connect(m_ui.tab,
+	  SIGNAL(tabCloseRequested(int)),
+	  this,
+	  SLOT(slot_close_tab(int)));
   prepare_icons();
   process_terminal();
   restore();
@@ -106,6 +112,12 @@ void porque::restore(void)
 {
   restoreGeometry(QSettings().value("geometry").toByteArray());
   restoreState(QSettings().value("state").toByteArray());
+}
+
+void porque::slot_close_tab(int index)
+{
+  m_ui.tab->widget(index) ? m_ui.tab->widget(index)->deleteLater() : (void) 0;
+  m_ui.tab->removeTab(index);
 }
 
 void porque::slot_open_pdf_files(void)
