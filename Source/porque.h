@@ -52,6 +52,7 @@ class porque: public QMainWindow
   void slot_close_tab(int index);
   void slot_open_pdf_files(void);
   void slot_quit(void);
+  void slot_screen_mode(void);
 };
 
 #endif

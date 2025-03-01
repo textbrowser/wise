@@ -50,6 +50,10 @@ porque::porque(void):QMainWindow(nullptr)
 	  &QAction::triggered,
 	  this,
 	  &porque::slot_quit);
+  connect(m_ui.action_Screen_Mode,
+	  &QAction::triggered,
+	  this,
+	  &porque::slot_screen_mode);
   connect(m_ui.tab,
 	  SIGNAL(tabCloseRequested(int)),
 	  this,
@@ -113,6 +117,9 @@ void porque::restore(void)
 {
   restoreGeometry(QSettings().value("geometry").toByteArray());
   restoreState(QSettings().value("state").toByteArray());
+  isFullScreen() ?
+    m_ui.action_Screen_Mode->setText(tr("Normal Screen")) :
+    m_ui.action_Screen_Mode->setText(tr("Full Screen"));
 }
 
 void porque::slot_close_tab(int index)
@@ -154,4 +161,18 @@ void porque::slot_open_pdf_files(void)
 void porque::slot_quit(void)
 {
   close();
+}
+
+void porque::slot_screen_mode(void)
+{
+  if(isFullScreen())
+    {
+      m_ui.action_Screen_Mode->setText(tr("Full Screen"));
+      showNormal();
+    }
+  else
+    {
+      m_ui.action_Screen_Mode->setText(tr("Normal Screen"));
+      showFullScreen();
+    }
 }
