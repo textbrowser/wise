@@ -115,7 +115,6 @@ void porque::add_pdf_page(const QString &file_name)
     (m_ui.tab->addTab(page, QIcon(":/porque.png"), file_name), file_name);
   m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(page));
   page->set_page_mode(m_settings->page_mode());
-  QApplication::processEvents();
 }
 
 void porque::closeEvent(QCloseEvent *event)
@@ -301,12 +300,8 @@ void porque::slot_settings(void)
     }
 
   m_ui.action_Close_Page->setEnabled(true);
+  m_ui.tab->addTab(m_settings, QIcon(":/settings.png"), tr("Porque Settings"));
   m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(m_settings));
   m_ui.tab->setTabToolTip
-    (m_ui.tab->addTab(m_settings,
-		      QIcon(":/settings.png"),
-		      tr("Porque Settings")),
-     tr("Porque Settings"));
-  repaint();
-  QApplication::processEvents();
+    (m_ui.tab->indexOf(m_settings), tr("Porque Settings"));
 }
