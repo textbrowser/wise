@@ -52,6 +52,9 @@ class porque_pdf_view: public QWidget
   QUrl m_url;
   Ui_porque_pdf_view m_ui;
   void prepare(void);
+
+ private slots:
+  void slot_contents_selected(const QModelIndex &index);
 };
 
 #endif

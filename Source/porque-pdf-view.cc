@@ -29,6 +29,7 @@
 
 #include <QPdfBookmarkModel>
 #include <QPdfDocument>
+#include <QPdfPageNavigator>
 
 porque_pdf_view::porque_pdf_view
 (const QUrl &url, QWidget *parent):QWidget(parent)
@@ -40,6 +41,10 @@ porque_pdf_view::porque_pdf_view
   m_pdf_view->setDocument(m_document);
   m_pdf_view->setPageMode(QPdfView::PageMode::MultiPage);
   m_ui.setupUi(this);
+  connect(m_ui.contents,
+	  SIGNAL(activated(const QModelIndex &)),
+	  this,
+	  SLOT(slot_contents_selected(const QModelIndex &)));
   m_ui.contents->setModel(m_bookmark_model);
   m_ui.splitter->setStretchFactor(0, 0);
   m_ui.splitter->setStretchFactor(1, 1);
@@ -60,4 +65,17 @@ void porque_pdf_view::prepare(void)
 void porque_pdf_view::set_page_mode(const QPdfView::PageMode page_mode)
 {
   m_pdf_view->setPageMode(page_mode);
+}
+
+void porque_pdf_view::slot_contents_selected(const QModelIndex &index)
+{
+  if(!index.isValid())
+    return;
+
+  auto const page = index.data
+    (static_cast<int> (QPdfBookmarkModel::Role::Page)).toInt();
+  auto const zoom_level = index.data
+    (static_cast<int> (QPdfBookmarkModel::Role::Level)).toReal();
+
+  m_pdf_view->pageNavigator()->jump(page, QPointF(), zoom_level);
 }
