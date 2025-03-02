@@ -28,6 +28,7 @@
 #include "porque.h"
 #include "porque-pdf-view.h"
 
+#include <QActionGroup>
 #include <QDir>
 #include <QFileDialog>
 #include <QSettings>
@@ -37,6 +38,7 @@ QString porque::PORQUE_VERSION_STRING = "2025.04.01";
 porque::porque(void):QMainWindow(nullptr)
 {
   m_ui.setupUi(this);
+  m_ui.menu_Pages->setStyleSheet("QMenu {menu-scrollable: 1;}");
   m_ui.tab->setDocumentMode(false);
   m_ui.tab->setMovable(true);
   m_ui.tab->setTabsClosable(true);
@@ -55,10 +57,23 @@ porque::porque(void):QMainWindow(nullptr)
 	  &QAction::triggered,
 	  this,
 	  &porque::slot_screen_mode);
+  connect(m_ui.menu_Pages,
+	  &QMenu::aboutToShow,
+	  this,
+	  &porque::slot_about_to_show_pages_menu);
+  connect(m_ui.tab,
+	  SIGNAL(currentChanged(int)),
+	  this,
+	  SLOT(slot_page_selected(int)));
   connect(m_ui.tab,
 	  SIGNAL(tabCloseRequested(int)),
 	  this,
 	  SLOT(slot_close_tab(int)));
+  connect(m_ui.tab->tab_bar(),
+	  SIGNAL(tabMoved(int, int)),
+	  this,
+	  SLOT(slot_page_moved(int, int)),
+	  Qt::QueuedConnection);
   prepare_icons();
   process_terminal();
   restore();
@@ -102,6 +117,40 @@ void porque::prepare_icons(void)
   m_ui.action_Settings->setIcon(QIcon(":/settings.png"));
 }
 
+void porque::prepare_pages_menu(void)
+{
+  QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+  m_ui.menu_Pages->clear();
+
+  auto group = m_ui.menu_Pages->findChild<QActionGroup *> ();
+
+  if(!group)
+    group = new QActionGroup(m_ui.menu_Pages);
+
+  for(int i = 0; i < m_ui.tab->count(); i++)
+    {
+      auto action = new QAction(m_ui.tab->tabText(i), this);
+
+      action->setCheckable(true);
+      action->setChecked(i == m_ui.tab->currentIndex());
+      action->setData(i);
+      connect(action,
+	      &QAction::triggered,
+	      this,
+	      &porque::slot_select_page);
+      group->addAction(action);
+      m_ui.menu_Pages->addAction(action);
+    }
+
+  if(group->actions().isEmpty())
+    group->deleteLater();
+
+  if(m_ui.menu_Pages->actions().isEmpty())
+    m_ui.menu_Pages->addAction(tr("Empty"))->setEnabled(false);
+
+  QApplication::restoreOverrideCursor();
+}
+
 void porque::process_terminal(void)
 {
   QApplication::processEvents();
@@ -123,6 +172,11 @@ void porque::restore(void)
   isFullScreen() ?
     m_ui.action_Screen_Mode->setText(tr("Normal Screen")) :
     m_ui.action_Screen_Mode->setText(tr("Full Screen"));
+}
+
+void porque::slot_about_to_show_pages_menu(void)
+{
+  prepare_pages_menu();
 }
 
 void porque::slot_close_tab(int index)
@@ -151,14 +205,32 @@ void porque::slot_open_pdf_files(void)
   if(dialog.exec() == QDialog::Accepted)
     {
       QApplication::processEvents();
+      QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
       auto const list(dialog.selectedFiles());
 
       for(int i = 0; i < list.size(); i++)
 	add_pdf_page(list.at(i));
+
+      QApplication::restoreOverrideCursor();
     }
   else
     QApplication::processEvents();
+}
+
+void porque::slot_page_moved(int from, int to)
+{
+  Q_UNUSED(from);
+  Q_UNUSED(to);
+  prepare_pages_menu();
+}
+
+void porque::slot_page_selected(int index)
+{
+  if(index >= 0)
+    setWindowTitle(tr("Porque (%1)").arg(m_ui.tab->tabText(index)));
+  else
+    setWindowTitle(tr("Porque"));
 }
 
 void porque::slot_quit(void)
@@ -178,4 +250,12 @@ void porque::slot_screen_mode(void)
       m_ui.action_Screen_Mode->setText(tr("Normal Screen"));
       showFullScreen();
     }
+}
+
+void porque::slot_select_page(void)
+{
+  auto action = qobject_cast<QAction *> (sender());
+
+  if(action)
+    m_ui.tab->setCurrentIndex(action->data().toInt());
 }

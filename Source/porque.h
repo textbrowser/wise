@@ -45,14 +45,19 @@ class porque: public QMainWindow
   void add_pdf_page(const QString &file_name);
   void closeEvent(QCloseEvent *event);
   void prepare_icons(void);
+  void prepare_pages_menu(void);
   void process_terminal(void);
   void restore(void);
 
  private slots:
+  void slot_about_to_show_pages_menu(void);
   void slot_close_tab(int index);
   void slot_open_pdf_files(void);
+  void slot_page_moved(int from, int to);
+  void slot_page_selected(int index);
   void slot_quit(void);
   void slot_screen_mode(void);
+  void slot_select_page(void);
 };
 
 #endif

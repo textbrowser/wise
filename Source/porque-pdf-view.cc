@@ -56,5 +56,6 @@ void porque_pdf_view::prepare_table_of_contents(void)
   m_ui.contents->clear();
 
   for(int i = 0; i < m_document->pageCount(); i++)
-    m_ui.contents->addItem(m_document->pageLabel(i));
+    {
+    }
 }
