@@ -30,6 +30,8 @@
 
 #include "ui_porque.h"
 
+class porque_settings;
+
 class porque: public QMainWindow
 {
   Q_OBJECT
@@ -42,6 +44,7 @@ class porque: public QMainWindow
 
  private:
   Ui_porque m_ui;
+  porque_settings *m_settings;
   void add_pdf_page(const QString &file_name);
   void closeEvent(QCloseEvent *event);
   void prepare_icons(void);

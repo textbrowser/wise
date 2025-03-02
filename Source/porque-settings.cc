@@ -51,6 +51,45 @@ porque_settings::~porque_settings()
 {
 }
 
+QPdfDocumentRenderOptions porque_settings::options(void) const
+{
+  QPdfDocumentRenderOptions options;
+  QPdfDocumentRenderOptions::RenderFlags render_flags =
+    QPdfDocumentRenderOptions::RenderFlag::None;
+
+  if(m_ui.annotations->isChecked())
+    render_flags |= QPdfDocumentRenderOptions::RenderFlag::Annotations;
+
+  if(m_ui.grayscale->isChecked())
+    render_flags |= QPdfDocumentRenderOptions::RenderFlag::Grayscale;
+
+  if(m_ui.halftone->isChecked())
+    render_flags |= QPdfDocumentRenderOptions::RenderFlag::ForceHalftone;
+
+  if(m_ui.image_aliased->isChecked())
+    render_flags |= QPdfDocumentRenderOptions::RenderFlag::ImageAliased;
+
+  if(m_ui.lcd_optimized->isChecked())
+    render_flags |= QPdfDocumentRenderOptions::RenderFlag::OptimizedForLcd;
+
+  if(m_ui.path_aliased->isChecked())
+    render_flags |= QPdfDocumentRenderOptions::RenderFlag::PathAliased;
+
+  if(m_ui.text_aliased->isChecked())
+    render_flags |= QPdfDocumentRenderOptions::RenderFlag::TextAliased;
+
+  options.setRenderFlags(render_flags);
+  return options;
+}
+
+QPdfView::PageMode porque_settings::page_mode(void) const
+{
+  if(m_ui.page_mode->currentText() == tr("Multiple"))
+    return QPdfView::PageMode::MultiPage;
+  else
+    return QPdfView::PageMode::SinglePage;
+}
+
 void porque_settings::restore(void)
 {
   foreach(auto check_box, findChildren<QCheckBox *> ())

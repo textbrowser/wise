@@ -30,6 +30,9 @@
 
 #include "ui_porque-settings.h"
 
+#include <QPdfDocumentRenderOptions>
+#include <QPdfView>
+
 class porque_settings: public QWidget
 {
   Q_OBJECT
@@ -37,6 +40,8 @@ class porque_settings: public QWidget
  public:
   porque_settings(QWidget *parent);
   ~porque_settings();
+  QPdfDocumentRenderOptions options(void) const;
+  QPdfView::PageMode page_mode(void) const;
 
  private:
   Ui_porque_settings m_ui;

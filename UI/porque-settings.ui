@@ -131,7 +131,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="lcd">
+       <widget class="QCheckBox" name="lcd_optimized">
         <property name="text">
          <string>LCD-Optimized</string>
         </property>
@@ -176,7 +176,7 @@
   <tabstop>halftone</tabstop>
   <tabstop>grayscale</tabstop>
   <tabstop>image_aliased</tabstop>
-  <tabstop>lcd</tabstop>
+  <tabstop>lcd_optimized</tabstop>
   <tabstop>path_aliased</tabstop>
   <tabstop>text_aliased</tabstop>
  </tabstops>

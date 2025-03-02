@@ -30,11 +30,11 @@
 
 #include "ui_porque-pdf-view.h"
 
+#include <QPdfView>
 #include <QUrl>
 
 class QPdfBookmarkModel;
 class QPdfDocument;
-class QPdfView;
 
 class porque_pdf_view: public QWidget
 {
@@ -43,6 +43,7 @@ class porque_pdf_view: public QWidget
  public:
   porque_pdf_view(const QUrl &url, QWidget *parent);
   ~porque_pdf_view();
+  void set_page_mode(const QPdfView::PageMode page_mode);
 
  private:
   QPdfBookmarkModel *m_bookmark_model;

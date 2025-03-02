@@ -29,7 +29,6 @@
 
 #include <QPdfBookmarkModel>
 #include <QPdfDocument>
-#include <QPdfView>
 
 porque_pdf_view::porque_pdf_view
 (const QUrl &url, QWidget *parent):QWidget(parent)
@@ -56,4 +55,9 @@ void porque_pdf_view::prepare(void)
 {
   m_ui.contents->expandAll();
   m_ui.frame->layout()->addWidget(m_pdf_view);
+}
+
+void porque_pdf_view::set_page_mode(const QPdfView::PageMode page_mode)
+{
+  m_pdf_view->setPageMode(page_mode);
 }

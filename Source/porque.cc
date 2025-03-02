@@ -38,6 +38,8 @@ QString porque::PORQUE_VERSION_STRING = "2025.04.01";
 
 porque::porque(void):QMainWindow(nullptr)
 {
+  m_settings = new porque_settings(this);
+  m_settings->setVisible(false);
   m_ui.setupUi(this);
   m_ui.action_Close_Page->setEnabled(false);
   m_ui.menu_Pages->setStyleSheet("QMenu {menu-scrollable: 1;}");
@@ -112,6 +114,8 @@ void porque::add_pdf_page(const QString &file_name)
 
   m_ui.tab->setTabToolTip
     (m_ui.tab->addTab(page, QIcon(":/porque.png"), file_name), file_name);
+  page->set_page_mode(m_settings->page_mode());
+  QApplication::processEvents();
 }
 
 void porque::closeEvent(QCloseEvent *event)
@@ -198,7 +202,11 @@ void porque::slot_about_to_show_pages_menu(void)
 void porque::slot_close_tab(int index)
 {
   m_ui.action_Close_Page->setEnabled(m_ui.tab->count() > 1);
-  m_ui.tab->widget(index) ? m_ui.tab->widget(index)->deleteLater() : (void) 0;
+
+  if(m_settings != m_ui.tab->widget(index))
+    m_ui.tab->widget(index) ?
+      m_ui.tab->widget(index)->deleteLater() : (void) 0;
+
   m_ui.tab->removeTab(index);
 }
 
@@ -286,16 +294,16 @@ void porque::slot_select_page(void)
 
 void porque::slot_settings(void)
 {
-  auto page = m_ui.tab->findChild<porque_settings *> ();
+  if(m_ui.tab->indexOf(m_settings) >= 0)
+    return;
 
-  if(!page)
-    {
-      page = new porque_settings(this);
-      m_ui.action_Close_Page->setEnabled(true);
-      m_ui.tab->setTabToolTip
-	(m_ui.tab->addTab(page, QIcon(":/settings.png"), tr("Settings")),
-	 tr("Settings"));
-    }
-
-  m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(page));
+  m_ui.action_Close_Page->setEnabled(true);
+  m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(m_settings));
+  m_ui.tab->setTabToolTip
+    (m_ui.tab->addTab(m_settings,
+		      QIcon(":/settings.png"),
+		      tr("Porque Settings")),
+     tr("Porque Settings"));
+  repaint();
+  QApplication::processEvents();
 }
