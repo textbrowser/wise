@@ -43,7 +43,6 @@ porque::porque(void):QMainWindow(nullptr)
   m_ui.setupUi(this);
   m_ui.action_Close_Page->setEnabled(false);
   m_ui.menu_Pages->setStyleSheet("QMenu {menu-scrollable: 1;}");
-  m_ui.tab->setDocumentMode(false);
   m_ui.tab->setMovable(true);
   m_ui.tab->setTabsClosable(true);
   m_ui.tool_bar->addAction(m_ui.action_Open_PDF_Files);
@@ -114,6 +113,7 @@ void porque::add_pdf_page(const QString &file_name)
 
   m_ui.tab->setTabToolTip
     (m_ui.tab->addTab(page, QIcon(":/porque.png"), file_name), file_name);
+  m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(page));
   page->set_page_mode(m_settings->page_mode());
   QApplication::processEvents();
 }
@@ -295,7 +295,10 @@ void porque::slot_select_page(void)
 void porque::slot_settings(void)
 {
   if(m_ui.tab->indexOf(m_settings) >= 0)
-    return;
+    {
+      m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(m_settings));
+      return;
+    }
 
   m_ui.action_Close_Page->setEnabled(true);
   m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(m_settings));
