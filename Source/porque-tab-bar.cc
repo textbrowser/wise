@@ -73,7 +73,7 @@ QSize porque_tab_bar::tabSizeHint(int index) const
       int preferred_tab_height = 175;
 
       preferred_tab_height = qBound
-	(125,
+	(150,
 	 qMax(rect().height() / qMax(1, count()), size.height()),
 	 175);
       preferred_tab_height = 5 * qCeil(preferred_tab_height / 5.0),
@@ -81,17 +81,12 @@ QSize porque_tab_bar::tabSizeHint(int index) const
     }
   else
     {
-#ifdef Q_OS_MACOS
-      int preferred = 250;
-#else
-      int preferred = 250;
-#endif
-      int preferred_tab_width = 0;
+      int preferred_tab_width = 175;
 
       preferred_tab_width = qBound
-	(125,
+	(150,
 	 qMax(rect().width() / qMax(1, count()), size.width()),
-	 preferred);
+	 250);
       preferred_tab_width = 5 * qCeil(preferred_tab_width / 5.0),
       size.setHeight(10 + size.height());
       size.setWidth(preferred_tab_width);

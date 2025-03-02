@@ -35,10 +35,10 @@ class porque: public QMainWindow
   Q_OBJECT
 
  public:
+  static QString PORQUE_VERSION_STRING;
   porque(void);
   ~porque();
   static QString home_path(void);
-  static QString PORQUE_VERSION_STRING;
 
  private:
   Ui_porque m_ui;
@@ -59,6 +59,7 @@ class porque: public QMainWindow
   void slot_quit(void);
   void slot_screen_mode(void);
   void slot_select_page(void);
+  void slot_settings(void);
 };
 
 #endif

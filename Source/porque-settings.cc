@@ -25,35 +25,13 @@
 ** PORQUE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "porque-pdf-view.h"
+#include "porque-settings.h"
 
-#include <QPdfBookmarkModel>
-#include <QPdfDocument>
-#include <QPdfView>
-
-porque_pdf_view::porque_pdf_view
-(const QUrl &url, QWidget *parent):QWidget(parent)
+porque_settings::porque_settings(QWidget *parent):QWidget(parent)
 {
-  m_bookmark_model = new QPdfBookmarkModel(this);
-  m_bookmark_model->setDocument(m_document = new QPdfDocument(this));
-  m_document->load(url.path());
-  m_pdf_view = new QPdfView(this);
-  m_pdf_view->setDocument(m_document);
-  m_pdf_view->setPageMode(QPdfView::PageMode::MultiPage);
   m_ui.setupUi(this);
-  m_ui.contents->setModel(m_bookmark_model);
-  m_ui.splitter->setStretchFactor(0, 0);
-  m_ui.splitter->setStretchFactor(1, 1);
-  m_url = url;
-  prepare();
 }
 
-porque_pdf_view::~porque_pdf_view()
+porque_settings::~porque_settings()
 {
-}
-
-void porque_pdf_view::prepare(void)
-{
-  m_ui.contents->expandAll();
-  m_ui.frame->layout()->addWidget(m_pdf_view);
 }

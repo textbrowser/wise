@@ -27,6 +27,7 @@
 
 #include "porque.h"
 #include "porque-pdf-view.h"
+#include "porque-settings.h"
 
 #include <QActionGroup>
 #include <QDir>
@@ -58,6 +59,10 @@ porque::porque(void):QMainWindow(nullptr)
 	  &QAction::triggered,
 	  this,
 	  &porque::slot_quit);
+  connect(m_ui.action_Settings,
+	  &QAction::triggered,
+	  this,
+	  &porque::slot_settings);
   connect(m_ui.action_Screen_Mode,
 	  &QAction::triggered,
 	  this,
@@ -277,4 +282,20 @@ void porque::slot_select_page(void)
 
   if(action)
     m_ui.tab->setCurrentIndex(action->data().toInt());
+}
+
+void porque::slot_settings(void)
+{
+  auto page = m_ui.tab->findChild<porque_settings *> ();
+
+  if(!page)
+    {
+      page = new porque_settings(this);
+      m_ui.action_Close_Page->setEnabled(true);
+      m_ui.tab->setTabToolTip
+	(m_ui.tab->addTab(page, QIcon(":/settings.png"), tr("Settings")),
+	 tr("Settings"));
+    }
+
+  m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(page));
 }
