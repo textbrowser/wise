@@ -74,7 +74,6 @@ porque::porque(void):QMainWindow(nullptr)
 	  this,
 	  SLOT(slot_page_moved(int, int)),
 	  Qt::QueuedConnection);
-  prepare_icons();
   process_terminal();
   restore();
 }
@@ -114,6 +113,10 @@ void porque::prepare_icons(void)
 {
   m_ui.action_Open_PDF_Files->setIcon(QIcon(":/open-file.png"));
   m_ui.action_Quit->setIcon(QIcon(":/quit.png"));
+  m_ui.action_Screen_Mode->setIcon
+    (isFullScreen() ?
+     QIcon(":/normal-screen.png") :
+     QIcon(":/full-screen.png"));
   m_ui.action_Settings->setIcon(QIcon(":/settings.png"));
 }
 
@@ -172,6 +175,7 @@ void porque::restore(void)
   isFullScreen() ?
     m_ui.action_Screen_Mode->setText(tr("Normal Screen")) :
     m_ui.action_Screen_Mode->setText(tr("Full Screen"));
+  prepare_icons();
 }
 
 void porque::slot_about_to_show_pages_menu(void)
@@ -250,6 +254,8 @@ void porque::slot_screen_mode(void)
       m_ui.action_Screen_Mode->setText(tr("Normal Screen"));
       showFullScreen();
     }
+
+  prepare_icons();
 }
 
 void porque::slot_select_page(void)
