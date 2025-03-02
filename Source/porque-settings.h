@@ -40,6 +40,11 @@ class porque_settings: public QWidget
 
  private:
   Ui_porque_settings m_ui;
+  void restore(void);
+
+ private slots:
+  void slot_check_box_state_changed(int state);
+  void slot_combination_box_current_index_changed(int index);
 };
 
 #endif

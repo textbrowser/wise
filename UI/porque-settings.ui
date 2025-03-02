@@ -103,49 +103,49 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QCheckBox" name="checkBox">
+       <widget class="QCheckBox" name="annotations">
         <property name="text">
          <string>Annotations</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox_3">
+       <widget class="QCheckBox" name="halftone">
         <property name="text">
          <string>Force Halftone</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox_2">
+       <widget class="QCheckBox" name="grayscale">
         <property name="text">
          <string>Grayscale</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox_4">
+       <widget class="QCheckBox" name="image_aliased">
         <property name="text">
          <string>Image Aliased</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox_7">
+       <widget class="QCheckBox" name="lcd">
         <property name="text">
          <string>LCD-Optimized</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox_5">
+       <widget class="QCheckBox" name="path_aliased">
         <property name="text">
          <string>Path Aliased</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox_6">
+       <widget class="QCheckBox" name="text_aliased">
         <property name="text">
          <string>Text Aliased</string>
         </property>
@@ -172,13 +172,13 @@
  <tabstops>
   <tabstop>page_mode</tabstop>
   <tabstop>render_mode</tabstop>
-  <tabstop>checkBox</tabstop>
-  <tabstop>checkBox_3</tabstop>
-  <tabstop>checkBox_2</tabstop>
-  <tabstop>checkBox_4</tabstop>
-  <tabstop>checkBox_7</tabstop>
-  <tabstop>checkBox_5</tabstop>
-  <tabstop>checkBox_6</tabstop>
+  <tabstop>annotations</tabstop>
+  <tabstop>halftone</tabstop>
+  <tabstop>grayscale</tabstop>
+  <tabstop>image_aliased</tabstop>
+  <tabstop>lcd</tabstop>
+  <tabstop>path_aliased</tabstop>
+  <tabstop>text_aliased</tabstop>
  </tabstops>
  <resources/>
  <connections/>
