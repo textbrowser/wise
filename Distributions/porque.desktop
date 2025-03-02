@@ -1,0 +1,10 @@
+[Desktop Entry]
+Categories=Library
+Comment=Porque
+Exec=/opt/porque/porque.sh
+GenericName=Porque
+Icon=/opt/porque/porque.png
+Name=Porque
+StartupNotify=true
+Terminal=false
+Type=Application
