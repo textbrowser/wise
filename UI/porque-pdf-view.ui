@@ -116,7 +116,7 @@
      <property name="childrenCollapsible">
       <bool>false</bool>
      </property>
-     <widget class="QTreeWidget" name="contents">
+     <widget class="QTreeView" name="contents">
       <property name="tabKeyNavigation">
        <bool>true</bool>
       </property>
@@ -141,11 +141,9 @@
       <attribute name="headerVisible">
        <bool>false</bool>
       </attribute>
-      <column>
-       <property name="text">
-        <string notr="true">1</string>
-       </property>
-      </column>
+      <attribute name="headerDefaultSectionSize">
+       <number>55</number>
+      </attribute>
      </widget>
      <widget class="QFrame" name="frame">
       <layout class="QVBoxLayout" name="verticalLayout_3"/>

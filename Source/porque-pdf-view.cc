@@ -27,23 +27,25 @@
 
 #include "porque-pdf-view.h"
 
+#include <QPdfBookmarkModel>
 #include <QPdfDocument>
 #include <QPdfView>
 
 porque_pdf_view::porque_pdf_view
 (const QUrl &url, QWidget *parent):QWidget(parent)
 {
-  m_document = new QPdfDocument(nullptr);
+  m_bookmark_model = new QPdfBookmarkModel(this);
+  m_bookmark_model->setDocument(m_document = new QPdfDocument(nullptr));
   m_document->load(url.path());
   m_pdf_view = new QPdfView(this);
   m_pdf_view->setDocument(m_document);
   m_pdf_view->setPageMode(QPdfView::PageMode::MultiPage);
   m_ui.setupUi(this);
-  m_ui.frame->layout()->addWidget(m_pdf_view);
+  m_ui.contents->expandAll();
   m_ui.splitter->setStretchFactor(0, 0);
   m_ui.splitter->setStretchFactor(1, 1);
   m_url = url;
-  prepare_table_of_contents();
+  prepare();
 }
 
 porque_pdf_view::~porque_pdf_view()
@@ -51,11 +53,8 @@ porque_pdf_view::~porque_pdf_view()
   m_document->deleteLater();
 }
 
-void porque_pdf_view::prepare_table_of_contents(void)
+void porque_pdf_view::prepare(void)
 {
-  m_ui.contents->clear();
-
-  for(int i = 0; i < m_document->pageCount(); i++)
-    {
-    }
+  m_ui.contents->setModel(m_bookmark_model);
+  m_ui.frame->layout()->addWidget(m_pdf_view);
 }

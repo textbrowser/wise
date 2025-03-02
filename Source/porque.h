@@ -52,6 +52,7 @@ class porque: public QMainWindow
  private slots:
   void slot_about_to_show_pages_menu(void);
   void slot_close_tab(int index);
+  void slot_close_tab(void);
   void slot_open_pdf_files(void);
   void slot_page_moved(int from, int to);
   void slot_page_selected(int index);

@@ -38,6 +38,7 @@ QString porque::PORQUE_VERSION_STRING = "2025.04.01";
 porque::porque(void):QMainWindow(nullptr)
 {
   m_ui.setupUi(this);
+  m_ui.action_Close_Page->setEnabled(false);
   m_ui.menu_Pages->setStyleSheet("QMenu {menu-scrollable: 1;}");
   m_ui.tab->setDocumentMode(false);
   m_ui.tab->setMovable(true);
@@ -45,6 +46,10 @@ porque::porque(void):QMainWindow(nullptr)
   m_ui.tool_bar->addAction(m_ui.action_Open_PDF_Files);
   m_ui.tool_bar->addAction(m_ui.action_Settings);
   m_ui.tool_bar->setIconSize(QSize(50, 50));
+  connect(m_ui.action_Close_Page,
+	  SIGNAL(triggered(void)),
+	  this,
+	  SLOT(slot_close_tab(void)));
   connect(m_ui.action_Open_PDF_Files,
 	  &QAction::triggered,
 	  this,
@@ -95,6 +100,8 @@ void porque::add_pdf_page(const QString &file_name)
 {
   if(file_name.isEmpty())
     return;
+
+  m_ui.action_Close_Page->setEnabled(true);
 
   auto page = new porque_pdf_view(QUrl::fromLocalFile(file_name), this);
 
@@ -185,8 +192,14 @@ void porque::slot_about_to_show_pages_menu(void)
 
 void porque::slot_close_tab(int index)
 {
+  m_ui.action_Close_Page->setEnabled(m_ui.tab->count() > 1);
   m_ui.tab->widget(index) ? m_ui.tab->widget(index)->deleteLater() : (void) 0;
   m_ui.tab->removeTab(index);
+}
+
+void porque::slot_close_tab(void)
+{
+  slot_close_tab(m_ui.tab->currentIndex());
 }
 
 void porque::slot_open_pdf_files(void)
