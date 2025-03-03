@@ -88,6 +88,18 @@ void wise_pdf_view::prepare(void)
       m_ui.meta->setItem(row, 1, item2);
     }
 
+  foreach(auto tool_button, findChildren<QToolButton *> ())
+    {
+      tool_button->setArrowType(Qt::NoArrow);
+      tool_button->setAutoRaise(true);
+#ifdef Q_OS_MACOS
+      tool_button->setStyleSheet
+	("QToolButton {border: none;}"
+	 "QToolButton::menu-button {border: none;}"
+	 "QToolButton::menu-indicator {image: none;}");
+#endif
+    }
+
   m_ui.contents->expandAll();
   m_ui.contents->setVisible(m_bookmark_model->rowCount() > 0);
   m_ui.frame->layout()->addWidget(m_pdf_view);
