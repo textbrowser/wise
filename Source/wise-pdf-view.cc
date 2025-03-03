@@ -46,8 +46,10 @@ wise_pdf_view::wise_pdf_view
 	  this,
 	  SLOT(slot_contents_selected(const QModelIndex &)));
   m_ui.contents->setModel(m_bookmark_model);
-  m_ui.splitter->setStretchFactor(0, 0);
-  m_ui.splitter->setStretchFactor(1, 1);
+  m_ui.contents_meta_splitter->setStretchFactor(0, 1);
+  m_ui.contents_meta_splitter->setStretchFactor(1, 0);
+  m_ui.pdf_view_splitter->setStretchFactor(0, 0);
+  m_ui.pdf_view_splitter->setStretchFactor(1, 1);
   m_url = url;
   prepare();
 }
@@ -58,8 +60,39 @@ wise_pdf_view::~wise_pdf_view()
 
 void wise_pdf_view::prepare(void)
 {
+  QMap<QString, QPdfDocument::MetaDataField> meta;
+
+  meta[tr("Author")] = QPdfDocument::MetaDataField::Author;
+  meta[tr("Creation Date")] = QPdfDocument::MetaDataField::CreationDate;
+  meta[tr("Creator")] = QPdfDocument::MetaDataField::Creator;
+  meta[tr("Keywords")] = QPdfDocument::MetaDataField::Keywords;
+  meta[tr("Modification Date")] =
+    QPdfDocument::MetaDataField::ModificationDate;
+  meta[tr("Producer")] = QPdfDocument::MetaDataField::Producer;
+  meta[tr("Subject")] = QPdfDocument::MetaDataField::Subject;
+  meta[tr("Title")] = QPdfDocument::MetaDataField::Title;
+  m_ui.meta->setRowCount(meta.size());
+
+  QMap<QString, QPdfDocument::MetaDataField>::const_iterator it;
+
+  for(it = meta.constBegin(); it != meta.constEnd(); ++it)
+    {
+      auto const row = static_cast<int> (std::distance(meta.constBegin(), it));
+      auto item1 = new QTableWidgetItem(it.key());
+      auto item2 = new QTableWidgetItem
+	(m_document->metaData(it.value()).toString());
+
+      item1->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+      item2->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+      m_ui.meta->setItem(row, 0, item1);
+      m_ui.meta->setItem(row, 1, item2);
+    }
+
   m_ui.contents->expandAll();
+  m_ui.contents->setVisible(m_bookmark_model->rowCount() > 0);
   m_ui.frame->layout()->addWidget(m_pdf_view);
+  m_ui.meta->resizeColumnToContents(0);
+  m_ui.meta->resizeColumnToContents(1);
 }
 
 void wise_pdf_view::set_page_mode(const QPdfView::PageMode page_mode)
