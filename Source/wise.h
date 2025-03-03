@@ -59,6 +59,7 @@ class wise: public QMainWindow
   void slot_open_pdf_files(void);
   void slot_page_moved(int from, int to);
   void slot_page_selected(int index);
+  void slot_print(void);
   void slot_quit(void);
   void slot_screen_mode(void);
   void slot_select_page(void);

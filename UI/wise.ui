@@ -52,6 +52,8 @@
     <addaction name="separator"/>
     <addaction name="action_Close_Page"/>
     <addaction name="separator"/>
+    <addaction name="action_Print"/>
+    <addaction name="separator"/>
     <addaction name="action_Quit"/>
    </widget>
    <widget class="QMenu" name="menu_View">
@@ -123,6 +125,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+W</string>
+   </property>
+  </action>
+  <action name="action_Print">
+   <property name="text">
+    <string>Print...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
    </property>
   </action>
  </widget>

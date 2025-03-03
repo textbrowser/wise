@@ -27,9 +27,13 @@
 
 #include "wise-pdf-view.h"
 
+#include <QPainter>
 #include <QPdfBookmarkModel>
 #include <QPdfDocument>
 #include <QPdfPageNavigator>
+#include <QPrintPreviewDialog>
+#include <QPrinter>
+#include <QShortcut>
 
 wise_pdf_view::wise_pdf_view
 (const QUrl &url, QWidget *parent):QWidget(parent)
@@ -45,6 +49,10 @@ wise_pdf_view::wise_pdf_view
 	  SIGNAL(activated(const QModelIndex &)),
 	  this,
 	  SLOT(slot_contents_selected(const QModelIndex &)));
+  connect(m_ui.print,
+	  SIGNAL(clicked(void)),
+	  this,
+	  SLOT(slot_print(void)));
   m_ui.contents->setModel(m_bookmark_model);
   m_ui.contents_meta_splitter->setStretchFactor(0, 1);
   m_ui.contents_meta_splitter->setStretchFactor(1, 0);
@@ -107,6 +115,11 @@ void wise_pdf_view::prepare(void)
   m_ui.meta->resizeColumnToContents(1);
 }
 
+void wise_pdf_view::print(void)
+{
+  slot_print();
+}
+
 void wise_pdf_view::set_page_mode(const QPdfView::PageMode page_mode)
 {
   m_pdf_view->setPageMode(page_mode);
@@ -123,4 +136,64 @@ void wise_pdf_view::slot_contents_selected(const QModelIndex &index)
     (static_cast<int> (QPdfBookmarkModel::Role::Level)).toReal();
 
   m_pdf_view->pageNavigator()->jump(page, QPointF(), zoom_level);
+}
+
+void wise_pdf_view::slot_print(QPrinter *printer)
+{
+  if(!printer)
+    return;
+
+  QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+
+  QPainter painter(printer);
+
+  painter.setRenderHints
+    (QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+
+  auto const dpi_x = printer->physicalDpiX();
+  auto const dpi_y = printer->physicalDpiY();
+  auto const page_rect(printer->pageRect(QPrinter::Unit::Inch));
+  auto const rect
+    (QRectF(dpi_x * page_rect.x(),
+	    dpi_y * page_rect.y(),
+	    dpi_x * page_rect.width(),
+	    dpi_y * page_rect.height()));
+
+  for(int i = 0; i < m_document->pageCount(); i++)
+    {
+      if(i != 0)
+	printer->newPage();
+
+      auto const size(2 * m_document->pagePointSize(i).toSize());
+
+      painter.drawImage(rect, m_document->render(i, size));
+    }
+
+  QApplication::restoreOverrideCursor();
+}
+
+void wise_pdf_view::slot_print(void)
+{
+  QPrinter printer(QPrinter::HighResolution);
+
+  printer.setColorMode(QPrinter::Color);
+  printer.setPageMargins(QMarginsF(0.25, 0.25, 0.25, 0.25));
+  printer.setPageSize(QPageSize(QPageSize::PageSizeId::Letter));
+
+  QScopedPointer<QPrintPreviewDialog> dialog
+    (new QPrintPreviewDialog(&printer, this));
+
+  connect(dialog.data(),
+	  SIGNAL(paintRequested(QPrinter *)),
+	  this,
+	  SLOT(slot_print(QPrinter *)));
+  dialog->setWindowTitle("Wise: Print Preview");
+#ifdef Q_OS_ANDROID
+  dialog->showMaximized();
+#endif
+  new QShortcut(tr("Ctrl+W"), dialog.data(), SLOT(close(void)));
+  new QShortcut(tr("Esc"), dialog.data(), SLOT(close(void)));
+  QApplication::processEvents();
+  dialog->exec();
+  QApplication::processEvents();
 }

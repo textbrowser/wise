@@ -56,6 +56,10 @@ wise::wise(void):QMainWindow(nullptr)
 	  &QAction::triggered,
 	  this,
 	  &wise::slot_open_pdf_files);
+  connect(m_ui.action_Print,
+	  &QAction::triggered,
+	  this,
+	  &wise::slot_print);
   connect(m_ui.action_Quit,
 	  &QAction::triggered,
 	  this,
@@ -127,6 +131,7 @@ void wise::closeEvent(QCloseEvent *event)
 void wise::prepare_icons(void)
 {
   m_ui.action_Open_PDF_Files->setIcon(QIcon(":/open-file.png"));
+  m_ui.action_Print->setIcon(QIcon(":/print.png"));
   m_ui.action_Quit->setIcon(QIcon(":/quit.png"));
   m_ui.action_Screen_Mode->setIcon
     (isFullScreen() ?
@@ -260,6 +265,14 @@ void wise::slot_page_selected(int index)
     setWindowTitle(tr("Wise (%1)").arg(m_ui.tab->tabText(index)));
   else
     setWindowTitle(tr("Wise"));
+}
+
+void wise::slot_print(void)
+{
+  auto page = qobject_cast<wise_pdf_view *> (m_ui.tab->currentWidget());
+
+  if(page)
+    page->print();
 }
 
 void wise::slot_quit(void)
