@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>porque</class>
- <widget class="QMainWindow" name="porque">
+ <class>wise</class>
+ <widget class="QMainWindow" name="wise">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Porque</string>
+   <string>Wise</string>
   </property>
   <widget class="QWidget" name="central_widget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -31,7 +31,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="porque_tab" name="tab"/>
+     <widget class="wise_tab" name="tab"/>
     </item>
    </layout>
   </widget>
@@ -90,7 +90,7 @@
   </widget>
   <action name="action_Quit">
    <property name="text">
-    <string>&amp;Quit Porque</string>
+    <string>&amp;Quit Wise</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
@@ -128,9 +128,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>porque_tab</class>
+   <class>wise_tab</class>
    <extends>QTabWidget</extends>
-   <header>porque-tab.h</header>
+   <header>wise-tab.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>porque_settings</class>
- <widget class="QWidget" name="porque_settings">
+ <class>wise_settings</class>
+ <widget class="QWidget" name="wise_settings">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -31,11 +31,6 @@
        <item>
         <property name="text">
          <string>Multiple</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Single</string>
         </property>
        </item>
       </widget>

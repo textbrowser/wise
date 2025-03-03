@@ -1,5 +1,5 @@
 macx {
-dmg.commands = make install && hdiutil create Porque.d.dmg -srcfolder Porque.d
+dmg.commands = make install && hdiutil create Wise.d.dmg -srcfolder Wise.d
 QMAKE_EXTRA_TARGETS += dmg
 }
 
@@ -11,7 +11,7 @@ QMAKE_EXTRA_TARGETS += purge
 CONFIG += qt release warn_on
 DEFINES +=
 LANGUAGE = C++
-QMAKE_CLEAN += Porque
+QMAKE_CLEAN += Wise
 QT += concurrent gui network printsupport sql widgets
 
 contains(QMAKE_HOST.arch, armv7l) {
@@ -147,7 +147,7 @@ QMAKE_CXXFLAGS_RELEASE -= -std=c++11
 }
 
 macx {
-QMAKE_DISTCLEAN += -r Porque.d
+QMAKE_DISTCLEAN += -r Wise.d
 }
 
 win32 {
@@ -163,11 +163,11 @@ QMAKE_DISTCLEAN += -f .qmake* \
 QMAKE_STRIP = echo
 
 macx {
-ICON = Icons/Logo/porque-logo.icns
+ICON = Icons/Logo/wise-logo.icns
 }
 
 win32 {
-RC_FILE = Icons/porque.rc
+RC_FILE = Icons/wise.rc
 }
 
 INCLUDEPATH += Source
@@ -186,24 +186,24 @@ RCC_DIR = Temporary/rcc
 RESOURCES = Documentation/documentation.qrc Icons/icons.qrc
 UI_DIR = Temporary/ui
 
-FORMS += UI/porque.ui \
-         UI/porque-pdf-view.ui \
-         UI/porque-settings.ui
-HEADERS += Source/porque.h \
-           Source/porque-pdf-view.h \
-           Source/porque-settings.h \
-           Source/porque-tab.h \
-           Source/porque-tab-bar.h
-SOURCES += Source/porque.cc \
-           Source/porque-main.cc \
-           Source/porque-pdf-view.cc \
-           Source/porque-settings.cc \
-           Source/porque-tab.cc \
-           Source/porque-tab-bar.cc
+FORMS += UI/wise.ui \
+         UI/wise-pdf-view.ui \
+         UI/wise-settings.ui
+HEADERS += Source/wise.h \
+           Source/wise-pdf-view.h \
+           Source/wise-settings.h \
+           Source/wise-tab.h \
+           Source/wise-tab-bar.h
+SOURCES += Source/wise.cc \
+           Source/wise-main.cc \
+           Source/wise-pdf-view.cc \
+           Source/wise-settings.cc \
+           Source/wise-tab.cc \
+           Source/wise-tab-bar.cc
 TRANSLATIONS =
 
-PROJECTNAME = Porque
-TARGET = Porque
+PROJECTNAME = Wise
+TARGET = Wise
 TEMPLATE = app
 
 android {
@@ -223,11 +223,11 @@ INSTALLS += examples
 }
 
 macx {
-macdeployqt.extra = $$[QT_INSTALL_BINS]/macdeployqt Porque.d/Porque.app \
-                    -executable=Porque.d/Porque.app/Contents/MacOS/Porque
-macdeployqt.path = Porque.app
-preinstall.extra = rm -fr Porque.d/Porque.app
-preinstall.path = Porque.d
+macdeployqt.extra = $$[QT_INSTALL_BINS]/macdeployqt Wise.d/Wise.app \
+                    -executable=Wise.d/Wise.app/Contents/MacOS/Wise
+macdeployqt.path = Wise.app
+preinstall.extra = rm -fr Wise.d/Wise.app
+preinstall.path = Wise.d
 
 INSTALLS = preinstall \
            macdeployqt

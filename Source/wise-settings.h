@@ -11,9 +11,9 @@
 **    notice, this list of conditions and the following disclaimer in the
 **    documentation and/or other materials provided with the distribution.
 ** 3. The name of the author may not be used to endorse or promote products
-**    derived from Porque without specific prior written permission.
+**    derived from Wise without specific prior written permission.
 **
-** PORQUE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+** WISE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
 ** IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
 ** OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
 ** IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
@@ -22,28 +22,34 @@
 ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-** PORQUE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+** WISE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef porque_tab_bar_h
-#define porque_tab_bar_h
+#ifndef wise_settings_h
+#define wise_settings_h
 
-#include <QTabBar>
+#include "ui_wise-settings.h"
 
-class porque_tab_bar: public QTabBar
+#include <QPdfDocumentRenderOptions>
+#include <QPdfView>
+
+class wise_settings: public QWidget
 {
   Q_OBJECT
 
  public:
-  porque_tab_bar(QWidget *parent);
-  ~porque_tab_bar();
-  QTabBar::ButtonPosition preferred_close_button_position_opposite(void) const;
+  wise_settings(QWidget *parent);
+  ~wise_settings();
+  QPdfDocumentRenderOptions options(void) const;
+  QPdfView::PageMode page_mode(void) const;
 
  private:
-  QSize tabSizeHint(int index) const;
+  Ui_wise_settings m_ui;
+  void restore(void);
 
  private slots:
-  void slot_custom_context_menu_requested(const QPoint &point);
+  void slot_check_box_state_changed(int state);
+  void slot_combination_box_current_index_changed(int index);
 };
 
 #endif

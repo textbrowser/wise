@@ -11,9 +11,9 @@
 **    notice, this list of conditions and the following disclaimer in the
 **    documentation and/or other materials provided with the distribution.
 ** 3. The name of the author may not be used to endorse or promote products
-**    derived from Porque without specific prior written permission.
+**    derived from Wise without specific prior written permission.
 **
-** PORQUE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+** WISE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
 ** IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
 ** OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
 ** IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
@@ -22,17 +22,17 @@
 ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-** PORQUE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+** WISE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "porque-tab.h"
-#include "porque-tab-bar.h"
+#include "wise-tab.h"
+#include "wise-tab-bar.h"
 
 #include <QStyle>
 #include <QToolButton>
 #include <QtMath>
 
-porque_tab_bar::porque_tab_bar(QWidget *parent):QTabBar(parent)
+wise_tab_bar::wise_tab_bar(QWidget *parent):QTabBar(parent)
 {
   setContextMenuPolicy(Qt::CustomContextMenu);
   setDocumentMode(true);
@@ -57,14 +57,14 @@ porque_tab_bar::porque_tab_bar(QWidget *parent):QTabBar(parent)
 	 arg(QWidget::palette().color(QWidget::backgroundRole()).name()));
 }
 
-porque_tab_bar::~porque_tab_bar()
+wise_tab_bar::~wise_tab_bar()
 {
 }
 
-QSize porque_tab_bar::tabSizeHint(int index) const
+QSize wise_tab_bar::tabSizeHint(int index) const
 {
-  auto const tab_position = qobject_cast<porque_tab *> (parentWidget()) ?
-    qobject_cast<porque_tab *> (parentWidget())->tabPosition() :
+  auto const tab_position = qobject_cast<wise_tab *> (parentWidget()) ?
+    qobject_cast<wise_tab *> (parentWidget())->tabPosition() :
     QTabWidget::North;
   auto size(QTabBar::tabSizeHint(index));
 
@@ -83,7 +83,7 @@ QSize porque_tab_bar::tabSizeHint(int index) const
   return size;
 }
 
-QTabBar::ButtonPosition porque_tab_bar::
+QTabBar::ButtonPosition wise_tab_bar::
 preferred_close_button_position_opposite(void) const
 {
 #ifdef Q_OS_MACOS
@@ -106,7 +106,7 @@ preferred_close_button_position_opposite(void) const
 #endif
 }
 
-void porque_tab_bar::slot_custom_context_menu_requested(const QPoint &point)
+void wise_tab_bar::slot_custom_context_menu_requested(const QPoint &point)
 {
   Q_UNUSED(point);
 }

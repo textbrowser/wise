@@ -11,9 +11,9 @@
 **    notice, this list of conditions and the following disclaimer in the
 **    documentation and/or other materials provided with the distribution.
 ** 3. The name of the author may not be used to endorse or promote products
-**    derived from Porque without specific prior written permission.
+**    derived from Wise without specific prior written permission.
 **
-** PORQUE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+** WISE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
 ** IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
 ** OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
 ** IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
@@ -22,23 +22,23 @@
 ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-** PORQUE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+** WISE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "porque.h"
-#include "porque-pdf-view.h"
-#include "porque-settings.h"
+#include "wise.h"
+#include "wise-pdf-view.h"
+#include "wise-settings.h"
 
 #include <QActionGroup>
 #include <QDir>
 #include <QFileDialog>
 #include <QSettings>
 
-QString porque::PORQUE_VERSION_STRING = "2025.04.01";
+QString wise::WISE_VERSION_STRING = "2025.04.01";
 
-porque::porque(void):QMainWindow(nullptr)
+wise::wise(void):QMainWindow(nullptr)
 {
-  m_settings = new porque_settings(this);
+  m_settings = new wise_settings(this);
   m_settings->setVisible(false);
   m_ui.setupUi(this);
   m_ui.action_Close_Page->setEnabled(false);
@@ -55,23 +55,23 @@ porque::porque(void):QMainWindow(nullptr)
   connect(m_ui.action_Open_PDF_Files,
 	  &QAction::triggered,
 	  this,
-	  &porque::slot_open_pdf_files);
+	  &wise::slot_open_pdf_files);
   connect(m_ui.action_Quit,
 	  &QAction::triggered,
 	  this,
-	  &porque::slot_quit);
+	  &wise::slot_quit);
   connect(m_ui.action_Settings,
 	  &QAction::triggered,
 	  this,
-	  &porque::slot_settings);
+	  &wise::slot_settings);
   connect(m_ui.action_Screen_Mode,
 	  &QAction::triggered,
 	  this,
-	  &porque::slot_screen_mode);
+	  &wise::slot_screen_mode);
   connect(m_ui.menu_Pages,
 	  &QMenu::aboutToShow,
 	  this,
-	  &porque::slot_about_to_show_pages_menu);
+	  &wise::slot_about_to_show_pages_menu);
   connect(m_ui.tab,
 	  SIGNAL(currentChanged(int)),
 	  this,
@@ -89,42 +89,42 @@ porque::porque(void):QMainWindow(nullptr)
   restore();
 }
 
-porque::~porque()
+wise::~wise()
 {
 }
 
-QString porque::home_path(void)
+QString wise::home_path(void)
 {
 #ifdef Q_OS_WINDOWS
-  return QDir::currentPath() + QDir::separator() + ".porque";
+  return QDir::currentPath() + QDir::separator() + ".wise";
 #else
-  return QDir::homePath() + QDir::separator() + ".porque";
+  return QDir::homePath() + QDir::separator() + ".wise";
 #endif
 }
 
-void porque::add_pdf_page(const QString &file_name)
+void wise::add_pdf_page(const QString &file_name)
 {
   if(file_name.isEmpty())
     return;
 
   m_ui.action_Close_Page->setEnabled(true);
 
-  auto page = new porque_pdf_view(QUrl::fromLocalFile(file_name), this);
+  auto page = new wise_pdf_view(QUrl::fromLocalFile(file_name), this);
 
   m_ui.tab->setTabToolTip
-    (m_ui.tab->addTab(page, QIcon(":/porque.png"), file_name), file_name);
+    (m_ui.tab->addTab(page, QIcon(":/wise.png"), file_name), file_name);
   m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(page));
   page->set_page_mode(m_settings->page_mode());
 }
 
-void porque::closeEvent(QCloseEvent *event)
+void wise::closeEvent(QCloseEvent *event)
 {
   QMainWindow::closeEvent(event);
   QSettings().setValue("geometry", saveGeometry());
   QSettings().setValue("state", saveState());
 }
 
-void porque::prepare_icons(void)
+void wise::prepare_icons(void)
 {
   m_ui.action_Open_PDF_Files->setIcon(QIcon(":/open-file.png"));
   m_ui.action_Quit->setIcon(QIcon(":/quit.png"));
@@ -135,7 +135,7 @@ void porque::prepare_icons(void)
   m_ui.action_Settings->setIcon(QIcon(":/settings.png"));
 }
 
-void porque::prepare_pages_menu(void)
+void wise::prepare_pages_menu(void)
 {
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
   m_ui.menu_Pages->clear();
@@ -155,7 +155,7 @@ void porque::prepare_pages_menu(void)
       connect(action,
 	      &QAction::triggered,
 	      this,
-	      &porque::slot_select_page);
+	      &wise::slot_select_page);
       group->addAction(action);
       m_ui.menu_Pages->addAction(action);
     }
@@ -169,7 +169,7 @@ void porque::prepare_pages_menu(void)
   QApplication::restoreOverrideCursor();
 }
 
-void porque::process_terminal(void)
+void wise::process_terminal(void)
 {
   QApplication::processEvents();
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -183,7 +183,7 @@ void porque::process_terminal(void)
   QApplication::restoreOverrideCursor();
 }
 
-void porque::restore(void)
+void wise::restore(void)
 {
   restoreGeometry(QSettings().value("geometry").toByteArray());
   restoreState(QSettings().value("state").toByteArray());
@@ -193,12 +193,12 @@ void porque::restore(void)
   prepare_icons();
 }
 
-void porque::slot_about_to_show_pages_menu(void)
+void wise::slot_about_to_show_pages_menu(void)
 {
   prepare_pages_menu();
 }
 
-void porque::slot_close_tab(int index)
+void wise::slot_close_tab(int index)
 {
   m_ui.action_Close_Page->setEnabled(m_ui.tab->count() > 1);
 
@@ -209,23 +209,23 @@ void porque::slot_close_tab(int index)
   m_ui.tab->removeTab(index);
 }
 
-void porque::slot_close_tab(void)
+void wise::slot_close_tab(void)
 {
   slot_close_tab(m_ui.tab->currentIndex());
 }
 
-void porque::slot_open_pdf_files(void)
+void wise::slot_open_pdf_files(void)
 {
   QFileDialog dialog(this);
 
   dialog.setAcceptMode(QFileDialog::AcceptOpen);
-  dialog.setDirectory(porque::home_path());
+  dialog.setDirectory(wise::home_path());
   dialog.setFileMode(QFileDialog::ExistingFiles);
   dialog.setLabelText(QFileDialog::Accept, tr("Select"));
   dialog.setNameFilters(QStringList() << tr("PDF Files (*.pdf)"));
   dialog.setOption(QFileDialog::DontUseNativeDialog);
   dialog.setWindowIcon(windowIcon());
-  dialog.setWindowTitle(tr("Porque: Open PDF Files"));
+  dialog.setWindowTitle(tr("Wise: Open PDF Files"));
 #ifdef Q_OS_ANDROID
   dialog.showMaximized();
 #endif
@@ -247,27 +247,27 @@ void porque::slot_open_pdf_files(void)
     QApplication::processEvents();
 }
 
-void porque::slot_page_moved(int from, int to)
+void wise::slot_page_moved(int from, int to)
 {
   Q_UNUSED(from);
   Q_UNUSED(to);
   prepare_pages_menu();
 }
 
-void porque::slot_page_selected(int index)
+void wise::slot_page_selected(int index)
 {
   if(index >= 0)
-    setWindowTitle(tr("Porque (%1)").arg(m_ui.tab->tabText(index)));
+    setWindowTitle(tr("Wise (%1)").arg(m_ui.tab->tabText(index)));
   else
-    setWindowTitle(tr("Porque"));
+    setWindowTitle(tr("Wise"));
 }
 
-void porque::slot_quit(void)
+void wise::slot_quit(void)
 {
   close();
 }
 
-void porque::slot_screen_mode(void)
+void wise::slot_screen_mode(void)
 {
   if(isFullScreen())
     {
@@ -283,7 +283,7 @@ void porque::slot_screen_mode(void)
   prepare_icons();
 }
 
-void porque::slot_select_page(void)
+void wise::slot_select_page(void)
 {
   auto action = qobject_cast<QAction *> (sender());
 
@@ -291,7 +291,7 @@ void porque::slot_select_page(void)
     m_ui.tab->setCurrentIndex(action->data().toInt());
 }
 
-void porque::slot_settings(void)
+void wise::slot_settings(void)
 {
   if(m_ui.tab->indexOf(m_settings) >= 0)
     {
@@ -300,8 +300,8 @@ void porque::slot_settings(void)
     }
 
   m_ui.action_Close_Page->setEnabled(true);
-  m_ui.tab->addTab(m_settings, QIcon(":/settings.png"), tr("Porque Settings"));
+  m_ui.tab->addTab(m_settings, QIcon(":/settings.png"), tr("Wise Settings"));
   m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(m_settings));
   m_ui.tab->setTabToolTip
-    (m_ui.tab->indexOf(m_settings), tr("Porque Settings"));
+    (m_ui.tab->indexOf(m_settings), tr("Wise Settings"));
 }

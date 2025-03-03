@@ -1,0 +1,10 @@
+[Desktop Entry]
+Categories=Library
+Comment=Wise
+Exec=/opt/wise/wise.sh
+GenericName=Wise
+Icon=/opt/wise/wise.png
+Name=Wise
+StartupNotify=true
+Terminal=false
+Type=Application

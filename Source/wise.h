@@ -11,9 +11,9 @@
 **    notice, this list of conditions and the following disclaimer in the
 **    documentation and/or other materials provided with the distribution.
 ** 3. The name of the author may not be used to endorse or promote products
-**    derived from Porque without specific prior written permission.
+**    derived from Wise without specific prior written permission.
 **
-** PORQUE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+** WISE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
 ** IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
 ** OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
 ** IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
@@ -22,29 +22,29 @@
 ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-** PORQUE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+** WISE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef porque_h
-#define porque_h
+#ifndef wise_h
+#define wise_h
 
-#include "ui_porque.h"
+#include "ui_wise.h"
 
-class porque_settings;
+class wise_settings;
 
-class porque: public QMainWindow
+class wise: public QMainWindow
 {
   Q_OBJECT
 
  public:
-  static QString PORQUE_VERSION_STRING;
-  porque(void);
-  ~porque();
+  static QString WISE_VERSION_STRING;
+  wise(void);
+  ~wise();
   static QString home_path(void);
 
  private:
-  Ui_porque m_ui;
-  porque_settings *m_settings;
+  Ui_wise m_ui;
+  wise_settings *m_settings;
   void add_pdf_page(const QString &file_name);
   void closeEvent(QCloseEvent *event);
   void prepare_icons(void);

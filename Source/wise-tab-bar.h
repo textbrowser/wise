@@ -11,9 +11,9 @@
 **    notice, this list of conditions and the following disclaimer in the
 **    documentation and/or other materials provided with the distribution.
 ** 3. The name of the author may not be used to endorse or promote products
-**    derived from Porque without specific prior written permission.
+**    derived from Wise without specific prior written permission.
 **
-** PORQUE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+** WISE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
 ** IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
 ** OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
 ** IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
@@ -22,39 +22,28 @@
 ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-** PORQUE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+** WISE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef porque_pdf_view_h
-#define porque_pdf_view_h
+#ifndef wise_tab_bar_h
+#define wise_tab_bar_h
 
-#include "ui_porque-pdf-view.h"
+#include <QTabBar>
 
-#include <QPdfView>
-#include <QUrl>
-
-class QPdfBookmarkModel;
-class QPdfDocument;
-
-class porque_pdf_view: public QWidget
+class wise_tab_bar: public QTabBar
 {
   Q_OBJECT
 
  public:
-  porque_pdf_view(const QUrl &url, QWidget *parent);
-  ~porque_pdf_view();
-  void set_page_mode(const QPdfView::PageMode page_mode);
+  wise_tab_bar(QWidget *parent);
+  ~wise_tab_bar();
+  QTabBar::ButtonPosition preferred_close_button_position_opposite(void) const;
 
  private:
-  QPdfBookmarkModel *m_bookmark_model;
-  QPdfDocument *m_document;
-  QPdfView *m_pdf_view;
-  QUrl m_url;
-  Ui_porque_pdf_view m_ui;
-  void prepare(void);
+  QSize tabSizeHint(int index) const;
 
  private slots:
-  void slot_contents_selected(const QModelIndex &index);
+  void slot_custom_context_menu_requested(const QPoint &point);
 };
 
 #endif

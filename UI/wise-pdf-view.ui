@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>porque_pdf_view</class>
- <widget class="QWidget" name="porque_pdf_view">
+ <class>wise_pdf_view</class>
+ <widget class="QWidget" name="wise_pdf_view">
   <property name="geometry">
    <rect>
     <x>0</x>

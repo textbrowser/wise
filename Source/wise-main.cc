@@ -11,9 +11,9 @@
 **    notice, this list of conditions and the following disclaimer in the
 **    documentation and/or other materials provided with the distribution.
 ** 3. The name of the author may not be used to endorse or promote products
-**    derived from Porque without specific prior written permission.
+**    derived from Wise without specific prior written permission.
 **
-** PORQUE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+** WISE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
 ** IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
 ** OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
 ** IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
@@ -22,10 +22,10 @@
 ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-** PORQUE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+** WISE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "porque.h"
+#include "wise.h"
 
 #include <QApplication>
 #include <QDir>
@@ -57,11 +57,11 @@ int main(int argc, char *argv[])
 
   QApplication application(argc, argv);
 
-  application.setWindowIcon(QIcon(":/porque.png"));
+  application.setWindowIcon(QIcon(":/wise.png"));
 
   QDir dir;
 
-  dir.mkdir(porque::home_path());
+  dir.mkdir(wise::home_path());
 
 #ifdef Q_OS_MACOS
   /*
@@ -70,19 +70,19 @@ int main(int argc, char *argv[])
 
   CocoaInitializer ci;
 #endif
-  QCoreApplication::setApplicationName("Porque");
-  QCoreApplication::setApplicationVersion(porque::PORQUE_VERSION_STRING);
-  QCoreApplication::setOrganizationName("Porque");
+  QCoreApplication::setApplicationName("Wise");
+  QCoreApplication::setApplicationVersion(wise::WISE_VERSION_STRING);
+  QCoreApplication::setOrganizationName("Wise");
   QSettings::setDefaultFormat(QSettings::IniFormat);
   QSettings::setPath
-    (QSettings::IniFormat, QSettings::UserScope, porque::home_path());
+    (QSettings::IniFormat, QSettings::UserScope, wise::home_path());
 
   int rc = 0;
 
   {
-    porque porque;
+    wise wise;
 
-    porque.show();
+    wise.show();
     rc = static_cast<int> (application.exec());
   }
 
