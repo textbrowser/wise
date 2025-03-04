@@ -148,10 +148,15 @@ void wise_pdf_view::slot_print(QPrinter *printer)
   QPainter painter(printer);
 
   painter.setRenderHints
-    (QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    (QPainter::Antialiasing |
+     QPainter::LosslessImageRendering |
+     QPainter::SmoothPixmapTransform |
+     QPainter::TextAntialiasing);
 
+  QList<int> pages;
   auto const dpi_x = printer->physicalDpiX();
   auto const dpi_y = printer->physicalDpiY();
+  auto const page_ranges(printer->pageRanges());
   auto const page_rect(printer->pageRect(QPrinter::Unit::Inch));
   auto const rect
     (QRectF(dpi_x * page_rect.x(),
@@ -159,9 +164,19 @@ void wise_pdf_view::slot_print(QPrinter *printer)
 	    dpi_x * page_rect.width(),
 	    dpi_y * page_rect.height()));
 
-  for(int i = 0; i < m_document->pageCount(); i++)
+  if(page_ranges.isEmpty() == false)
     {
-      if(i != 0)
+      for(int i = 1; i <= m_document->pageCount(); i++)
+	if(page_ranges.contains(i))
+	  pages.append(i - 1);
+    }
+  else
+    for(int i = 0; i < m_document->pageCount(); i++)
+      pages.append(i);
+
+  foreach(auto const i, pages)
+    {
+      if(i != pages.at(0))
 	printer->newPage();
 
       auto const size(2 * m_document->pagePointSize(i).toSize());
