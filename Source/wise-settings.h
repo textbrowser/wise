@@ -40,8 +40,8 @@ class wise_settings: public QWidget
  public:
   wise_settings(QWidget *parent);
   ~wise_settings();
-  QPdfDocumentRenderOptions options(void) const;
-  QPdfView::PageMode page_mode(void) const;
+  static QPdfDocumentRenderOptions options(void);
+  static QPdfView::PageMode page_mode(void);
 
  private:
   Ui_wise_settings m_ui;

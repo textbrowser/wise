@@ -51,40 +51,43 @@ wise_settings::~wise_settings()
 {
 }
 
-QPdfDocumentRenderOptions wise_settings::options(void) const
+QPdfDocumentRenderOptions wise_settings::options(void)
 {
   QPdfDocumentRenderOptions options;
   QPdfDocumentRenderOptions::RenderFlags render_flags =
     QPdfDocumentRenderOptions::RenderFlag::None;
+  wise_settings settings(nullptr);
 
-  if(m_ui.annotations->isChecked())
+  if(settings.m_ui.annotations->isChecked())
     render_flags |= QPdfDocumentRenderOptions::RenderFlag::Annotations;
 
-  if(m_ui.grayscale->isChecked())
+  if(settings.m_ui.grayscale->isChecked())
     render_flags |= QPdfDocumentRenderOptions::RenderFlag::Grayscale;
 
-  if(m_ui.halftone->isChecked())
+  if(settings.m_ui.halftone->isChecked())
     render_flags |= QPdfDocumentRenderOptions::RenderFlag::ForceHalftone;
 
-  if(m_ui.image_aliased->isChecked())
+  if(settings.m_ui.image_aliased->isChecked())
     render_flags |= QPdfDocumentRenderOptions::RenderFlag::ImageAliased;
 
-  if(m_ui.lcd_optimized->isChecked())
+  if(settings.m_ui.lcd_optimized->isChecked())
     render_flags |= QPdfDocumentRenderOptions::RenderFlag::OptimizedForLcd;
 
-  if(m_ui.path_aliased->isChecked())
+  if(settings.m_ui.path_aliased->isChecked())
     render_flags |= QPdfDocumentRenderOptions::RenderFlag::PathAliased;
 
-  if(m_ui.text_aliased->isChecked())
+  if(settings.m_ui.text_aliased->isChecked())
     render_flags |= QPdfDocumentRenderOptions::RenderFlag::TextAliased;
 
   options.setRenderFlags(render_flags);
   return options;
 }
 
-QPdfView::PageMode wise_settings::page_mode(void) const
+QPdfView::PageMode wise_settings::page_mode(void)
 {
-  if(m_ui.page_mode->currentText() == tr("Multiple"))
+  wise_settings settings(nullptr);
+
+  if(settings.m_ui.page_mode->currentText() == tr("Multiple"))
     return QPdfView::PageMode::MultiPage;
   else
     return QPdfView::PageMode::SinglePage;

@@ -14,6 +14,12 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -73,6 +79,37 @@
       </widget>
      </item>
      <item>
+      <widget class="QToolButton" name="zoom_in">
+       <property name="icon">
+        <iconset resource="../Icons/icons.qrc">
+         <normaloff>:/zoom-in.png</normaloff>:/zoom-in.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="zoom_out">
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../Icons/icons.qrc">
+         <normaloff>:/zoom-out.png</normaloff>:/zoom-out.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -84,20 +121,6 @@
         </size>
        </property>
       </spacer>
-     </item>
-     <item>
-      <widget class="QToolButton" name="next">
-       <property name="text">
-        <string>...</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="previous">
-       <property name="text">
-        <string>...</string>
-       </property>
-      </widget>
      </item>
      <item>
       <widget class="QToolButton" name="print">
@@ -215,21 +238,13 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="find_next">
-       <property name="text">
-        <string>Find &amp;Next</string>
-       </property>
-      </widget>
+      <widget class="QToolButton" name="find_next"/>
      </item>
      <item>
-      <widget class="QPushButton" name="find_previous">
-       <property name="text">
-        <string>Find &amp;Previous</string>
-       </property>
-      </widget>
+      <widget class="QToolButton" name="find_previous"/>
      </item>
      <item>
-      <widget class="QToolButton" name="case_sensitive">
+      <widget class="QCheckBox" name="case_sensitive">
        <property name="text">
         <string>&amp;Case Sensitive</string>
        </property>
@@ -245,8 +260,8 @@
  <tabstops>
   <tabstop>page</tabstop>
   <tabstop>view_size</tabstop>
-  <tabstop>next</tabstop>
-  <tabstop>previous</tabstop>
+  <tabstop>zoom_in</tabstop>
+  <tabstop>zoom_out</tabstop>
   <tabstop>print</tabstop>
   <tabstop>contents</tabstop>
   <tabstop>meta</tabstop>

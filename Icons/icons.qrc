@@ -7,5 +7,7 @@
 	<file>quit.png</file>
 	<file>settings.png</file>
 	<file>wise.png</file>
+	<file>zoom-in.png</file>
+	<file>zoom-out.png</file>
     </qresource>
 </RCC>
