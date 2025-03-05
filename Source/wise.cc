@@ -34,6 +34,7 @@
 #include <QFileDialog>
 #include <QSettings>
 #include <QShortcut>
+#include <QTextBrowser>
 
 QString wise::WISE_VERSION_STRING = "2025.04.01";
 
@@ -47,6 +48,7 @@ wise::wise(void):QMainWindow(nullptr)
   m_ui.tab->setMovable(true);
   m_ui.tab->setTabsClosable(true);
   m_ui.tool_bar->addAction(m_ui.action_Open_PDF_Files);
+  m_ui.tool_bar->addAction(m_ui.action_Release_Notes);
   m_ui.tool_bar->addAction(m_ui.action_Settings);
   m_ui.tool_bar->setIconSize(QSize(50, 50));
   new QShortcut(tr("Ctrl+F"), this, SLOT(slot_find(void)));
@@ -70,6 +72,10 @@ wise::wise(void):QMainWindow(nullptr)
 	  &QAction::triggered,
 	  this,
 	  &wise::slot_quit);
+  connect(m_ui.action_Release_Notes,
+	  &QAction::triggered,
+	  this,
+	  &wise::slot_release_notes);
   connect(m_ui.action_Settings,
 	  &QAction::triggered,
 	  this,
@@ -142,6 +148,7 @@ void wise::prepare_icons(void)
   m_ui.action_Open_PDF_Files->setIcon(QIcon(":/open-file.png"));
   m_ui.action_Print->setIcon(QIcon(":/print.png"));
   m_ui.action_Quit->setIcon(QIcon(":/quit.png"));
+  m_ui.action_Release_Notes->setIcon(QIcon(":/release-notes.png"));
   m_ui.action_Screen_Mode->setIcon
     (isFullScreen() ?
      QIcon(":/normal-screen.png") :
@@ -220,7 +227,7 @@ void wise::slot_close_tab(int index)
 {
   m_ui.action_Close_Page->setEnabled(m_ui.tab->count() > 1);
 
-  if(m_settings != m_ui.tab->widget(index))
+  if(qobject_cast<wise_pdf_view *> (m_ui.tab->widget(index)))
     m_ui.tab->widget(index) ?
       m_ui.tab->widget(index)->deleteLater() : (void) 0;
 
@@ -299,6 +306,34 @@ void wise::slot_print(void)
 void wise::slot_quit(void)
 {
   close();
+}
+
+void wise::slot_release_notes(void)
+{
+  auto frame = findChild<QFrame *> ("release-notes");
+
+  if(m_ui.tab->indexOf(frame) >= 0)
+    {
+      m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(frame));
+      return;
+    }
+
+  if(frame == nullptr)
+    {
+      frame = new QFrame(this);
+      frame->setLayout(new QHBoxLayout());
+      frame->setObjectName("release-notes");
+
+      auto text_browser = new QTextBrowser(this);
+
+      text_browser->setSource(QUrl::fromUserInput("qrc:/ReleaseNotes.html"));
+      frame->layout()->addWidget(text_browser);
+    }
+
+  m_ui.tab->addTab
+    (frame, QIcon(":/release-notes.png"), tr("Wise Release Notes"));
+  m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(frame));
+  m_ui.tab->setTabToolTip(m_ui.tab->indexOf(frame), tr("Wise Release Notes"));
 }
 
 void wise::slot_screen_mode(void)

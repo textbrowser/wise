@@ -63,6 +63,7 @@ class wise: public QMainWindow
   void slot_page_selected(int index);
   void slot_print(void);
   void slot_quit(void);
+  void slot_release_notes(void);
   void slot_screen_mode(void);
   void slot_select_page(void);
   void slot_settings(void);

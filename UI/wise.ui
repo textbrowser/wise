@@ -78,6 +78,8 @@
      <string>&amp;Help</string>
     </property>
     <addaction name="action_About"/>
+    <addaction name="separator"/>
+    <addaction name="action_Release_Notes"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
@@ -145,6 +147,11 @@
   <action name="action_About">
    <property name="text">
     <string>&amp;About...</string>
+   </property>
+  </action>
+  <action name="action_Release_Notes">
+   <property name="text">
+    <string>Release Notes</string>
    </property>
   </action>
  </widget>
