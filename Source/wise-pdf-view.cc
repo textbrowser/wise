@@ -49,6 +49,10 @@ wise_pdf_view::wise_pdf_view
 	  SIGNAL(activated(const QModelIndex &)),
 	  this,
 	  SLOT(slot_contents_selected(const QModelIndex &)));
+  connect(m_ui.page,
+	  SIGNAL(valueChanged(int)),
+	  this,
+	  SLOT(slot_select_page(int)));
   connect(m_ui.print,
 	  SIGNAL(clicked(void)),
 	  this,
@@ -113,6 +117,8 @@ void wise_pdf_view::prepare(void)
   m_ui.frame->layout()->addWidget(m_pdf_view);
   m_ui.meta->resizeColumnToContents(0);
   m_ui.meta->resizeColumnToContents(1);
+  m_ui.page->setMaximum(m_document->pageCount());
+  m_ui.page->setToolTip(QString("[%1, %2]").arg(1).arg(m_ui.page->maximum()));
 }
 
 void wise_pdf_view::print(void)
@@ -136,6 +142,9 @@ void wise_pdf_view::slot_contents_selected(const QModelIndex &index)
     (static_cast<int> (QPdfBookmarkModel::Role::Level)).toReal();
 
   m_pdf_view->pageNavigator()->jump(page, QPointF(), zoom_level);
+  m_ui.page->blockSignals(true);
+  m_ui.page->setValue(page);
+  m_ui.page->blockSignals(false);
 }
 
 void wise_pdf_view::slot_print(QPrinter *printer)
@@ -211,4 +220,9 @@ void wise_pdf_view::slot_print(void)
   QApplication::processEvents();
   dialog->exec();
   QApplication::processEvents();
+}
+
+void wise_pdf_view::slot_select_page(int value)
+{
+  m_pdf_view->pageNavigator()->jump(value - 1, QPointF());
 }

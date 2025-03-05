@@ -238,10 +238,24 @@
       </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="find_next"/>
+      <widget class="QToolButton" name="find_next">
+       <property name="iconSize">
+        <size>
+         <width>25</width>
+         <height>25</height>
+        </size>
+       </property>
+      </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="find_previous"/>
+      <widget class="QToolButton" name="find_previous">
+       <property name="iconSize">
+        <size>
+         <width>25</width>
+         <height>25</height>
+        </size>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QCheckBox" name="case_sensitive">
