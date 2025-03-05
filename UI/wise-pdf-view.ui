@@ -29,7 +29,7 @@
        </property>
        <property name="icon">
         <iconset resource="../Icons/icons.qrc">
-         <normaloff>:/first-page.png</normaloff>:/first-page.png</iconset>
+         <normaloff>:/first-page.svg</normaloff>:/first-page.svg</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -46,7 +46,7 @@
        </property>
        <property name="icon">
         <iconset resource="../Icons/icons.qrc">
-         <normaloff>:/previous-page.png</normaloff>:/previous-page.png</iconset>
+         <normaloff>:/previous-page.svg</normaloff>:/previous-page.svg</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -77,7 +77,7 @@
        </property>
        <property name="icon">
         <iconset resource="../Icons/icons.qrc">
-         <normaloff>:/next-page.png</normaloff>:/next-page.png</iconset>
+         <normaloff>:/next-page.svg</normaloff>:/next-page.svg</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -94,7 +94,7 @@
        </property>
        <property name="icon">
         <iconset resource="../Icons/icons.qrc">
-         <normaloff>:/last-page.png</normaloff>:/last-page.png</iconset>
+         <normaloff>:/last-page.svg</normaloff>:/last-page.svg</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -194,7 +194,7 @@
        </property>
        <property name="icon">
         <iconset resource="../Icons/icons.qrc">
-         <normaloff>:/print.png</normaloff>:/print.png</iconset>
+         <normaloff>:/print.svg</normaloff>:/print.svg</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -312,7 +312,7 @@
        </property>
        <property name="icon">
         <iconset resource="../Icons/icons.qrc">
-         <normaloff>:/next.png</normaloff>:/next.png</iconset>
+         <normaloff>:/next-page.svg</normaloff>:/next-page.svg</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -329,7 +329,7 @@
        </property>
        <property name="icon">
         <iconset resource="../Icons/icons.qrc">
-         <normaloff>:/previous.png</normaloff>:/previous.png</iconset>
+         <normaloff>:/previous-page.svg</normaloff>:/previous-page.svg</iconset>
        </property>
        <property name="iconSize">
         <size>

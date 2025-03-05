@@ -145,15 +145,15 @@ void wise::closeEvent(QCloseEvent *event)
 
 void wise::prepare_icons(void)
 {
-  m_ui.action_Open_PDF_Files->setIcon(QIcon(":/open-file.png"));
-  m_ui.action_Print->setIcon(QIcon(":/print.png"));
+  m_ui.action_Open_PDF_Files->setIcon(QIcon(":/open-file.svg"));
+  m_ui.action_Print->setIcon(QIcon(":/print.svg"));
   m_ui.action_Quit->setIcon(QIcon(":/quit.png"));
   m_ui.action_Release_Notes->setIcon(QIcon(":/release-notes.png"));
   m_ui.action_Screen_Mode->setIcon
     (isFullScreen() ?
      QIcon(":/normal-screen.png") :
      QIcon(":/full-screen.png"));
-  m_ui.action_Settings->setIcon(QIcon(":/settings.png"));
+  m_ui.action_Settings->setIcon(QIcon(":/settings.svg"));
 }
 
 void wise::prepare_pages_menu(void)

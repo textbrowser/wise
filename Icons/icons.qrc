@@ -1,18 +1,16 @@
 <RCC>
     <qresource prefix="/">
-	<file>first-page.png</file>
+	<file>first-page.svg</file>
 	<file>full-screen.png</file>
-	<file>last-page.png</file>
-	<file>next-page.png</file>
-	<file>next.png</file>
+	<file>last-page.svg</file>
+	<file>next-page.svg</file>
 	<file>normal-screen.png</file>
-	<file>open-file.png</file>
-	<file>previous-page.png</file>
-	<file>previous.png</file>
-	<file>print.png</file>
+	<file>open-file.svg</file>
+	<file>previous-page.svg</file>
+	<file>print.svg</file>
 	<file>quit.png</file>
 	<file>release-notes.png</file>
-	<file>settings.png</file>
+	<file>settings.svg</file>
 	<file>wise.png</file>
 	<file>zoom-in.png</file>
 	<file>zoom-out.png</file>
