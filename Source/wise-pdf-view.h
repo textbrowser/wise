@@ -82,6 +82,8 @@ class wise_pdf_view: public QWidget
   void slot_print(void);
   void slot_scrolled(int value);
   void slot_select_page(int value);
+  void slot_zoom_in(void);
+  void slot_zoom_out(void);
 };
 
 #endif

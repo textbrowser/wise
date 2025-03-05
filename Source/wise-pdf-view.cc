@@ -105,6 +105,14 @@ wise_pdf_view::wise_pdf_view
 	  SIGNAL(clicked(void)),
 	  this,
 	  SLOT(slot_print(void)));
+  connect(m_ui.zoom_in,
+	  &QToolButton::clicked,
+	  this,
+	  &wise_pdf_view::slot_zoom_in);
+  connect(m_ui.zoom_out,
+	  &QToolButton::clicked,
+	  this,
+	  &wise_pdf_view::slot_zoom_out);
   m_document->load(url.path());
   m_ui.contents->setModel(m_bookmark_model);
   m_ui.contents_meta_splitter->setStretchFactor(0, 1);
@@ -160,6 +168,7 @@ void wise_pdf_view::prepare(void)
     {
       tool_button->setArrowType(Qt::NoArrow);
       tool_button->setAutoRaise(true);
+      tool_button->setIconSize(QSize(25, 25));
 #ifdef Q_OS_MACOS
       tool_button->setStyleSheet
 	("QToolButton {border: none;}"
@@ -308,4 +317,14 @@ void wise_pdf_view::slot_select_page(int value)
 {
   m_pdf_view->pageNavigator()->jump(value - 1, QPointF());
   prepare_widget_states();
+}
+
+void wise_pdf_view::slot_zoom_in(void)
+{
+  m_pdf_view->setZoomFactor(1.25 * m_pdf_view->zoomFactor());
+}
+
+void wise_pdf_view::slot_zoom_out(void)
+{
+  m_pdf_view->setZoomFactor(m_pdf_view->zoomFactor() / 1.25);
 }

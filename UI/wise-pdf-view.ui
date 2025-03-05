@@ -114,34 +114,19 @@
      <item>
       <widget class="QComboBox" name="view_size">
        <property name="currentIndex">
-        <number>4</number>
+        <number>0</number>
        </property>
        <property name="sizeAdjustPolicy">
         <enum>QComboBox::AdjustToContents</enum>
        </property>
        <item>
         <property name="text">
-         <string>50%</string>
+         <string>View-Fit</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>75%</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>85%</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>95%</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>100%</string>
+         <string>Width-Fit</string>
         </property>
        </item>
       </widget>

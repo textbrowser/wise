@@ -51,6 +51,53 @@
     </layout>
    </item>
    <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Proxy</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLineEdit" name="proxy">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The correct format is Host:Port. Please press the Enter key to save the proxy text.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="placeholderText">
+         <string>Host:Port</string>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="proxy_type">
+        <property name="currentIndex">
+         <number>2</number>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QComboBox::AdjustToContents</enum>
+        </property>
+        <item>
+         <property name="text">
+          <string>HTTP</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>SOCKS</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>System</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QLabel" name="label_2">
@@ -166,6 +213,8 @@
  </widget>
  <tabstops>
   <tabstop>page_mode</tabstop>
+  <tabstop>proxy</tabstop>
+  <tabstop>proxy_type</tabstop>
   <tabstop>render_mode</tabstop>
   <tabstop>annotations</tabstop>
   <tabstop>halftone</tabstop>
