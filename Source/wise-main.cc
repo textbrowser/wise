@@ -82,7 +82,11 @@ int main(int argc, char *argv[])
   {
     wise wise;
 
+#ifndef Q_OS_ANDROID
     wise.show();
+#else
+    wise.showMaximized();
+#endif
     rc = static_cast<int> (application.exec());
   }
 

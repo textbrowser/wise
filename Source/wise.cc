@@ -95,6 +95,9 @@ wise::wise(void):QMainWindow(nullptr)
 	  this,
 	  SLOT(slot_page_moved(int, int)),
 	  Qt::QueuedConnection);
+#ifdef Q_OS_ANDROID
+  m_ui.action_Screen_Mode->setEnabled(false);
+#endif
   process_terminal();
   restore();
 }
