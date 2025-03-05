@@ -193,8 +193,8 @@ void wise::restore(void)
   restoreGeometry(QSettings().value("geometry").toByteArray());
   restoreState(QSettings().value("state").toByteArray());
   isFullScreen() ?
-    m_ui.action_Screen_Mode->setText(tr("Normal Screen")) :
-    m_ui.action_Screen_Mode->setText(tr("Full Screen"));
+    m_ui.action_Screen_Mode->setText(tr("&Normal Screen")) :
+    m_ui.action_Screen_Mode->setText(tr("&Full Screen"));
   prepare_icons();
 }
 
@@ -284,12 +284,12 @@ void wise::slot_screen_mode(void)
 {
   if(isFullScreen())
     {
-      m_ui.action_Screen_Mode->setText(tr("Full Screen"));
+      m_ui.action_Screen_Mode->setText(tr("&Full Screen"));
       showNormal();
     }
   else
     {
-      m_ui.action_Screen_Mode->setText(tr("Normal Screen"));
+      m_ui.action_Screen_Mode->setText(tr("&Normal Screen"));
       showFullScreen();
     }
 
