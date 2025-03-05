@@ -1,9 +1,13 @@
 <RCC>
     <qresource prefix="/">
+	<file>first-page.png</file>
 	<file>full-screen.png</file>
+	<file>last-page.png</file>
+	<file>next-page.png</file>
 	<file>next.png</file>
 	<file>normal-screen.png</file>
 	<file>open-file.png</file>
+	<file>previous-page.png</file>
 	<file>previous.png</file>
 	<file>print.png</file>
 	<file>quit.png</file>

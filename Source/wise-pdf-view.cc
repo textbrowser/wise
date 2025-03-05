@@ -26,6 +26,7 @@
 */
 
 #include "wise-pdf-view.h"
+#include "wise-settings.h"
 
 #include <QKeyEvent>
 #include <QPainter>
@@ -78,10 +79,18 @@ wise_pdf_view::wise_pdf_view
 	  SIGNAL(activated(const QModelIndex &)),
 	  this,
 	  SLOT(slot_contents_selected(const QModelIndex &)));
+  connect(m_ui.next_page,
+	  &QToolButton::clicked,
+	  m_ui.page,
+	  &QSpinBox::stepUp);
   connect(m_ui.page,
 	  SIGNAL(valueChanged(int)),
 	  this,
 	  SLOT(slot_select_page(int)));
+  connect(m_ui.previous_page,
+	  &QToolButton::clicked,
+	  m_ui.page,
+	  &QSpinBox::stepDown);
   connect(m_ui.print,
 	  SIGNAL(clicked(void)),
 	  this,
@@ -93,6 +102,7 @@ wise_pdf_view::wise_pdf_view
   m_ui.pdf_view_splitter->setStretchFactor(1, 1);
   m_url = url;
   prepare();
+  prepare_widget_states();
 }
 
 wise_pdf_view::~wise_pdf_view()
@@ -154,6 +164,14 @@ void wise_pdf_view::prepare(void)
   m_ui.meta->resizeColumnToContents(1);
   m_ui.page->setMaximum(m_document->pageCount());
   m_ui.page->setToolTip(QString("[%1, %2]").arg(1).arg(m_ui.page->maximum()));
+}
+
+void wise_pdf_view::prepare_widget_states(void)
+{
+  m_ui.first_page->setEnabled(1 < m_ui.page->value());
+  m_ui.last_page->setEnabled(m_ui.page->maximum() > m_ui.page->value());
+  m_ui.next_page->setEnabled(m_ui.page->maximum() > m_ui.page->value());
+  m_ui.previous_page->setEnabled(1 < m_ui.page->value());
 }
 
 void wise_pdf_view::print(void)
@@ -225,7 +243,8 @@ void wise_pdf_view::slot_print(QPrinter *printer)
 
       auto const size(2 * m_document->pagePointSize(i).toSize());
 
-      painter.drawImage(rect, m_document->render(i, size));
+      painter.drawImage
+	(rect, m_document->render(i, size, wise_settings::render_options()));
     }
 
   QApplication::restoreOverrideCursor();
@@ -261,9 +280,11 @@ void wise_pdf_view::slot_scrolled(int value)
 {
   Q_UNUSED(value);
   m_ui.page->setValue(m_pdf_view->pageNavigator()->currentPage() + 1);
+  prepare_widget_states();
 }
 
 void wise_pdf_view::slot_select_page(int value)
 {
   m_pdf_view->pageNavigator()->jump(value - 1, QPointF());
+  prepare_widget_states();
 }

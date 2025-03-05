@@ -51,7 +51,7 @@ wise_settings::~wise_settings()
 {
 }
 
-QPdfDocumentRenderOptions wise_settings::options(void)
+QPdfDocumentRenderOptions wise_settings::render_options(void)
 {
   QPdfDocumentRenderOptions options;
   QPdfDocumentRenderOptions::RenderFlags render_flags =

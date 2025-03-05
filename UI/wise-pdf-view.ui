@@ -23,6 +23,40 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
+      <widget class="QToolButton" name="first_page">
+       <property name="toolTip">
+        <string>First Page</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../Icons/icons.qrc">
+         <normaloff>:/first-page.png</normaloff>:/first-page.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="previous_page">
+       <property name="toolTip">
+        <string>Previous Page</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../Icons/icons.qrc">
+         <normaloff>:/previous-page.png</normaloff>:/previous-page.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Page</string>
@@ -33,6 +67,40 @@
       <widget class="QSpinBox" name="page">
        <property name="minimum">
         <number>1</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="next_page">
+       <property name="toolTip">
+        <string>Next Page</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../Icons/icons.qrc">
+         <normaloff>:/next-page.png</normaloff>:/next-page.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="last_page">
+       <property name="toolTip">
+        <string>Last Page</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../Icons/icons.qrc">
+         <normaloff>:/last-page.png</normaloff>:/last-page.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -254,6 +322,9 @@
      </item>
      <item>
       <widget class="QToolButton" name="find_next">
+       <property name="toolTip">
+        <string>Next Search Result</string>
+       </property>
        <property name="icon">
         <iconset resource="../Icons/icons.qrc">
          <normaloff>:/next.png</normaloff>:/next.png</iconset>
@@ -268,6 +339,9 @@
      </item>
      <item>
       <widget class="QToolButton" name="find_previous">
+       <property name="toolTip">
+        <string>Previous Search Results</string>
+       </property>
        <property name="icon">
         <iconset resource="../Icons/icons.qrc">
          <normaloff>:/previous.png</normaloff>:/previous.png</iconset>
@@ -295,7 +369,11 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>first_page</tabstop>
+  <tabstop>previous_page</tabstop>
   <tabstop>page</tabstop>
+  <tabstop>next_page</tabstop>
+  <tabstop>last_page</tabstop>
   <tabstop>view_size</tabstop>
   <tabstop>zoom_in</tabstop>
   <tabstop>zoom_out</tabstop>

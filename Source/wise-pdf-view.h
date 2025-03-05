@@ -70,6 +70,7 @@ class wise_pdf_view: public QWidget
   Ui_wise_pdf_view m_ui;
   wise_pdf_view_view *m_pdf_view;
   void prepare(void);
+  void prepare_widget_states(void);
 
  private slots:
   void slot_contents_selected(const QModelIndex &index);
