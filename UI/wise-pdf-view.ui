@@ -207,6 +207,28 @@
     </layout>
    </item>
    <item>
+    <widget class="QFrame" name="password_frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLineEdit" name="password">
+        <property name="placeholderText">
+         <string>Document Password</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="password_accept"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QSplitter" name="pdf_view_splitter">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -363,6 +385,8 @@
   <tabstop>zoom_in</tabstop>
   <tabstop>zoom_out</tabstop>
   <tabstop>print</tabstop>
+  <tabstop>password</tabstop>
+  <tabstop>password_accept</tabstop>
   <tabstop>contents</tabstop>
   <tabstop>meta</tabstop>
   <tabstop>find</tabstop>
