@@ -81,6 +81,14 @@ wise_pdf_view::wise_pdf_view
 	  SIGNAL(activated(const QModelIndex &)),
 	  this,
 	  SLOT(slot_contents_selected(const QModelIndex &)));
+  connect(m_ui.first_page,
+	  &QToolButton::clicked,
+	  this,
+	  &wise_pdf_view::slot_first_page);
+  connect(m_ui.last_page,
+	  &QToolButton::clicked,
+	  this,
+	  &wise_pdf_view::slot_last_page);
   connect(m_ui.next_page,
 	  &QToolButton::clicked,
 	  m_ui.page,
@@ -201,6 +209,16 @@ void wise_pdf_view::slot_contents_selected(const QModelIndex &index)
   m_ui.page->blockSignals(true);
   m_ui.page->setValue(page + 1);
   m_ui.page->blockSignals(false);
+}
+
+void wise_pdf_view::slot_first_page(void)
+{
+  m_ui.page->setValue(m_ui.page->minimum());
+}
+
+void wise_pdf_view::slot_last_page(void)
+{
+  m_ui.page->setValue(m_ui.page->maximum());
 }
 
 void wise_pdf_view::slot_print(QPrinter *printer)

@@ -76,6 +76,8 @@ class wise_pdf_view: public QWidget
 
  private slots:
   void slot_contents_selected(const QModelIndex &index);
+  void slot_first_page(void);
+  void slot_last_page(void);
   void slot_print(QPrinter *printer);
   void slot_print(void);
   void slot_scrolled(int value);
