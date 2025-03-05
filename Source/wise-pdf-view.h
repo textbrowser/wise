@@ -35,6 +35,7 @@
 
 class QPdfBookmarkModel;
 class QPdfDocument;
+class QPdfPageRenderer;
 class QPrinter;
 
 class wise_pdf_view_view: public QPdfView
@@ -66,6 +67,7 @@ class wise_pdf_view: public QWidget
  private:
   QPdfBookmarkModel *m_bookmark_model;
   QPdfDocument *m_document;
+  QPdfPageRenderer *m_page_renderer;
   QUrl m_url;
   Ui_wise_pdf_view m_ui;
   wise_pdf_view_view *m_pdf_view;

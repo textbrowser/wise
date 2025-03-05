@@ -83,6 +83,16 @@ QPdfDocumentRenderOptions wise_settings::render_options(void)
   return options;
 }
 
+QPdfPageRenderer::RenderMode wise_settings::render_mode(void)
+{
+  wise_settings settings(nullptr);
+
+  if(settings.m_ui.render_mode->currentText() == tr("Single Threads"))
+    return QPdfPageRenderer::RenderMode::SingleThreaded;
+  else
+    return QPdfPageRenderer::RenderMode::MultiThreaded;
+}
+
 QPdfView::PageMode wise_settings::page_mode(void)
 {
   wise_settings settings(nullptr);

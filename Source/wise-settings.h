@@ -31,6 +31,7 @@
 #include "ui_wise-settings.h"
 
 #include <QPdfDocumentRenderOptions>
+#include <QPdfPageRenderer>
 #include <QPdfView>
 
 class wise_settings: public QWidget
@@ -41,6 +42,7 @@ class wise_settings: public QWidget
   wise_settings(QWidget *parent);
   ~wise_settings();
   static QPdfDocumentRenderOptions render_options(void);
+  static QPdfPageRenderer::RenderMode render_mode(void);
   static QPdfView::PageMode page_mode(void);
 
  private:

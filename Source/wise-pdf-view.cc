@@ -33,6 +33,7 @@
 #include <QPdfBookmarkModel>
 #include <QPdfDocument>
 #include <QPdfPageNavigator>
+#include <QPdfPageRenderer>
 #include <QPrintPreviewDialog>
 #include <QPrinter>
 #include <QScrollBar>
@@ -65,10 +66,11 @@ wise_pdf_view::wise_pdf_view
 {
   m_bookmark_model = new QPdfBookmarkModel(this);
   m_bookmark_model->setDocument(m_document = new QPdfDocument(this));
-  m_document->load(url.path());
+  m_page_renderer = new QPdfPageRenderer(this);
+  m_page_renderer->setDocument(m_document);
+  m_page_renderer->setRenderMode(wise_settings::render_mode());
   m_pdf_view = new wise_pdf_view_view(this);
   m_pdf_view->setDocument(m_document);
-  m_pdf_view->setFocus();
   m_pdf_view->setPageMode(QPdfView::PageMode::MultiPage);
   m_ui.setupUi(this);
   connect(m_pdf_view->verticalScrollBar(),
@@ -95,6 +97,7 @@ wise_pdf_view::wise_pdf_view
 	  SIGNAL(clicked(void)),
 	  this,
 	  SLOT(slot_print(void)));
+  m_document->load(url.path());
   m_ui.contents->setModel(m_bookmark_model);
   m_ui.contents_meta_splitter->setStretchFactor(0, 1);
   m_ui.contents_meta_splitter->setStretchFactor(1, 0);
