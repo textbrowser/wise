@@ -53,6 +53,7 @@ class wise: public QMainWindow
   void restore(void);
 
  private slots:
+  void slot_about(void);
   void slot_about_to_show_pages_menu(void);
   void slot_close_tab(int index);
   void slot_close_tab(void);

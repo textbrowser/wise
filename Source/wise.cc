@@ -50,6 +50,10 @@ wise::wise(void):QMainWindow(nullptr)
   m_ui.tool_bar->addAction(m_ui.action_Settings);
   m_ui.tool_bar->setIconSize(QSize(50, 50));
   new QShortcut(tr("Ctrl+F"), this, SLOT(slot_find(void)));
+  connect(m_ui.action_about,
+	  &QAction::triggered,
+	  this,
+	  &wise::slot_about);
   connect(m_ui.action_Close_Page,
 	  SIGNAL(triggered(void)),
 	  this,
@@ -198,6 +202,10 @@ void wise::restore(void)
     m_ui.action_Screen_Mode->setText(tr("&Normal Screen")) :
     m_ui.action_Screen_Mode->setText(tr("&Full Screen"));
   prepare_icons();
+}
+
+void wise::slot_about(void)
+{
 }
 
 void wise::slot_about_to_show_pages_menu(void)

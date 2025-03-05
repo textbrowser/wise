@@ -37,6 +37,21 @@ class QPdfBookmarkModel;
 class QPdfDocument;
 class QPrinter;
 
+class wise_pdf_view_view: public QPdfView
+{
+  Q_OBJECT
+
+ public:
+  wise_pdf_view_view(QWidget *parent);
+
+  ~wise_pdf_view_view()
+  {
+  }
+
+ private:
+  void keyPressEvent(QKeyEvent *event);
+};
+
 class wise_pdf_view: public QWidget
 {
   Q_OBJECT
@@ -51,9 +66,9 @@ class wise_pdf_view: public QWidget
  private:
   QPdfBookmarkModel *m_bookmark_model;
   QPdfDocument *m_document;
-  QPdfView *m_pdf_view;
   QUrl m_url;
   Ui_wise_pdf_view m_ui;
+  wise_pdf_view_view *m_pdf_view;
   void prepare(void);
 
  private slots:

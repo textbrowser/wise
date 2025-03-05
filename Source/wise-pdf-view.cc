@@ -27,6 +27,7 @@
 
 #include "wise-pdf-view.h"
 
+#include <QKeyEvent>
 #include <QPainter>
 #include <QPdfBookmarkModel>
 #include <QPdfDocument>
@@ -36,14 +37,37 @@
 #include <QScrollBar>
 #include <QShortcut>
 
+wise_pdf_view_view::wise_pdf_view_view(QWidget *parent):QPdfView(parent)
+{
+}
+
+void wise_pdf_view_view::keyPressEvent(QKeyEvent *event)
+{
+  QPdfView::keyPressEvent(event);
+
+  if(event)
+    {
+      auto keyboard_modifiers(QGuiApplication::keyboardModifiers());
+
+      if(keyboard_modifiers == Qt::ControlModifier)
+	{
+	  if(event->key() == Qt::Key_End)
+	    verticalScrollBar()->setValue(verticalScrollBar()->maximum());
+	  else if(event->key() == Qt::Key_Home)
+	    verticalScrollBar()->setValue(0);
+	}
+    }
+}
+
 wise_pdf_view::wise_pdf_view
 (const QUrl &url, QWidget *parent):QWidget(parent)
 {
   m_bookmark_model = new QPdfBookmarkModel(this);
   m_bookmark_model->setDocument(m_document = new QPdfDocument(this));
   m_document->load(url.path());
-  m_pdf_view = new QPdfView(this);
+  m_pdf_view = new wise_pdf_view_view(this);
   m_pdf_view->setDocument(m_document);
+  m_pdf_view->setFocus();
   m_pdf_view->setPageMode(QPdfView::PageMode::MultiPage);
   m_ui.setupUi(this);
   connect(m_pdf_view->verticalScrollBar(),
