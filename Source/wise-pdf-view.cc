@@ -33,6 +33,7 @@
 #include <QPdfPageNavigator>
 #include <QPrintPreviewDialog>
 #include <QPrinter>
+#include <QScrollBar>
 #include <QShortcut>
 
 wise_pdf_view::wise_pdf_view
@@ -45,6 +46,10 @@ wise_pdf_view::wise_pdf_view
   m_pdf_view->setDocument(m_document);
   m_pdf_view->setPageMode(QPdfView::PageMode::MultiPage);
   m_ui.setupUi(this);
+  connect(m_pdf_view->verticalScrollBar(),
+	  SIGNAL(valueChanged(int)),
+	  this,
+	  SLOT(slot_scrolled(int)));
   connect(m_ui.contents,
 	  SIGNAL(activated(const QModelIndex &)),
 	  this,
@@ -68,6 +73,12 @@ wise_pdf_view::wise_pdf_view
 
 wise_pdf_view::~wise_pdf_view()
 {
+}
+
+void wise_pdf_view::find(void)
+{
+  m_ui.find->selectAll();
+  m_ui.find->setFocus();
 }
 
 void wise_pdf_view::prepare(void)
@@ -143,7 +154,7 @@ void wise_pdf_view::slot_contents_selected(const QModelIndex &index)
 
   m_pdf_view->pageNavigator()->jump(page, QPointF(), zoom_level);
   m_ui.page->blockSignals(true);
-  m_ui.page->setValue(page);
+  m_ui.page->setValue(page + 1);
   m_ui.page->blockSignals(false);
 }
 
@@ -220,6 +231,12 @@ void wise_pdf_view::slot_print(void)
   QApplication::processEvents();
   dialog->exec();
   QApplication::processEvents();
+}
+
+void wise_pdf_view::slot_scrolled(int value)
+{
+  Q_UNUSED(value);
+  m_ui.page->setValue(m_pdf_view->pageNavigator()->currentPage() + 1);
 }
 
 void wise_pdf_view::slot_select_page(int value)

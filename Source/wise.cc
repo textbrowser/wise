@@ -33,6 +33,7 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QSettings>
+#include <QShortcut>
 
 QString wise::WISE_VERSION_STRING = "2025.04.01";
 
@@ -48,6 +49,7 @@ wise::wise(void):QMainWindow(nullptr)
   m_ui.tool_bar->addAction(m_ui.action_Open_PDF_Files);
   m_ui.tool_bar->addAction(m_ui.action_Settings);
   m_ui.tool_bar->setIconSize(QSize(50, 50));
+  new QShortcut(tr("Ctrl+F"), this, SLOT(slot_find(void)));
   connect(m_ui.action_Close_Page,
 	  SIGNAL(triggered(void)),
 	  this,
@@ -217,6 +219,14 @@ void wise::slot_close_tab(int index)
 void wise::slot_close_tab(void)
 {
   slot_close_tab(m_ui.tab->currentIndex());
+}
+
+void wise::slot_find(void)
+{
+  auto page = qobject_cast<wise_pdf_view *> (m_ui.tab->currentWidget());
+
+  if(page)
+    page->find();
 }
 
 void wise::slot_open_pdf_files(void)

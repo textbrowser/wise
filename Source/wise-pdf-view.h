@@ -44,8 +44,9 @@ class wise_pdf_view: public QWidget
  public:
   wise_pdf_view(const QUrl &url, QWidget *parent);
   ~wise_pdf_view();
-  void set_page_mode(const QPdfView::PageMode page_mode);
+  void find(void);
   void print(void);
+  void set_page_mode(const QPdfView::PageMode page_mode);
 
  private:
   QPdfBookmarkModel *m_bookmark_model;
@@ -59,6 +60,7 @@ class wise_pdf_view: public QWidget
   void slot_contents_selected(const QModelIndex &index);
   void slot_print(QPrinter *printer);
   void slot_print(void);
+  void slot_scrolled(int value);
   void slot_select_page(int value);
 };
 
