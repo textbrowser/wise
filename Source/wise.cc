@@ -151,8 +151,8 @@ void wise::prepare_icons(void)
   m_ui.action_Release_Notes->setIcon(QIcon(":/release-notes.png"));
   m_ui.action_Screen_Mode->setIcon
     (isFullScreen() ?
-     QIcon(":/normal-screen.png") :
-     QIcon(":/full-screen.png"));
+     QIcon(":/normal-screen.svg") :
+     QIcon(":/full-screen.svg"));
   m_ui.action_Settings->setIcon(QIcon(":/settings.svg"));
 }
 

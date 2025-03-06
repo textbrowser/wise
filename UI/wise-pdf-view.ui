@@ -223,7 +223,21 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="password_accept"/>
+       <widget class="QToolButton" name="password_accept">
+        <property name="toolTip">
+         <string>Set Password</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../Icons/icons.qrc">
+          <normaloff>:/ok.svg</normaloff>:/ok.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

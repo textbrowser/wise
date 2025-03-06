@@ -1,10 +1,11 @@
 <RCC>
     <qresource prefix="/">
 	<file>first-page.svg</file>
-	<file>full-screen.png</file>
+	<file>full-screen.svg</file>
 	<file>last-page.svg</file>
 	<file>next-page.svg</file>
-	<file>normal-screen.png</file>
+	<file>normal-screen.svg</file>
+	<file>ok.svg</file>
 	<file>open-file.svg</file>
 	<file>previous-page.svg</file>
 	<file>print.svg</file>
