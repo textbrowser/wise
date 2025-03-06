@@ -229,6 +229,9 @@
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <widget class="QLineEdit" name="password">
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {border: 2px solid #fd6c9e;}</string>
+        </property>
         <property name="placeholderText">
          <string>Document Password</string>
         </property>

@@ -70,14 +70,16 @@ QSize wise_tab_bar::tabSizeHint(int index) const
 
   if(tab_position == QTabWidget::East || tab_position == QTabWidget::West)
     {
-      int preferred_tab_height = 175;
+      const int preferred_tab_height = 175;
 
       size.setHeight(preferred_tab_height);
     }
   else
     {
+      const int preferred_tab_width = 250;
+
       size.setHeight(10 + size.height());
-      size.setWidth(250);
+      size.setWidth(preferred_tab_width);
     }
 
   return size;
