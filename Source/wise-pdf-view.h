@@ -30,12 +30,12 @@
 
 #include "ui_wise-pdf-view.h"
 
+#include <QPdfDocument>
 #include <QPdfView>
 #include <QTimer>
 #include <QUrl>
 
 class QPdfBookmarkModel;
-class QPdfDocument;
 class QPdfPageRenderer;
 class QPrinter;
 
@@ -77,6 +77,7 @@ class wise_pdf_view: public QWidget
 
  private slots:
   void slot_contents_selected(const QModelIndex &index);
+  void slot_document_status_changed(QPdfDocument::Status status);
   void slot_first_page(void);
   void slot_last_page(void);
   void slot_load_document(void);

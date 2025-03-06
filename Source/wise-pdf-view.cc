@@ -31,7 +31,6 @@
 #include <QKeyEvent>
 #include <QPainter>
 #include <QPdfBookmarkModel>
-#include <QPdfDocument>
 #include <QPdfPageNavigator>
 #include <QPdfPageRenderer>
 #include <QPrintPreviewDialog>
@@ -74,9 +73,9 @@ wise_pdf_view::wise_pdf_view
   m_pdf_view->setPageMode(QPdfView::PageMode::MultiPage);
   m_ui.setupUi(this);
   connect(m_document,
-	  &QPdfDocument::passwordChanged,
+	  SIGNAL(statusChanged(QPdfDocument::Status)),
 	  this,
-	  &wise_pdf_view::slot_password_changed);
+	  SLOT(slot_document_status_changed(QPdfDocument::Status)));
   connect(m_pdf_view->verticalScrollBar(),
 	  SIGNAL(valueChanged(int)),
 	  this,
@@ -101,6 +100,14 @@ wise_pdf_view::wise_pdf_view
 	  SIGNAL(valueChanged(int)),
 	  this,
 	  SLOT(slot_select_page(int)));
+  connect(m_ui.password,
+	  &QLineEdit::returnPressed,
+	  this,
+	  &wise_pdf_view::slot_password_changed);
+  connect(m_ui.password_accept,
+	  &QToolButton::clicked,
+	  this,
+	  &wise_pdf_view::slot_password_changed);
   connect(m_ui.previous_page,
 	  &QToolButton::clicked,
 	  m_ui.page,
@@ -120,6 +127,8 @@ wise_pdf_view::wise_pdf_view
   m_ui.contents->setModel(m_bookmark_model);
   m_ui.contents_meta_splitter->setStretchFactor(0, 1);
   m_ui.contents_meta_splitter->setStretchFactor(1, 0);
+  m_ui.frame->layout()->addWidget(m_pdf_view);
+  m_ui.page->selectAll();
   m_ui.password_frame->setVisible(false);
   m_ui.pdf_view_splitter->setStretchFactor(0, 0);
   m_ui.pdf_view_splitter->setStretchFactor(1, 1);
@@ -141,6 +150,8 @@ void wise_pdf_view::find(void)
 
 void wise_pdf_view::prepare(void)
 {
+  m_ui.meta->setRowCount(0);
+
   QMap<QString, QPdfDocument::MetaDataField> meta;
 
   meta[tr("Author")] = QPdfDocument::MetaDataField::Author;
@@ -184,7 +195,6 @@ void wise_pdf_view::prepare(void)
 
   m_ui.contents->expandAll();
   m_ui.contents->setVisible(m_bookmark_model->rowCount() > 0);
-  m_ui.frame->layout()->addWidget(m_pdf_view);
   m_ui.meta->resizeColumnToContents(0);
   m_ui.meta->resizeColumnToContents(1);
   m_ui.page->setMaximum(m_document->pageCount());
@@ -222,28 +232,42 @@ void wise_pdf_view::slot_contents_selected(const QModelIndex &index)
   m_pdf_view->pageNavigator()->jump(page, QPointF(), zoom_level);
   m_ui.page->blockSignals(true);
   m_ui.page->setValue(page + 1);
+  m_ui.page->selectAll();
   m_ui.page->blockSignals(false);
+}
+
+void wise_pdf_view::slot_document_status_changed(QPdfDocument::Status status)
+{
+  if(status == QPdfDocument::Status::Ready)
+    {
+      prepare();
+      prepare_widget_states();
+    }
 }
 
 void wise_pdf_view::slot_first_page(void)
 {
   m_ui.page->setValue(m_ui.page->minimum());
+  m_ui.page->selectAll();
 }
 
 void wise_pdf_view::slot_last_page(void)
 {
   m_ui.page->setValue(m_ui.page->maximum());
+  m_ui.page->selectAll();
 }
 
 void wise_pdf_view::slot_load_document(void)
 {
-  if(m_document->load(m_url.path()) == QPdfDocument::Error::IncorrectPassword)
-    slot_password_changed();
+  m_ui.password_frame->setVisible
+    (m_document->load(m_url.path()) == QPdfDocument::Error::IncorrectPassword);
 }
 
 void wise_pdf_view::slot_password_changed(void)
 {
-  m_ui.password_frame->setVisible(true);
+  m_document->setPassword(m_ui.password->text());
+  m_ui.password_frame->setVisible
+    (m_document->load(m_url.path()) == QPdfDocument::Error::IncorrectPassword);
 }
 
 void wise_pdf_view::slot_print(QPrinter *printer)
@@ -326,6 +350,7 @@ void wise_pdf_view::slot_scrolled(int value)
 {
   Q_UNUSED(value);
   m_ui.page->setValue(m_pdf_view->pageNavigator()->currentPage() + 1);
+  m_ui.page->selectAll();
   prepare_widget_states();
 }
 
