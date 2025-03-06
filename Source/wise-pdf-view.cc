@@ -198,7 +198,9 @@ void wise_pdf_view::prepare(void)
   m_ui.meta->resizeColumnToContents(0);
   m_ui.meta->resizeColumnToContents(1);
   m_ui.page->setMaximum(m_document->pageCount());
-  m_ui.page->setToolTip(QString("[%1, %2]").arg(1).arg(m_ui.page->maximum()));
+  m_ui.page->setMinimum(1); // The document's page count may be zero.
+  m_ui.page->setToolTip
+    (QString("[%1, %2]").arg(m_ui.page->minimum()).arg(m_ui.page->maximum()));
 }
 
 void wise_pdf_view::prepare_widget_states(void)
