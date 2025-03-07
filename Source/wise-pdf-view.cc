@@ -38,6 +38,16 @@
 #include <QScrollBar>
 #include <QShortcut>
 
+qreal static maximum_zoom_factor = 10.0;
+qreal static minimum_zoom_factor = 0.25;
+qreal static zoom_constant = 2.0;
+
+static bool numeric_sort(const QString &string_1, const QString &string_2)
+{
+  return QString(string_1).remove('%').toInt() <
+    QString(string_2).remove('%').toInt();
+}
+
 wise_pdf_view_view::wise_pdf_view_view(QWidget *parent):QPdfView(parent)
 {
 }
@@ -71,6 +81,7 @@ wise_pdf_view::wise_pdf_view
   m_pdf_view = new wise_pdf_view_view(this);
   m_pdf_view->setDocument(m_document);
   m_pdf_view->setPageMode(QPdfView::PageMode::MultiPage);
+  m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitInView);
   m_ui.setupUi(this);
   connect(m_document,
 	  SIGNAL(statusChanged(QPdfDocument::Status)),
@@ -116,6 +127,10 @@ wise_pdf_view::wise_pdf_view
 	  SIGNAL(clicked(void)),
 	  this,
 	  SLOT(slot_print(void)));
+  connect(m_ui.view_size,
+	  SIGNAL(activated(int)),
+	  this,
+	  SLOT(slot_view_size_activated(int)));
   connect(m_ui.zoom_in,
 	  &QToolButton::clicked,
 	  this,
@@ -203,12 +218,43 @@ void wise_pdf_view::prepare(void)
     (QString("[%1, %2]").arg(m_ui.page->minimum()).arg(m_ui.page->maximum()));
 }
 
+void wise_pdf_view::prepare_view_size(void)
+{
+  auto const percent = static_cast<int> (100.0 * m_pdf_view->zoomFactor());
+  auto const index = m_ui.view_size->findText(QString("%1%").arg(percent));
+
+  if(index < 0)
+    {
+      QStringList list;
+
+      for(int i = 0; i < m_ui.view_size->count(); i++)
+	list << m_ui.view_size->itemText(i);
+
+      list << QString("%1%").arg(percent);
+      std::sort(list.begin(), list.end(), numeric_sort);
+      m_ui.view_size->blockSignals(true);
+      m_ui.view_size->clear();
+      m_ui.view_size->addItems(list);
+      m_ui.view_size->blockSignals(false);
+      m_ui.view_size->setCurrentIndex
+	(m_ui.view_size->findText(QString("%1%").arg(percent)));
+    }
+  else
+    m_ui.view_size->setCurrentIndex(index);
+}
+
 void wise_pdf_view::prepare_widget_states(void)
 {
   m_ui.first_page->setEnabled(1 < m_ui.page->value());
   m_ui.last_page->setEnabled(m_ui.page->maximum() > m_ui.page->value());
   m_ui.next_page->setEnabled(m_ui.page->maximum() > m_ui.page->value());
   m_ui.previous_page->setEnabled(1 < m_ui.page->value());
+  m_ui.zoom_in->setEnabled
+    (m_pdf_view->zoomFactor() < 1 ||
+     m_pdf_view->zoomFactor() < maximum_zoom_factor);
+  m_ui.zoom_out->setEnabled
+    (m_pdf_view->zoomFactor() > 1 ||
+     m_pdf_view->zoomFactor() > minimum_zoom_factor);
 }
 
 void wise_pdf_view::print(void)
@@ -362,12 +408,42 @@ void wise_pdf_view::slot_select_page(int value)
   prepare_widget_states();
 }
 
+void wise_pdf_view::slot_view_size_activated(int index)
+{
+  auto const zoom_factor = m_ui.view_size->itemText(index).remove('%').toInt();
+
+  if(zoom_factor != 0)
+    {
+      m_pdf_view->setZoomFactor(zoom_factor / 100.0);
+      m_pdf_view->setZoomMode(QPdfView::ZoomMode::Custom);
+    }
+  else
+    {
+      m_pdf_view->setZoomFactor(1.0);
+
+      if(m_ui.view_size->currentText() == tr("Width-Fit"))
+	m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitToWidth);
+      else
+	m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitInView);
+    }
+
+  prepare_widget_states();
+}
+
 void wise_pdf_view::slot_zoom_in(void)
 {
-  m_pdf_view->setZoomFactor(1.25 * m_pdf_view->zoomFactor());
+  m_pdf_view->setZoomFactor(m_pdf_view->zoomFactor() * zoom_constant);
+  m_pdf_view->setZoomMode(QPdfView::ZoomMode::Custom);
+  m_ui.zoom_out->setEnabled(true);
+  prepare_view_size();
+  prepare_widget_states();
 }
 
 void wise_pdf_view::slot_zoom_out(void)
 {
-  m_pdf_view->setZoomFactor(m_pdf_view->zoomFactor() / 1.25);
+  m_pdf_view->setZoomFactor(m_pdf_view->zoomFactor() / zoom_constant);
+  m_pdf_view->setZoomMode(QPdfView::ZoomMode::Custom);
+  m_ui.zoom_in->setEnabled(true);
+  prepare_view_size();
+  prepare_widget_states();
 }

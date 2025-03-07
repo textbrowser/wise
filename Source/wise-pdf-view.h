@@ -73,6 +73,7 @@ class wise_pdf_view: public QWidget
   Ui_wise_pdf_view m_ui;
   wise_pdf_view_view *m_pdf_view;
   void prepare(void);
+  void prepare_view_size(void);
   void prepare_widget_states(void);
 
  private slots:
@@ -86,6 +87,7 @@ class wise_pdf_view: public QWidget
   void slot_print(void);
   void slot_scrolled(int value);
   void slot_select_page(int value);
+  void slot_view_size_activated(int index);
   void slot_zoom_in(void);
   void slot_zoom_out(void);
 };
