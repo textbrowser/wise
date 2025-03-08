@@ -143,7 +143,6 @@ wise_pdf_view::wise_pdf_view
   m_ui.contents_meta_splitter->setStretchFactor(0, 1);
   m_ui.contents_meta_splitter->setStretchFactor(1, 0);
   m_ui.frame->layout()->addWidget(m_pdf_view);
-  m_ui.page->selectAll();
   m_ui.password_frame->setVisible(false);
   m_ui.pdf_view_splitter->setStretchFactor(0, 0);
   m_ui.pdf_view_splitter->setStretchFactor(1, 1);
@@ -280,7 +279,6 @@ void wise_pdf_view::slot_contents_selected(const QModelIndex &index)
   m_pdf_view->pageNavigator()->jump(page, QPointF(), zoom_level);
   m_ui.page->blockSignals(true);
   m_ui.page->setValue(page + 1);
-  m_ui.page->selectAll();
   m_ui.page->blockSignals(false);
 }
 
@@ -296,13 +294,11 @@ void wise_pdf_view::slot_document_status_changed(QPdfDocument::Status status)
 void wise_pdf_view::slot_first_page(void)
 {
   m_ui.page->setValue(m_ui.page->minimum());
-  m_ui.page->selectAll();
 }
 
 void wise_pdf_view::slot_last_page(void)
 {
   m_ui.page->setValue(m_ui.page->maximum());
-  m_ui.page->selectAll();
 }
 
 void wise_pdf_view::slot_load_document(void)
@@ -398,7 +394,6 @@ void wise_pdf_view::slot_scrolled(int value)
 {
   Q_UNUSED(value);
   m_ui.page->setValue(m_pdf_view->pageNavigator()->currentPage() + 1);
-  m_ui.page->selectAll();
   prepare_widget_states();
 }
 
