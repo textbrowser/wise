@@ -145,6 +145,10 @@
    </property>
   </action>
   <action name="action_About">
+   <property name="icon">
+    <iconset resource="../Icons/icons.qrc">
+     <normaloff>:/wise.png</normaloff>:/wise.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;About...</string>
    </property>
@@ -166,6 +170,8 @@
  <tabstops>
   <tabstop>tab</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../Icons/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

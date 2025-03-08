@@ -32,6 +32,7 @@
 #include <QActionGroup>
 #include <QDir>
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QSettings>
 #include <QShortcut>
 #include <QTextBrowser>
@@ -216,6 +217,44 @@ void wise::restore(void)
 
 void wise::slot_about(void)
 {
+  auto message_box = findChild<QMessageBox *> ("about");
+
+  if(!message_box)
+    {
+      message_box = new QMessageBox(this);
+      message_box->setFont(QApplication::font());
+      message_box->setIconPixmap
+	(QPixmap(":/wise.png").scaled(QSize(128, 128),
+				      Qt::KeepAspectRatio,
+				      Qt::SmoothTransformation));
+      message_box->setModal(false);
+      message_box->setObjectName("about");
+      message_box->setStandardButtons(QMessageBox::Close);
+      message_box->setText
+	(tr("<html><b>Wise</b> Version %1<br>"
+	    "Architecture %2.<br>"
+	    "Compiled on %3, %4.<br>"
+	    "Made with love by textbrower.<br>"
+	    "<b>Wonderfully-interactive and simple education program "
+	    "for reading portable documents.</b><br>"
+	    "Please visit "
+	    "<a href=\"https://textbrowser.github.io/wise\">"
+	    "https://textbrowser.github.io/wise</a> "
+	    "for project information.</html>").
+	 arg(WISE_VERSION_STRING).
+	 arg(QSysInfo::currentCpuArchitecture()).
+	 arg(__DATE__).
+	 arg(__TIME__));
+      message_box->setTextFormat(Qt::RichText);
+      message_box->setWindowIcon(windowIcon());
+      message_box->setWindowModality(Qt::NonModal);
+      message_box->setWindowTitle(tr("Wise: About"));
+      message_box->button(QMessageBox::Close)->setShortcut(tr("Ctrl+W"));
+    }
+
+  message_box->showNormal();
+  message_box->activateWindow();
+  message_box->raise();
 }
 
 void wise::slot_about_to_show_pages_menu(void)
@@ -330,6 +369,7 @@ void wise::slot_release_notes(void)
       frame->layout()->addWidget(text_browser);
     }
 
+  m_ui.action_Close_Page->setEnabled(true);
   m_ui.tab->addTab
     (frame, QIcon(":/release-notes.png"), tr("Wise Release Notes"));
   m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(frame));
