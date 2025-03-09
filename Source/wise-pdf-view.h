@@ -90,6 +90,7 @@ class wise_pdf_view: public QWidget
   void slot_view_size_activated(int index);
   void slot_zoom_in(void);
   void slot_zoom_out(void);
+  void slot_zoom_reset(void);
 };
 
 #endif

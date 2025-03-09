@@ -147,6 +147,7 @@ wise_pdf_view::wise_pdf_view
   m_ui.pdf_view_splitter->setStretchFactor(0, 0);
   m_ui.pdf_view_splitter->setStretchFactor(1, 1);
   m_url = url;
+  new QShortcut(tr("Ctrl+0"), this, SLOT(slot_zoom_reset(void)));
   prepare();
   prepare_widget_states();
   QTimer::singleShot(10, this, SLOT(slot_load_document(void)));
@@ -439,6 +440,16 @@ void wise_pdf_view::slot_zoom_out(void)
   m_pdf_view->setZoomFactor(m_pdf_view->zoomFactor() / zoom_constant);
   m_pdf_view->setZoomMode(QPdfView::ZoomMode::Custom);
   m_ui.zoom_in->setEnabled(true);
+  prepare_view_size();
+  prepare_widget_states();
+}
+
+void wise_pdf_view::slot_zoom_reset(void)
+{
+  m_pdf_view->setZoomFactor(1.0);
+  m_pdf_view->setZoomMode(QPdfView::ZoomMode::Custom);
+  m_ui.zoom_in->setEnabled(true);
+  m_ui.zoom_out->setEnabled(true);
   prepare_view_size();
   prepare_widget_states();
 }
