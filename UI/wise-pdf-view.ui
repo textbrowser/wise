@@ -14,12 +14,6 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="topMargin">
-    <number>1</number>
-   </property>
-   <property name="bottomMargin">
-    <number>1</number>
-   </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -262,7 +256,7 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QSplitter" name="contents_meta_splitter">
+     <widget class="QSplitter" name="contents_search_meta_splitter">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
@@ -294,6 +288,26 @@
        <attribute name="headerDefaultSectionSize">
         <number>55</number>
        </attribute>
+      </widget>
+      <widget class="QListView" name="search_view">
+       <property name="tabKeyNavigation">
+        <bool>true</bool>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+       <property name="verticalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
+       <property name="horizontalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
+       <property name="uniformItemSizes">
+        <bool>true</bool>
+       </property>
       </widget>
       <widget class="QTableWidget" name="meta">
        <property name="alternatingRowColors">
@@ -417,6 +431,7 @@
   <tabstop>password</tabstop>
   <tabstop>password_accept</tabstop>
   <tabstop>contents</tabstop>
+  <tabstop>search_view</tabstop>
   <tabstop>meta</tabstop>
   <tabstop>search</tabstop>
   <tabstop>find_next</tabstop>

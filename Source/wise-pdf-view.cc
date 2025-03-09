@@ -50,6 +50,28 @@ static bool numeric_sort(const QString &string_1, const QString &string_2)
     QString(string_2).remove('%').toInt();
 }
 
+wise_pdf_view_search_view_item_delegate::
+wise_pdf_view_search_view_item_delegate(QWidget *parent):
+  QStyledItemDelegate(parent)
+{
+}
+
+void wise_pdf_view_search_view_item_delegate::paint
+(QPainter *painter,
+ const QStyleOptionViewItem &option,
+ const QModelIndex &index) const
+{
+  auto const text(index.data().toString());
+  auto const bold_begin = 3 + text.indexOf("<b>", 0, Qt::CaseInsensitive);
+  auto const bold_end = text.indexOf("</b>", bold_begin, Qt::CaseInsensitive);
+
+  if(bold_begin >= 3 and bold_begin < bold_end)
+    {
+    }
+  else
+    QStyledItemDelegate::paint(painter, option, index);
+}
+
 wise_pdf_view_view::wise_pdf_view_view(QWidget *parent):QPdfView(parent)
 {
 }
@@ -86,9 +108,6 @@ wise_pdf_view::wise_pdf_view
   m_pdf_view->setSearchModel(m_search_model = new QPdfSearchModel(this));
   m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitInView);
   m_search_model->setDocument(m_document);
-  m_search_view = new QListView(this);
-  m_search_view->setModel(m_search_model);
-  m_search_view->setVisible(false);
   m_ui.setupUi(this);
   connect(m_document,
 	  SIGNAL(statusChanged(QPdfDocument::Status)),
@@ -98,6 +117,10 @@ wise_pdf_view::wise_pdf_view
 	  SIGNAL(valueChanged(int)),
 	  this,
 	  SLOT(slot_scrolled(int)));
+  connect(m_search_model,
+	  &QPdfSearchModel::countChanged,
+	  this,
+	  &wise_pdf_view::slot_search_count_changed);
   connect(m_ui.contents,
 	  SIGNAL(activated(const QModelIndex &)),
 	  this,
@@ -151,12 +174,17 @@ wise_pdf_view::wise_pdf_view
 	  this,
 	  &wise_pdf_view::slot_zoom_out);
   m_ui.contents->setModel(m_bookmark_model);
-  m_ui.contents_meta_splitter->setStretchFactor(0, 1);
-  m_ui.contents_meta_splitter->setStretchFactor(1, 0);
+  m_ui.contents_search_meta_splitter->setStretchFactor(0, 1);
+  m_ui.contents_search_meta_splitter->setStretchFactor(1, 0);
+  m_ui.contents_search_meta_splitter->setStretchFactor(2, 0);
   m_ui.frame->layout()->addWidget(m_pdf_view);
   m_ui.password_frame->setVisible(false);
   m_ui.pdf_view_splitter->setStretchFactor(0, 0);
   m_ui.pdf_view_splitter->setStretchFactor(1, 1);
+  m_ui.search_view->setItemDelegate
+    (new wise_pdf_view_search_view_item_delegate(this));
+  m_ui.search_view->setModel(m_search_model);
+  m_ui.search_view->setVisible(false);
   m_url = url;
   new QShortcut(tr("Ctrl+0"), this, SLOT(slot_zoom_reset(void)));
   prepare();
@@ -412,6 +440,11 @@ void wise_pdf_view::slot_scrolled(int value)
 void wise_pdf_view::slot_search(void)
 {
   m_search_model->setSearchString(m_ui.search->text());
+}
+
+void wise_pdf_view::slot_search_count_changed(void)
+{
+  m_ui.search_view->setVisible(m_search_model->count() > 0);
 }
 
 void wise_pdf_view::slot_select_page(int value)

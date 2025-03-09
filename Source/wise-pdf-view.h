@@ -30,9 +30,9 @@
 
 #include "ui_wise-pdf-view.h"
 
-#include <QListView>
 #include <QPdfDocument>
 #include <QPdfView>
+#include <QStyledItemDelegate>
 #include <QTimer>
 #include <QUrl>
 
@@ -40,6 +40,19 @@ class QPdfBookmarkModel;
 class QPdfPageRenderer;
 class QPdfSearchModel;
 class QPrinter;
+
+class wise_pdf_view_search_view_item_delegate: public QStyledItemDelegate
+{
+  Q_OBJECT
+
+ public:
+  wise_pdf_view_search_view_item_delegate(QWidget *parent);
+
+ private:
+  void paint(QPainter *painter,
+	     const QStyleOptionViewItem &option,
+	     const QModelIndex &index) const;
+};
 
 class wise_pdf_view_view: public QPdfView
 {
@@ -68,7 +81,6 @@ class wise_pdf_view: public QWidget
   void set_page_mode(const QPdfView::PageMode page_mode);
 
  private:
-  QListView *m_search_view;
   QPdfBookmarkModel *m_bookmark_model;
   QPdfDocument *m_document;
   QPdfPageRenderer *m_page_renderer;
@@ -91,6 +103,7 @@ class wise_pdf_view: public QWidget
   void slot_print(void);
   void slot_scrolled(int value);
   void slot_search(void);
+  void slot_search_count_changed(void);
   void slot_select_page(int value);
   void slot_view_size_activated(int index);
   void slot_zoom_in(void);
