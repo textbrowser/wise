@@ -61,12 +61,69 @@ void wise_pdf_view_search_view_item_delegate::paint
  const QStyleOptionViewItem &option,
  const QModelIndex &index) const
 {
+  if(!painter)
+    return;
+
   auto const text(index.data().toString());
   auto const bold_begin = 3 + text.indexOf("<b>", 0, Qt::CaseInsensitive);
   auto const bold_end = text.indexOf("</b>", bold_begin, Qt::CaseInsensitive);
 
   if(bold_begin >= 3 and bold_begin < bold_end)
     {
+      auto const bold_text(text.mid(bold_begin, -bold_begin + bold_end));
+      auto const label
+	(tr("Page %1: ").
+	 arg(index.data(int(QPdfSearchModel::Role::Page)).toInt()));
+
+      if(QStyle::State_Selected & option.state)
+	painter->fillRect(option.rect, option.palette.highlight());
+
+      auto const default_font(painter->font());
+      auto const font_metrics(painter->fontMetrics());
+      auto const label_width = font_metrics.horizontalAdvance(label);
+      auto const y_offset =
+	(-font_metrics.height() + option.rect.height()) / 2 +
+	font_metrics.ascent();
+
+      painter->drawText(0, option.rect.y() + y_offset, label);
+
+      auto bold_font(default_font);
+
+      bold_font.setBold(true);
+
+      auto const bold_width = QFontMetrics(bold_font).
+	horizontalAdvance(bold_text);
+      auto const prefix_suffix_width =
+	(-bold_width - label_width + option.rect.width()) / 2;
+
+      painter->setFont(bold_font);
+      painter->drawText
+	(label_width + prefix_suffix_width,
+	 option.rect.y() + y_offset,
+	 bold_text);
+      painter->setFont(default_font);
+
+      auto const prefix
+	(font_metrics.elidedText(text.left(-3 + bold_begin),
+				 Qt::ElideLeft,
+				 prefix_suffix_width));
+
+      painter->drawText
+	(-font_metrics.horizontalAdvance(prefix) +
+	 label_width +
+	 prefix_suffix_width,
+	 option.rect.y() + y_offset,
+	 prefix);
+
+      auto const suffix
+	(font_metrics.elidedText(text.mid(4 + bold_end),
+				 Qt::ElideRight,
+				 prefix_suffix_width));
+
+      painter->drawText
+	(bold_width + label_width + prefix_suffix_width,
+	 option.rect.y() + y_offset,
+	 suffix);
     }
   else
     QStyledItemDelegate::paint(painter, option, index);
