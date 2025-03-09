@@ -342,12 +342,12 @@
         <string>&amp;Search</string>
        </property>
        <property name="buddy">
-        <cstring>find</cstring>
+        <cstring>search</cstring>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="find">
+      <widget class="QLineEdit" name="search">
        <property name="placeholderText">
         <string>Search</string>
        </property>
@@ -418,7 +418,7 @@
   <tabstop>password_accept</tabstop>
   <tabstop>contents</tabstop>
   <tabstop>meta</tabstop>
-  <tabstop>find</tabstop>
+  <tabstop>search</tabstop>
   <tabstop>find_next</tabstop>
   <tabstop>find_previous</tabstop>
   <tabstop>case_sensitive</tabstop>

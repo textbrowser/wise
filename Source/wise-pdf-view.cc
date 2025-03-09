@@ -33,6 +33,7 @@
 #include <QPdfBookmarkModel>
 #include <QPdfPageNavigator>
 #include <QPdfPageRenderer>
+#include <QPdfSearchModel>
 #include <QPrintPreviewDialog>
 #include <QPrinter>
 #include <QScrollBar>
@@ -81,7 +82,9 @@ wise_pdf_view::wise_pdf_view
   m_pdf_view = new wise_pdf_view_view(this);
   m_pdf_view->setDocument(m_document);
   m_pdf_view->setPageMode(QPdfView::PageMode::MultiPage);
+  m_pdf_view->setSearchModel(m_search_model = new QPdfSearchModel(this));
   m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitInView);
+  m_search_model->setDocument(m_document);
   m_ui.setupUi(this);
   connect(m_document,
 	  SIGNAL(statusChanged(QPdfDocument::Status)),
@@ -127,6 +130,10 @@ wise_pdf_view::wise_pdf_view
 	  SIGNAL(clicked(void)),
 	  this,
 	  SLOT(slot_print(void)));
+  connect(m_ui.search,
+	  &QLineEdit::returnPressed,
+	  this,
+	  &wise_pdf_view::slot_search);
   connect(m_ui.view_size,
 	  SIGNAL(activated(int)),
 	  this,
@@ -159,8 +166,8 @@ wise_pdf_view::~wise_pdf_view()
 
 void wise_pdf_view::find(void)
 {
-  m_ui.find->selectAll();
-  m_ui.find->setFocus();
+  m_ui.search->selectAll();
+  m_ui.search->setFocus();
 }
 
 void wise_pdf_view::prepare(void)
@@ -396,6 +403,11 @@ void wise_pdf_view::slot_scrolled(int value)
   Q_UNUSED(value);
   m_ui.page->setValue(m_pdf_view->pageNavigator()->currentPage() + 1);
   prepare_widget_states();
+}
+
+void wise_pdf_view::slot_search(void)
+{
+  m_search_model->setSearchString(m_ui.search->text());
 }
 
 void wise_pdf_view::slot_select_page(int value)

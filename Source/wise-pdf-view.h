@@ -37,6 +37,7 @@
 
 class QPdfBookmarkModel;
 class QPdfPageRenderer;
+class QPdfSearchModel;
 class QPrinter;
 
 class wise_pdf_view_view: public QPdfView
@@ -69,6 +70,7 @@ class wise_pdf_view: public QWidget
   QPdfBookmarkModel *m_bookmark_model;
   QPdfDocument *m_document;
   QPdfPageRenderer *m_page_renderer;
+  QPdfSearchModel *m_search_model;
   QUrl m_url;
   Ui_wise_pdf_view m_ui;
   wise_pdf_view_view *m_pdf_view;
@@ -86,6 +88,7 @@ class wise_pdf_view: public QWidget
   void slot_print(QPrinter *printer);
   void slot_print(void);
   void slot_scrolled(int value);
+  void slot_search(void);
   void slot_select_page(int value);
   void slot_view_size_activated(int index);
   void slot_zoom_in(void);
