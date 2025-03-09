@@ -29,6 +29,7 @@
 #include "wise-settings.h"
 
 #include <QKeyEvent>
+#include <QListView>
 #include <QPainter>
 #include <QPdfBookmarkModel>
 #include <QPdfPageNavigator>
@@ -85,6 +86,9 @@ wise_pdf_view::wise_pdf_view
   m_pdf_view->setSearchModel(m_search_model = new QPdfSearchModel(this));
   m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitInView);
   m_search_model->setDocument(m_document);
+  m_search_view = new QListView(this);
+  m_search_view->setModel(m_search_model);
+  m_search_view->setVisible(false);
   m_ui.setupUi(this);
   connect(m_document,
 	  SIGNAL(statusChanged(QPdfDocument::Status)),

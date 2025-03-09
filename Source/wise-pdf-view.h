@@ -30,6 +30,7 @@
 
 #include "ui_wise-pdf-view.h"
 
+#include <QListView>
 #include <QPdfDocument>
 #include <QPdfView>
 #include <QTimer>
@@ -67,6 +68,7 @@ class wise_pdf_view: public QWidget
   void set_page_mode(const QPdfView::PageMode page_mode);
 
  private:
+  QListView *m_search_view;
   QPdfBookmarkModel *m_bookmark_model;
   QPdfDocument *m_document;
   QPdfPageRenderer *m_page_renderer;
