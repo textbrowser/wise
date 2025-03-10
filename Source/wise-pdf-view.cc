@@ -141,7 +141,7 @@ void wise_pdf_view_view::keyPressEvent(QKeyEvent *event)
 
   if(event)
     {
-      auto keyboard_modifiers(QGuiApplication::keyboardModifiers());
+      auto const keyboard_modifiers(QGuiApplication::keyboardModifiers());
 
       if(keyboard_modifiers == Qt::ControlModifier)
 	{
@@ -542,7 +542,7 @@ void wise_pdf_view::slot_search_count_changed(void)
 
 void wise_pdf_view::slot_search_paginate(void)
 {
-  auto index = m_ui.search_view->currentIndex();
+  auto index(m_ui.search_view->currentIndex());
 
   if(m_ui.find_next == sender())
     index = index.siblingAtRow(1 + index.row());
