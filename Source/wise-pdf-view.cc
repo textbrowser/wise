@@ -73,7 +73,8 @@ void wise_pdf_view_search_view_item_delegate::paint
       auto const bold_text(text.mid(bold_begin, -bold_begin + bold_end));
       auto const label
 	(tr("Page %1: ").
-	 arg(index.data(int(QPdfSearchModel::Role::Page)).toInt()));
+	 arg(index.data(static_cast<int> (QPdfSearchModel::Role::Page)).
+	     toInt()));
 
       if(QStyle::State_Selected & option.state)
 	painter->fillRect(option.rect, option.palette.highlight());
@@ -85,7 +86,7 @@ void wise_pdf_view_search_view_item_delegate::paint
 	(-font_metrics.height() + option.rect.height()) / 2 +
 	font_metrics.ascent();
 
-      painter->drawText(0, option.rect.y() + y_offset, label);
+      painter->drawText(option.rect.x(), option.rect.y() + y_offset, label);
 
       auto bold_font(default_font);
 
@@ -98,7 +99,7 @@ void wise_pdf_view_search_view_item_delegate::paint
 
       painter->setFont(bold_font);
       painter->drawText
-	(label_width + prefix_suffix_width,
+	(label_width + option.rect.x() + prefix_suffix_width,
 	 option.rect.y() + y_offset,
 	 bold_text);
       painter->setFont(default_font);
@@ -111,6 +112,7 @@ void wise_pdf_view_search_view_item_delegate::paint
       painter->drawText
 	(-font_metrics.horizontalAdvance(prefix) +
 	 label_width +
+	 option.rect.x() +
 	 prefix_suffix_width,
 	 option.rect.y() + y_offset,
 	 prefix);
@@ -121,7 +123,7 @@ void wise_pdf_view_search_view_item_delegate::paint
 				 prefix_suffix_width));
 
       painter->drawText
-	(bold_width + label_width + prefix_suffix_width,
+	(bold_width + label_width + option.rect.x() + prefix_suffix_width,
 	 option.rect.y() + y_offset,
 	 suffix);
     }
