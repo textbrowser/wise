@@ -168,6 +168,7 @@ wise_pdf_view::wise_pdf_view
   m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitInView);
   m_search_model->setDocument(m_document);
   m_ui.setupUi(this);
+  m_ui.case_sensitive->setVisible(false);
   m_ui.search_view->setModel(m_search_model);
   connect(m_document,
 	  SIGNAL(statusChanged(QPdfDocument::Status)),
@@ -189,6 +190,14 @@ wise_pdf_view::wise_pdf_view
 	  SIGNAL(activated(const QModelIndex &)),
 	  this,
 	  SLOT(slot_contents_selected(const QModelIndex &)));
+  connect(m_ui.find_next,
+	  &QToolButton::clicked,
+	  this,
+	  &wise_pdf_view::slot_search_paginate);
+  connect(m_ui.find_previous,
+	  &QToolButton::clicked,
+	  this,
+	  &wise_pdf_view::slot_search_paginate);
   connect(m_ui.first_page,
 	  &QToolButton::clicked,
 	  this,
@@ -391,7 +400,7 @@ void wise_pdf_view::slot_contents_selected(const QModelIndex &index)
 
   m_pdf_view->pageNavigator()->jump(page, QPointF(), zoom_level);
   m_ui.page->blockSignals(true);
-  m_ui.page->setValue(page + 1);
+  m_ui.page->setValue(1 + page);
   m_ui.page->blockSignals(false);
 }
 
@@ -457,7 +466,7 @@ void wise_pdf_view::slot_print(QPrinter *printer)
     {
       for(int i = 1; i <= m_document->pageCount(); i++)
 	if(page_ranges.contains(i))
-	  pages.append(i - 1);
+	  pages.append(-1 + i);
     }
   else
     for(int i = 0; i < m_document->pageCount(); i++)
@@ -506,7 +515,7 @@ void wise_pdf_view::slot_print(void)
 void wise_pdf_view::slot_scrolled(int value)
 {
   Q_UNUSED(value);
-  m_ui.page->setValue(m_pdf_view->pageNavigator()->currentPage() + 1);
+  m_ui.page->setValue(1 + m_pdf_view->pageNavigator()->currentPage());
   prepare_widget_states();
 }
 
@@ -514,19 +523,25 @@ void wise_pdf_view::slot_search(void)
 {
   m_search_model->setSearchString
     (m_ui.case_sensitive->isChecked() ?
-     m_ui.search->text().toLower() : m_ui.search->text());
+     m_ui.search->text() : m_ui.search->text().toLower());
 }
 
 void wise_pdf_view::slot_search_count_changed(void)
 {
   if(m_search_model->count() == 0)
     {
-      m_pdf_view->hide();
-      m_pdf_view->show();
+      m_pdf_view->setVisible(false);
+      m_pdf_view->setVisible(true);
+      m_ui.find_next->setEnabled(false);
+      m_ui.find_previous->setEnabled(false);
       m_ui.search_view->setVisible(false);
     }
   else
     m_ui.search_view->setVisible(true);
+}
+
+void wise_pdf_view::slot_search_paginate(void)
+{
 }
 
 void wise_pdf_view::slot_search_view_selected
@@ -541,14 +556,17 @@ void wise_pdf_view::slot_search_view_selected
     (static_cast<int> (QPdfSearchModel::Role::Location)).toPointF();
   auto const page = current.data
     (static_cast<int> (QPdfSearchModel::Role::Page)).toInt();
+  auto const row = current.row();
 
   m_pdf_view->pageNavigator()->jump(page, location);
-  m_pdf_view->setCurrentSearchResultIndex(current.row());
+  m_pdf_view->setCurrentSearchResultIndex(row);
+  m_ui.find_next->setEnabled(-1 + m_search_model->count() > row);
+  m_ui.find_previous->setEnabled(0 < row);
 }
 
 void wise_pdf_view::slot_select_page(int value)
 {
-  m_pdf_view->pageNavigator()->jump(value - 1, QPointF());
+  m_pdf_view->pageNavigator()->jump(-1 + value, QPointF());
   prepare_widget_states();
 }
 

@@ -105,6 +105,7 @@ class wise_pdf_view: public QWidget
   void slot_scrolled(int value);
   void slot_search(void);
   void slot_search_count_changed(void);
+  void slot_search_paginate(void);
   void slot_search_view_selected
     (const QModelIndex &current, const QModelIndex &previous);
   void slot_select_page(int value);

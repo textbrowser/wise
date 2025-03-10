@@ -390,7 +390,7 @@
      <item>
       <widget class="QToolButton" name="find_previous">
        <property name="toolTip">
-        <string>Previous Search Results</string>
+        <string>Previous Search Result</string>
        </property>
        <property name="icon">
         <iconset resource="../Icons/icons.qrc">
