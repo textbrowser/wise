@@ -45,6 +45,7 @@ wise::wise(void):QMainWindow(nullptr)
   m_settings->setVisible(false);
   m_ui.setupUi(this);
   m_ui.action_Close_Page->setEnabled(false);
+  m_ui.action_Print->setEnabled(false);
   m_ui.menu_Pages->setStyleSheet("QMenu {menu-scrollable: 1;}");
   m_ui.tab->setMovable(true);
   m_ui.tab->setTabsClosable(true);
@@ -328,6 +329,9 @@ void wise::slot_page_moved(int from, int to)
 
 void wise::slot_page_selected(int index)
 {
+  m_ui.action_Print->setEnabled
+    (qobject_cast<wise_pdf_view *> (m_ui.tab->widget(index)));
+
   if(index >= 0)
     setWindowTitle(tr("Wise (%1)").arg(m_ui.tab->tabText(index)));
   else
