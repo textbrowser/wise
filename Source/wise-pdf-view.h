@@ -93,6 +93,7 @@ class wise_pdf_view: public QWidget
   void prepare_widget_states(void);
 
  private slots:
+  void slot_case_sensitive_toggled(bool state);
   void slot_contents_selected(const QModelIndex &index);
   void slot_document_status_changed(QPdfDocument::Status status);
   void slot_first_page(void);

@@ -1,3 +1,2 @@
-Splendid PDF mosaic. Qt 6 LTS, or newer, is required!
-
-Please install Qt6CT for preparing Qt 6.
+Wise is a wonderfully-interactive and simple educational
+program for reading portable documents.

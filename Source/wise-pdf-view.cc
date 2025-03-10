@@ -181,6 +181,10 @@ wise_pdf_view::wise_pdf_view
 	  &QPdfSearchModel::countChanged,
 	  this,
 	  &wise_pdf_view::slot_search_count_changed);
+  connect(m_ui.case_sensitive,
+	  SIGNAL(toggled(bool)),
+	  this,
+	  SLOT(slot_case_sensitive_toggled(bool)));
   connect(m_ui.contents,
 	  SIGNAL(activated(const QModelIndex &)),
 	  this,
@@ -367,6 +371,12 @@ void wise_pdf_view::print(void)
 void wise_pdf_view::set_page_mode(const QPdfView::PageMode page_mode)
 {
   m_pdf_view->setPageMode(page_mode);
+}
+
+void wise_pdf_view::slot_case_sensitive_toggled(bool state)
+{
+  Q_UNUSED(state);
+  slot_search();
 }
 
 void wise_pdf_view::slot_contents_selected(const QModelIndex &index)
