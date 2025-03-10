@@ -168,6 +168,7 @@ wise_pdf_view::wise_pdf_view
   m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitInView);
   m_search_model->setDocument(m_document);
   m_ui.setupUi(this);
+  m_ui.search_view->setModel(m_search_model);
   connect(m_document,
 	  SIGNAL(statusChanged(QPdfDocument::Status)),
 	  this,
@@ -220,6 +221,10 @@ wise_pdf_view::wise_pdf_view
 	  &QLineEdit::returnPressed,
 	  this,
 	  &wise_pdf_view::slot_search);
+  connect(m_ui.search_view->selectionModel(),
+	  &QItemSelectionModel::currentChanged,
+	  this,
+	  &wise_pdf_view::slot_search_view_selected);
   connect(m_ui.view_size,
 	  SIGNAL(activated(int)),
 	  this,
@@ -242,7 +247,6 @@ wise_pdf_view::wise_pdf_view
   m_ui.pdf_view_splitter->setStretchFactor(1, 1);
   m_ui.search_view->setItemDelegate
     (new wise_pdf_view_search_view_item_delegate(this));
-  m_ui.search_view->setModel(m_search_model);
   m_ui.search_view->setVisible(false);
   m_url = url;
   new QShortcut(tr("Ctrl+0"), this, SLOT(slot_zoom_reset(void)));
@@ -506,6 +510,23 @@ void wise_pdf_view::slot_search(void)
 void wise_pdf_view::slot_search_count_changed(void)
 {
   m_ui.search_view->setVisible(m_search_model->count() > 0);
+}
+
+void wise_pdf_view::slot_search_view_selected
+(const QModelIndex &current, const QModelIndex &previous)
+{
+  Q_UNUSED(previous);
+
+  if(!current.isValid())
+    return;
+
+  auto const location = current.data
+    (static_cast<int> (QPdfSearchModel::Role::Location)).toPointF();
+  auto const page = current.data
+    (static_cast<int> (QPdfSearchModel::Role::Page)).toInt();
+
+  m_pdf_view->pageNavigator()->jump(page, location);
+  m_pdf_view->setCurrentSearchResultIndex(current.row());
 }
 
 void wise_pdf_view::slot_select_page(int value)
