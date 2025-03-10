@@ -519,7 +519,14 @@ void wise_pdf_view::slot_search(void)
 
 void wise_pdf_view::slot_search_count_changed(void)
 {
-  m_ui.search_view->setVisible(m_search_model->count() > 0);
+  if(m_search_model->count() == 0)
+    {
+      m_pdf_view->hide();
+      m_pdf_view->show();
+      m_ui.search_view->setVisible(false);
+    }
+  else
+    m_ui.search_view->setVisible(true);
 }
 
 void wise_pdf_view::slot_search_view_selected
