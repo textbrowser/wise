@@ -498,7 +498,9 @@ void wise_pdf_view::slot_scrolled(int value)
 
 void wise_pdf_view::slot_search(void)
 {
-  m_search_model->setSearchString(m_ui.search->text());
+  m_search_model->setSearchString
+    (m_ui.case_sensitive->isChecked() ?
+     m_ui.search->text().toLower() : m_ui.search->text());
 }
 
 void wise_pdf_view::slot_search_count_changed(void)
