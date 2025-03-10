@@ -542,6 +542,15 @@ void wise_pdf_view::slot_search_count_changed(void)
 
 void wise_pdf_view::slot_search_paginate(void)
 {
+  auto index = m_ui.search_view->currentIndex();
+
+  if(m_ui.find_next == sender())
+    index = index.siblingAtRow(1 + index.row());
+  else
+    index = index.siblingAtRow(-1 + index.row());
+
+  if(index.isValid())
+    m_ui.search_view->setCurrentIndex(index);
 }
 
 void wise_pdf_view::slot_search_view_selected
