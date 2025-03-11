@@ -106,9 +106,11 @@ QPdfView::PageMode wise_settings::page_mode(void)
 
 bool wise_settings::left_panel_visible(void)
 {
-  wise_settings settings(nullptr);
-
-  return settings.m_ui.action_Left_Panel->isChecked();
+#ifdef Q_OS_ANDROID
+  return QSettings().value("settings/left-panel-checked", false).toBool();
+#else
+  return QSettings().value("settings/left-panel-checked", true).toBool();
+#endif
 }
 
 void wise_settings::restore(void)
