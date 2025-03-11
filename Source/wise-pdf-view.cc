@@ -532,17 +532,20 @@ void wise_pdf_view::slot_scrolled(int value)
 
 void wise_pdf_view::slot_search(void)
 {
-  m_search_model->setSearchString
-    (m_ui.case_sensitive->isChecked() ?
-     m_ui.search->text() : m_ui.search->text().toLower());
+  if(m_search_model->searchString() != m_ui.search->text())
+    m_search_model->setSearchString
+      (m_ui.case_sensitive->isChecked() ?
+       m_ui.search->text() : m_ui.search->text().toLower());
+  else
+    slot_search_paginate();
 }
 
 void wise_pdf_view::slot_search_count_changed(void)
 {
   if(m_search_model->count() == 0)
     {
-      m_pdf_view->setVisible(false);
-      m_pdf_view->setVisible(true);
+      m_pdf_view->setVisible(false); // Artificial refresh.
+      m_pdf_view->setVisible(true); // Artificial refresh.
       m_ui.find_next->setEnabled(false);
       m_ui.find_previous->setEnabled(false);
       m_ui.search_view->clearSelection();
@@ -564,8 +567,15 @@ void wise_pdf_view::slot_search_paginate(void)
 
   if(m_ui.find_next == sender())
     index = index.siblingAtRow(1 + index.row());
-  else
+  else if(m_ui.find_previous == sender())
     index = index.siblingAtRow(-1 + index.row());
+  else
+    {
+      index = index.siblingAtRow(1 + index.row());
+
+      if(!index.isValid())
+	index = m_search_model->index(0, 0);
+    }
 
   if(index.isValid())
     m_ui.search_view->setCurrentIndex(index);
