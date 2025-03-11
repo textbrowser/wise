@@ -85,6 +85,7 @@ class wise_pdf_view: public QWidget
   QPdfDocument *m_document;
   QPdfPageRenderer *m_page_renderer;
   QPdfSearchModel *m_search_model;
+  QTimer m_search_timer;
   QUrl m_url;
   Ui_wise_pdf_view m_ui;
   wise_pdf_view_view *m_pdf_view;

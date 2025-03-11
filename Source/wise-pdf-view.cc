@@ -167,9 +167,15 @@ wise_pdf_view::wise_pdf_view
   m_pdf_view->setSearchModel(m_search_model = new QPdfSearchModel(this));
   m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitInView);
   m_search_model->setDocument(m_document);
+  m_search_timer.setInterval(1500);
+  m_search_timer.setSingleShot(true);
   m_ui.setupUi(this);
   m_ui.case_sensitive->setVisible(false);
   m_ui.search_view->setModel(m_search_model);
+  connect(&m_search_timer,
+	  &QTimer::timeout,
+	  this,
+	  &wise_pdf_view::slot_search);
   connect(m_document,
 	  SIGNAL(statusChanged(QPdfDocument::Status)),
 	  this,
@@ -234,6 +240,10 @@ wise_pdf_view::wise_pdf_view
 	  &QLineEdit::returnPressed,
 	  this,
 	  &wise_pdf_view::slot_search);
+  connect(m_ui.search,
+	  SIGNAL(textEdited(const QString &)),
+	  &m_search_timer,
+	  SLOT(start(void)));
   connect(m_ui.search_view->selectionModel(),
 	  &QItemSelectionModel::currentChanged,
 	  this,
@@ -265,6 +275,7 @@ wise_pdf_view::wise_pdf_view
   new QShortcut(tr("Ctrl+0"), this, SLOT(slot_zoom_reset(void)));
   prepare();
   prepare_widget_states();
+  slot_search_count_changed();
   QTimer::singleShot(10, this, SLOT(slot_load_document(void)));
 }
 
