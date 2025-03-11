@@ -545,10 +545,17 @@ void wise_pdf_view::slot_search_count_changed(void)
       m_pdf_view->setVisible(true);
       m_ui.find_next->setEnabled(false);
       m_ui.find_previous->setEnabled(false);
+      m_ui.search_view->clearSelection();
       m_ui.search_view->setVisible(false);
     }
   else
-    m_ui.search_view->setVisible(true);
+    {
+      m_ui.search_view->setCurrentIndex
+	(m_ui.search_view->currentIndex().isValid() == false ?
+	 m_search_model->index(0, 0) :
+	 m_ui.search_view->currentIndex());
+      m_ui.search_view->setVisible(true);
+    }
 }
 
 void wise_pdf_view::slot_search_paginate(void)
