@@ -175,6 +175,7 @@ wise_pdf_view::wise_pdf_view
 #ifdef Q_OS_ANDROID
   m_ui.print->setVisible(false);
 #endif
+  m_ui.search_frame->setVisible(false);
   m_ui.search_view->setModel(m_search_model);
   connect(&m_search_timer,
 	  &QTimer::timeout,
@@ -248,6 +249,10 @@ wise_pdf_view::wise_pdf_view
 	  SIGNAL(textEdited(const QString &)),
 	  &m_search_timer,
 	  SLOT(start(void)));
+  connect(m_ui.search_show,
+	  SIGNAL(toggled(bool)),
+	  m_ui.search_frame,
+	  SLOT(setVisible(bool)));
   connect(m_ui.search_view->selectionModel(),
 	  &QItemSelectionModel::currentChanged,
 	  this,
