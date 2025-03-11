@@ -254,3 +254,15 @@ INSTALLS = plugins \
            qt \
            qtlibraries
 }
+
+android {
+DISTFILES += Android/AndroidManifest.xml \
+             Android/build.gradle \
+             Android/gradle.properties \
+             Android/gradle/wrapper/gradle-wrapper.jar \
+             Android/gradle/wrapper/gradle-wrapper.properties \
+             Android/gradlew \
+             Android/gradlew.bat \
+             Android/res/values/libs.xml \
+             Android/res/xml/qtprovider_paths.xml
+}
