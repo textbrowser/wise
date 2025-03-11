@@ -326,7 +326,7 @@ void wise_pdf_view::prepare(void)
       tool_button->setArrowType(Qt::NoArrow);
       tool_button->setAutoRaise(true);
       tool_button->setIconSize(QSize(25, 25));
-#ifdef Q_OS_MACOS
+#if defined(Q_OS_ANDROID) || defined(Q_OS_MACOS)
       tool_button->setStyleSheet
 	("QToolButton {border: none;}"
 	 "QToolButton::menu-button {border: none;}"

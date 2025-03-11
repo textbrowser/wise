@@ -113,6 +113,20 @@ wise::wise(void):QMainWindow(nullptr)
 	  this,
 	  SLOT(slot_page_moved(int, int)),
 	  Qt::QueuedConnection);
+
+  foreach(auto tool_button, findChildren<QToolButton *> ())
+    {
+      tool_button->setArrowType(Qt::NoArrow);
+      tool_button->setAutoRaise(true);
+      tool_button->setIconSize(QSize(25, 25));
+#if defined(Q_OS_ANDROID) || defined(Q_OS_MACOS)
+      tool_button->setStyleSheet
+	("QToolButton {border: none;}"
+	 "QToolButton::menu-button {border: none;}"
+	 "QToolButton::menu-indicator {image: none;}");
+#endif
+    }
+
 #ifdef Q_OS_ANDROID
   m_ui.action_Screen_Mode->setEnabled(false);
 #endif
