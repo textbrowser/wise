@@ -45,6 +45,9 @@ wise::wise(void):QMainWindow(nullptr)
   m_settings->setVisible(false);
   m_ui.setupUi(this);
   m_ui.action_Close_Page->setEnabled(false);
+#ifdef Q_OS_ANDROID
+  m_ui.action_Left_Panel->setChecked(false);
+#endif
   m_ui.action_Print->setEnabled(false);
   m_ui.menu_Pages->setStyleSheet("QMenu {menu-scrollable: 1;}");
   m_ui.tab->setMovable(true);
@@ -296,7 +299,9 @@ void wise::slot_open_pdf_files(void)
   dialog.setFileMode(QFileDialog::ExistingFiles);
   dialog.setLabelText(QFileDialog::Accept, tr("Select"));
   dialog.setNameFilters(QStringList() << tr("PDF Files (*.pdf)"));
+#ifndef Q_OS_ANDROID
   dialog.setOption(QFileDialog::DontUseNativeDialog);
+#endif
   dialog.setWindowIcon(windowIcon());
   dialog.setWindowTitle(tr("Wise: Open PDF Files"));
 #ifdef Q_OS_ANDROID

@@ -61,6 +61,8 @@
      <string>&amp;View</string>
     </property>
     <addaction name="action_Screen_Mode"/>
+    <addaction name="separator"/>
+    <addaction name="action_Left_Panel"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
     <property name="title">
@@ -156,6 +158,17 @@
   <action name="action_Release_Notes">
    <property name="text">
     <string>&amp;Release Notes</string>
+   </property>
+  </action>
+  <action name="action_Left_Panel">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Left Panel</string>
    </property>
   </action>
  </widget>

@@ -104,6 +104,11 @@ QPdfView::PageMode wise_settings::page_mode(void)
     return QPdfView::PageMode::SinglePage;
 }
 
+bool wise_settings::left_panel_visible(void)
+{
+  return true;
+}
+
 void wise_settings::restore(void)
 {
   foreach(auto check_box, findChildren<QCheckBox *> ())

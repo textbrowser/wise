@@ -342,6 +342,8 @@ void wise_pdf_view::prepare(void)
   m_ui.page->setMinimum(1); // The document's page count may be zero.
   m_ui.page->setToolTip
     (QString("[%1, %2]").arg(m_ui.page->minimum()).arg(m_ui.page->maximum()));
+  m_ui.pdf_view_splitter->setSizes
+    (QList<int> () << (wise_settings::left_panel_visible() ? 1 : 0) << 1);
 }
 
 void wise_pdf_view::prepare_view_size(void)
@@ -381,6 +383,11 @@ void wise_pdf_view::prepare_widget_states(void)
   m_ui.zoom_out->setEnabled
     (m_pdf_view->zoomFactor() > 1 ||
      m_pdf_view->zoomFactor() > minimum_zoom_factor);
+#ifdef Q_OS_ANDROID
+  setVisible(false);
+  setVisible(true);
+  QApplication::processEvents();
+#endif
 }
 
 void wise_pdf_view::print(void)
