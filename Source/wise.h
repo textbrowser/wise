@@ -30,6 +30,8 @@
 
 #include "ui_wise.h"
 
+#include <QTimer>
+
 class wise_settings;
 
 class wise: public QMainWindow
@@ -43,6 +45,7 @@ class wise: public QMainWindow
   static QString home_path(void);
 
  private:
+  QTimer m_timer;
   Ui_wise m_ui;
   wise_settings *m_settings;
   void add_pdf_page(const QString &file_name);
@@ -63,6 +66,7 @@ class wise: public QMainWindow
   void slot_page_selected(int index);
   void slot_print(void);
   void slot_quit(void);
+  void slot_process_events(void);
   void slot_release_notes(void);
   void slot_screen_mode(void);
   void slot_select_page(void);

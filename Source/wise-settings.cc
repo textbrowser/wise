@@ -106,7 +106,9 @@ QPdfView::PageMode wise_settings::page_mode(void)
 
 bool wise_settings::left_panel_visible(void)
 {
-  return true;
+  wise_settings settings(nullptr);
+
+  return settings.m_ui.action_Left_Panel->isChecked();
 }
 
 void wise_settings::restore(void)

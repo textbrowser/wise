@@ -383,11 +383,6 @@ void wise_pdf_view::prepare_widget_states(void)
   m_ui.zoom_out->setEnabled
     (m_pdf_view->zoomFactor() > 1 ||
      m_pdf_view->zoomFactor() > minimum_zoom_factor);
-#ifdef Q_OS_ANDROID
-  setVisible(false);
-  setVisible(true);
-  QApplication::processEvents();
-#endif
 }
 
 void wise_pdf_view::print(void)

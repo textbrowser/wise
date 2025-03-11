@@ -43,6 +43,9 @@ wise::wise(void):QMainWindow(nullptr)
 {
   m_settings = new wise_settings(this);
   m_settings->setVisible(false);
+#ifdef Q_OS_ANDROID
+  m_timer.start(500);
+#endif
   m_ui.setupUi(this);
   m_ui.action_Close_Page->setEnabled(false);
 #ifdef Q_OS_ANDROID
@@ -57,6 +60,10 @@ wise::wise(void):QMainWindow(nullptr)
   m_ui.tool_bar->addAction(m_ui.action_Settings);
   m_ui.tool_bar->setIconSize(QSize(25, 25));
   new QShortcut(tr("Ctrl+F"), this, SLOT(slot_find(void)));
+  connect(&m_timer,
+	  &QTimer::timeout,
+	  this,
+	  &wise::slot_process_events);
   connect(m_ui.action_About,
 	  &QAction::triggered,
 	  this,
@@ -349,6 +356,12 @@ void wise::slot_print(void)
 
   if(page)
     page->print();
+}
+
+void wise::slot_process_events(void)
+{
+  repaint();
+  QApplication::processEvents();
 }
 
 void wise::slot_quit(void)
