@@ -216,12 +216,6 @@ android: include(/home/saturn/Android/Sdk/android_openssl/openssl.pri)
 
 # Installation Procedures
 
-android {
-examples.depends += FORCE
-
-INSTALLS += examples
-}
-
 macx {
 macdeployqt.extra = $$[QT_INSTALL_BINS]/macdeployqt Wise.d/Wise.app \
                     -executable=Wise.d/Wise.app/Contents/MacOS/Wise
