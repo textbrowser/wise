@@ -52,6 +52,9 @@ wise::wise(void):QMainWindow(nullptr)
   m_ui.action_Left_Panel->setChecked(false);
 #endif
   m_ui.action_Print->setEnabled(false);
+#ifdef Q_OS_ANDROID
+  m_ui.action_Print->setVisible(false);
+#endif
   m_ui.menu_Pages->setStyleSheet("QMenu {menu-scrollable: 1;}");
   m_ui.tab->setMovable(true);
   m_ui.tab->setTabsClosable(true);
