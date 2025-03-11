@@ -120,7 +120,7 @@
      <item>
       <widget class="QComboBox" name="view_size">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <property name="sizeAdjustPolicy">
         <enum>QComboBox::AdjustToContents</enum>

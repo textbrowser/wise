@@ -166,7 +166,7 @@ wise_pdf_view::wise_pdf_view
   m_pdf_view->setPageMode(QPdfView::PageMode::MultiPage);
   m_pdf_view->setPageSpacing(0);
   m_pdf_view->setSearchModel(m_search_model = new QPdfSearchModel(this));
-  m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitInView);
+  m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitToWidth);
   m_search_model->setDocument(m_document);
   m_search_timer.setInterval(1500);
   m_search_timer.setSingleShot(true);
@@ -631,10 +631,10 @@ void wise_pdf_view::slot_view_size_activated(int index)
     {
       m_pdf_view->setZoomFactor(1.0);
 
-      if(m_ui.view_size->currentText() == tr("Width-Fit"))
-	m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitToWidth);
-      else
+      if(m_ui.view_size->currentText() == tr("View-Fit"))
 	m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitInView);
+      else
+	m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitToWidth);
     }
 
   prepare_widget_states();
