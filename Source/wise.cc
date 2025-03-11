@@ -44,7 +44,7 @@ wise::wise(void):QMainWindow(nullptr)
   m_settings = new wise_settings(this);
   m_settings->setVisible(false);
 #ifdef Q_OS_ANDROID
-  m_timer.start(500);
+  m_timer.start(50);
 #endif
   m_ui.setupUi(this);
   m_ui.action_Close_Page->setEnabled(false);
@@ -325,9 +325,6 @@ void wise::slot_open_pdf_files(void)
 #endif
   dialog.setWindowIcon(windowIcon());
   dialog.setWindowTitle(tr("Wise: Open PDF Files"));
-#ifdef Q_OS_ANDROID
-  dialog.showMaximized();
-#endif
   QApplication::processEvents();
 
   if(dialog.exec() == QDialog::Accepted)

@@ -164,6 +164,7 @@ wise_pdf_view::wise_pdf_view
   m_pdf_view = new wise_pdf_view_view(this);
   m_pdf_view->setDocument(m_document);
   m_pdf_view->setPageMode(QPdfView::PageMode::MultiPage);
+  m_pdf_view->setPageSpacing(0);
   m_pdf_view->setSearchModel(m_search_model = new QPdfSearchModel(this));
   m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitInView);
   m_search_model->setDocument(m_document);
@@ -171,6 +172,9 @@ wise_pdf_view::wise_pdf_view
   m_search_timer.setSingleShot(true);
   m_ui.setupUi(this);
   m_ui.case_sensitive->setVisible(false);
+#ifdef Q_OS_ANDROID
+  m_ui.print->setVisible(false);
+#endif
   m_ui.search_view->setModel(m_search_model);
   connect(&m_search_timer,
 	  &QTimer::timeout,
