@@ -48,9 +48,6 @@ wise::wise(void):QMainWindow(nullptr)
 #endif
   m_ui.setupUi(this);
   m_ui.action_Close_Page->setEnabled(false);
-#ifdef Q_OS_ANDROID
-  m_ui.action_Left_Panel->setChecked(false);
-#endif
   m_ui.action_Print->setEnabled(false);
 #ifdef Q_OS_ANDROID
   m_ui.action_Print->setVisible(false);
@@ -160,7 +157,9 @@ void wise::add_pdf_page(const QString &file_name)
   auto page = new wise_pdf_view(QUrl::fromLocalFile(file_name), this);
 
   m_ui.tab->setTabToolTip
-    (m_ui.tab->addTab(page, QIcon(":/wise.png"), file_name), file_name);
+    (m_ui.tab->addTab(page,
+		      QIcon(":/wise.png"),
+		      QFileInfo(file_name).fileName()), file_name);
   m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(page));
   page->set_page_mode(m_settings->page_mode());
 }

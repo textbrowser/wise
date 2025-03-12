@@ -33,7 +33,6 @@
 #include <QPdfDocument>
 #include <QPdfView>
 #include <QStyledItemDelegate>
-#include <QTimer>
 #include <QUrl>
 
 class QPdfBookmarkModel;
@@ -85,7 +84,6 @@ class wise_pdf_view: public QWidget
   QPdfDocument *m_document;
   QPdfPageRenderer *m_page_renderer;
   QPdfSearchModel *m_search_model;
-  QTimer m_search_timer;
   QUrl m_url;
   Ui_wise_pdf_view m_ui;
   wise_pdf_view_view *m_pdf_view;
@@ -95,7 +93,8 @@ class wise_pdf_view: public QWidget
 
  private slots:
   void slot_case_sensitive_toggled(bool state);
-  void slot_contents_selected(const QModelIndex &index);
+  void slot_contents_selected
+    (const QModelIndex &current, const QModelIndex &previous);
   void slot_document_status_changed(QPdfDocument::Status status);
   void slot_first_page(void);
   void slot_last_page(void);

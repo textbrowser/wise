@@ -44,7 +44,6 @@ class wise_settings: public QWidget
   static QPdfDocumentRenderOptions render_options(void);
   static QPdfPageRenderer::RenderMode render_mode(void);
   static QPdfView::PageMode page_mode(void);
-  static bool left_panel_visible(void);
 
  private:
   Ui_wise_settings m_ui;

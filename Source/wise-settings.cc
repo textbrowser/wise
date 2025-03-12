@@ -104,15 +104,6 @@ QPdfView::PageMode wise_settings::page_mode(void)
     return QPdfView::PageMode::SinglePage;
 }
 
-bool wise_settings::left_panel_visible(void)
-{
-#ifdef Q_OS_ANDROID
-  return QSettings().value("settings/left-panel-checked", false).toBool();
-#else
-  return QSettings().value("settings/left-panel-checked", true).toBool();
-#endif
-}
-
 void wise_settings::restore(void)
 {
   foreach(auto check_box, findChildren<QCheckBox *> ())
