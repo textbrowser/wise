@@ -321,7 +321,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QGroupBox" name="groupBox_2">
+      <widget class="QGroupBox" name="search_results_group_box">
        <property name="title">
         <string>Search Results</string>
        </property>
