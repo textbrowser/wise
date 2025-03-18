@@ -36,6 +36,8 @@
 #include <QMessageBox>
 #include <QSettings>
 #include <QShortcut>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 #include <QTextBrowser>
 
 QString wise::WISE_VERSION_STRING = "2025.04.01";
@@ -167,6 +169,31 @@ void wise::add_pdf_page(const QString &file_name)
 		      QFileInfo(file_name).fileName()), file_name);
   m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(page));
   page->set_page_mode(m_settings->page_mode());
+
+  QString connection_name("add_pdf_page");
+
+  {
+    auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));
+
+    db.setDatabaseName
+      (home_path() + QDir::separator() + "wise-recent-files.db");
+
+    if(db.open())
+      {
+	QSqlQuery query(db);
+
+	query.exec("CREATE TABLE IF NOT EXISTS wise_recent_files "
+		   "(file_name TEXT NOT NULL PRIMARY KEY, image TEXT)");
+	query.prepare
+	  ("INSERT INTO wise_recent_files (file_name) VALUES (?)");
+	query.addBindValue(QFileInfo(file_name).absoluteFilePath());
+	query.exec();
+      }
+
+    db.close();
+  }
+
+  QSqlDatabase::removeDatabase(connection_name);
 }
 
 void wise::closeEvent(QCloseEvent *event)
