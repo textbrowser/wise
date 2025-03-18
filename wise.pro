@@ -191,12 +191,14 @@ FORMS += UI/wise.ui \
          UI/wise-settings.ui
 HEADERS += Source/wise.h \
            Source/wise-pdf-view.h \
+           Source/wise-recent-files-view.h \
            Source/wise-settings.h \
            Source/wise-tab.h \
            Source/wise-tab-bar.h
 SOURCES += Source/wise.cc \
            Source/wise-main.cc \
            Source/wise-pdf-view.cc \
+           Source/wise-recent-files-view.cc \
            Source/wise-settings.cc \
            Source/wise-tab.cc \
            Source/wise-tab-bar.cc

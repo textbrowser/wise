@@ -30,9 +30,7 @@
 #include <QApplication>
 #include <QDir>
 #ifdef Q_OS_ANDROID
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 1, 0))
 #include <QJniObject>
-#endif
 #endif
 #include <QSettings>
 
@@ -46,10 +44,6 @@ int main(int argc, char *argv[])
     if(!argv || !argv[i])
       continue;
 
-#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
-  QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
-  QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
-#endif
 #if defined(Q_OS_ANDROID)
 #else
   QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar, true);
@@ -91,11 +85,9 @@ int main(int argc, char *argv[])
   }
 
 #ifdef Q_OS_ANDROID
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 1, 0))
   auto activity = QJniObject(QNativeInterface::QAndroidApplication::context());
 
   activity.callMethod<void> ("finishAndRemoveTask");
-#endif
 #endif
   return rc;
 }

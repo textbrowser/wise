@@ -33,6 +33,7 @@
 #include <QTimer>
 
 class wise_settings;
+typedef QVector<QPair<QImage, QString> > QVectorQPairQImageQString;
 
 class wise: public QMainWindow
 {

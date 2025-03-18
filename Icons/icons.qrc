@@ -3,6 +3,7 @@
 	<file>first-page.svg</file>
 	<file>full-screen.svg</file>
 	<file>last-page.svg</file>
+	<file>missing-file.png</file>
 	<file>next-page.svg</file>
 	<file>normal-screen.svg</file>
 	<file>ok.svg</file>
@@ -10,6 +11,7 @@
 	<file>previous-page.svg</file>
 	<file>print.svg</file>
 	<file>quit.png</file>
+	<file>recent.svg</file>
 	<file>release-notes.png</file>
 	<file>search.svg</file>
 	<file>settings.svg</file>
