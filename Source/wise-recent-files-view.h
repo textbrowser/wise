@@ -130,13 +130,13 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
     painter->setRenderHint(QPainter::Antialiasing, true);
     painter->drawRoundedRect(boundingRect(), radius, radius); // Order.
 
-    QIcon const static icon(":/clear.png");
+    QIcon const static icon(":/clear.svg");
 
     m_remove_button.isEmpty() ?
       m_remove_button.addEllipse(-31.5 + boundingRect().topRight().x(),
-				8.5 + boundingRect().topRight().y(),
-				25.0,
-				25.0),
+				 8.5 + boundingRect().topRight().y(),
+				 25.0,
+				 25.0),
       m_remove_button.closeSubpath() :
       (void) 0;
     pen.setColor(QColor(222, 141, 174));

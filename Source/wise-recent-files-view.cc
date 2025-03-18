@@ -177,8 +177,8 @@ void wise_recent_files_view::slot_open(void)
   if(list.isEmpty())
     emit open_file();
   else
-    foreach(auto const &fileName, list)
-      emit open_file(fileName);
+    foreach(auto const &file_name, list)
+      emit open_file(file_name);
 }
 
 void wise_recent_files_view::slot_remove(QGraphicsItem *item)

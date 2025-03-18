@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+	<file>clear.svg</file>
 	<file>first-page.svg</file>
 	<file>full-screen.svg</file>
 	<file>last-page.svg</file>

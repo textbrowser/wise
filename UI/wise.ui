@@ -61,6 +61,8 @@
      <string>&amp;View</string>
     </property>
     <addaction name="action_Screen_Mode"/>
+    <addaction name="separator"/>
+    <addaction name="action_Recent_Files"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
     <property name="title">
@@ -166,6 +168,15 @@
    </property>
    <property name="text">
     <string>&amp;Left Panel</string>
+   </property>
+  </action>
+  <action name="action_Recent_Files">
+   <property name="icon">
+    <iconset resource="../Icons/icons.qrc">
+     <normaloff>:/recent.svg</normaloff>:/recent.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Recent Files</string>
    </property>
   </action>
  </widget>

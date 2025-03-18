@@ -27,6 +27,7 @@
 
 #include "wise.h"
 #include "wise-pdf-view.h"
+#include "wise-recent-files-view.h"
 #include "wise-settings.h"
 
 #include <QActionGroup>
@@ -84,6 +85,10 @@ wise::wise(void):QMainWindow(nullptr)
 	  &QAction::triggered,
 	  this,
 	  &wise::slot_quit);
+  connect(m_ui.action_Recent_Files,
+	  &QAction::triggered,
+	  this,
+	  &wise::slot_recent_files);
   connect(m_ui.action_Release_Notes,
 	  &QAction::triggered,
 	  this,
@@ -380,6 +385,27 @@ void wise::slot_process_events(void)
 void wise::slot_quit(void)
 {
   close();
+}
+
+void wise::slot_recent_files(void)
+{
+  auto view = findChild<wise_recent_files_view *> ();
+
+  if(m_ui.tab->indexOf(view) >= 0)
+    {
+      m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(view));
+      return;
+    }
+
+  if(view == nullptr)
+    {
+      view = new wise_recent_files_view(this);
+    }
+
+  m_ui.action_Close_Page->setEnabled(true);
+  m_ui.tab->addTab(view, QIcon(":/recent.svg"), tr("Wise Recent Files"));
+  m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(view));
+  m_ui.tab->setTabToolTip(m_ui.tab->indexOf(view), tr("Wise Recent Files"));
 }
 
 void wise::slot_release_notes(void)
