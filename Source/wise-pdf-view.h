@@ -90,6 +90,7 @@ class wise_pdf_view: public QWidget
   void prepare(void);
   void prepare_view_size(void);
   void prepare_widget_states(void);
+  void save_first_page(void);
 
  private slots:
   void slot_case_sensitive_toggled(bool state);
@@ -113,6 +114,9 @@ class wise_pdf_view: public QWidget
   void slot_zoom_in(void);
   void slot_zoom_out(void);
   void slot_zoom_reset(void);
+
+ signals:
+  void save_recent_file(const QImage &image, const QUrl &url);
 };
 
 #endif

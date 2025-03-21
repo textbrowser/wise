@@ -392,6 +392,12 @@ void wise_pdf_view::print(void)
   slot_print();
 }
 
+void wise_pdf_view::save_first_page(void)
+{
+  emit save_recent_file
+    (m_document->render(0, 2 * m_document->pagePointSize(0).toSize()), m_url);
+}
+
 void wise_pdf_view::set_page_mode(const QPdfView::PageMode page_mode)
 {
   m_pdf_view->setPageMode(page_mode);
@@ -443,8 +449,13 @@ void wise_pdf_view::slot_last_page(void)
 
 void wise_pdf_view::slot_load_document(void)
 {
+  auto const state = m_document->load(m_url.path());
+
+  if(state == QPdfDocument::Error::None)
+    save_first_page();
+
   m_ui.password_frame->setVisible
-    (m_document->load(m_url.path()) == QPdfDocument::Error::IncorrectPassword);
+    (state == QPdfDocument::Error::IncorrectPassword);
 }
 
 void wise_pdf_view::slot_password_changed(void)

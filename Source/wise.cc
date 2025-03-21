@@ -31,6 +31,7 @@
 #include "wise-settings.h"
 
 #include <QActionGroup>
+#include <QBuffer>
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -164,6 +165,10 @@ void wise::add_pdf_page(const QString &file_name)
 
   auto page = new wise_pdf_view(QUrl::fromLocalFile(file_name), this);
 
+  connect(page,
+	  SIGNAL(save_recent_file(const QImage &, const QUrl &)),
+	  this,
+	  SLOT(slot_save_recent_file(const QImage &, const QUrl &)));
   m_ui.tab->setTabToolTip
     (m_ui.tab->addTab(page,
 		      QIcon(":/wise.png"),
@@ -463,6 +468,39 @@ void wise::slot_release_notes(void)
     (frame, QIcon(":/release-notes.png"), tr("Wise Release Notes"));
   m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(frame));
   m_ui.tab->setTabToolTip(m_ui.tab->indexOf(frame), tr("Wise Release Notes"));
+}
+
+void wise::slot_save_recent_file(const QImage &image, const QUrl &url)
+{
+  QString connection_name("slot_save_recent_file");
+
+  {
+    auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));
+
+    db.setDatabaseName
+      (home_path() + QDir::separator() + "wise-recent-files.db");
+
+    if(db.open())
+      {
+	QBuffer buffer;
+	QByteArray bytes;
+	QSqlQuery query(db);
+
+	buffer.setBuffer(&bytes);
+	buffer.open(QIODevice::WriteOnly);
+	image.save(&buffer, "PNG");
+	query.prepare
+	  ("INSERT OR REPLACE INTO wise_recent_files "
+	   "(file_name, image) VALUES (?, ?)");
+	query.addBindValue(QFileInfo(url.path()).absoluteFilePath());
+	query.addBindValue(bytes.toBase64());
+	query.exec();
+      }
+
+    db.close();
+  }
+
+  QSqlDatabase::removeDatabase(connection_name);
 }
 
 void wise::slot_screen_mode(void)

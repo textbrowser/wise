@@ -70,6 +70,7 @@ class wise: public QMainWindow
   void slot_process_events(void);
   void slot_recent_files(void);
   void slot_release_notes(void);
+  void slot_save_recent_file(const QImage &image, const QUrl &url);
   void slot_screen_mode(void);
   void slot_select_page(void);
   void slot_settings(void);
