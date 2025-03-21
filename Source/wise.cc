@@ -176,7 +176,7 @@ void wise::add_pdf_page(const QString &file_name)
   m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(page));
   page->set_page_mode(m_settings->page_mode());
 
-  QString connection_name("add_pdf_page");
+  QString const connection_name("add_pdf_page");
 
   {
     auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));
@@ -472,7 +472,7 @@ void wise::slot_release_notes(void)
 
 void wise::slot_save_recent_file(const QImage &image, const QUrl &url)
 {
-  QString connection_name("slot_save_recent_file");
+  QString const connection_name("slot_save_recent_file");
 
   {
     auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));
