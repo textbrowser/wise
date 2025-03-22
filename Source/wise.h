@@ -40,10 +40,10 @@ class wise: public QMainWindow
   Q_OBJECT
 
  public:
-  static QString WISE_VERSION_STRING;
+  QString static WISE_VERSION_STRING;
   wise(void);
   ~wise();
-  static QString home_path(void);
+  QString static home_path(void);
 
  private:
   QTimer m_timer;
