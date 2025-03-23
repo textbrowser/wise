@@ -25,15 +25,23 @@
 ** WISE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <QDir>
 #include <QFileInfo>
 #include <QKeyEvent>
 #include <QScrollBar>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QtConcurrent>
 
 #include "wise-recent-files-view.h"
 
 wise_recent_files_view::wise_recent_files_view(QWidget *parent):
   QGraphicsView(parent)
 {
+  connect(this,
+	  SIGNAL(gathered(const QVectorQPairQImageQString &)),
+	  this,
+	  SLOT(slot_populate(const QVectorQPairQImageQString &)));
   m_menu_action = new QAction(QIcon(":/recent.svg"), tr("Recent Files"), this);
   setAlignment(Qt::AlignHCenter | Qt::AlignTop);
   setCacheMode(QGraphicsView::CacheNone);
@@ -51,6 +59,7 @@ wise_recent_files_view::wise_recent_files_view(QWidget *parent):
 
   viewport()->setAttribute(Qt::WA_AcceptTouchEvents, false);
 #endif
+  slot_gather();
 }
 
 QAction *wise_recent_files_view::menu_action(void) const
@@ -75,6 +84,45 @@ void wise_recent_files_view::enterEvent(QEnterEvent *event)
   setFocus();
 }
 
+void wise_recent_files_view::gather(void)
+{
+  QString connection_name("gather");
+  QVectorQPairQImageQString vector;
+
+  {
+    auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));
+
+    db.setDatabaseName
+      (wise::home_path() + QDir::separator() + "wise-recent-files.db");
+
+    if(db.open())
+      {
+	QSqlQuery query(db);
+
+	query.setForwardOnly(true);
+
+	if(query.exec("SELECT file_name, image FROM wise_recent_files "
+		      "ORDER BY 1"))
+	  while(m_gather_future.isCanceled() == false && query.next())
+	    {
+	      QFileInfo const file_info(query.value(0).toString());
+	      QImage image;
+
+	      if(image.loadFromData(QByteArray::
+				    fromBase64(query.value(1).toByteArray()),
+				    "PNG"))
+		vector << QPair<QImage, QString>
+		  (image, file_info.absoluteFilePath());
+	    }
+      }
+
+    db.close();
+  }
+
+  QSqlDatabase::removeDatabase(connection_name);
+  emit gathered(vector);
+}
+
 void wise_recent_files_view::keyPressEvent(QKeyEvent *event)
 {
   QGraphicsView::keyPressEvent(event);
@@ -90,7 +138,29 @@ void wise_recent_files_view::mouseDoubleClickEvent(QMouseEvent *event)
   slot_open();
 }
 
-void wise_recent_files_view::populate(const QVectorQPairQImageQString &vector)
+void wise_recent_files_view::slot_gather(void)
+{
+  if(m_gather_future.isFinished())
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+    m_gather_future = QtConcurrent::run(this, &wise_recent_files_view::gather);
+#else
+    m_gather_future = QtConcurrent::run(&wise_recent_files_view::gather, this);
+#endif
+}
+
+void wise_recent_files_view::slot_open(void)
+{
+  auto const list(selected_file_names());
+
+  if(list.isEmpty())
+    emit open_file();
+  else
+    foreach(auto const &file_name, list)
+      emit open_file(file_name);
+}
+
+void wise_recent_files_view::slot_populate
+(const QVectorQPairQImageQString &vector)
 {
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
@@ -168,17 +238,6 @@ void wise_recent_files_view::populate(const QVectorQPairQImageQString &vector)
   setSceneRect(rect);
   verticalScrollBar()->setValue(v_value);
   QApplication::restoreOverrideCursor();
-}
-
-void wise_recent_files_view::slot_open(void)
-{
-  auto const list(selected_file_names());
-
-  if(list.isEmpty())
-    emit open_file();
-  else
-    foreach(auto const &file_name, list)
-      emit open_file(file_name);
 }
 
 void wise_recent_files_view::slot_remove(QGraphicsItem *item)

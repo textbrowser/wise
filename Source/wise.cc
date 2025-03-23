@@ -161,21 +161,6 @@ void wise::add_pdf_page(const QString &file_name)
   if(file_name.isEmpty())
     return;
 
-  m_ui.action_Close_Page->setEnabled(true);
-
-  auto page = new wise_pdf_view(QUrl::fromLocalFile(file_name), this);
-
-  connect(page,
-	  SIGNAL(save_recent_file(const QImage &, const QUrl &)),
-	  this,
-	  SLOT(slot_save_recent_file(const QImage &, const QUrl &)));
-  m_ui.tab->setTabToolTip
-    (m_ui.tab->addTab(page,
-		      QIcon(":/wise.png"),
-		      QFileInfo(file_name).fileName()), file_name);
-  m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(page));
-  page->set_page_mode(m_settings->page_mode());
-
   QString const connection_name("add_pdf_page");
 
   {
@@ -200,6 +185,20 @@ void wise::add_pdf_page(const QString &file_name)
   }
 
   QSqlDatabase::removeDatabase(connection_name);
+  m_ui.action_Close_Page->setEnabled(true);
+
+  auto page = new wise_pdf_view(QUrl::fromLocalFile(file_name), this);
+
+  connect(page,
+	  SIGNAL(save_recent_file(const QImage &, const QUrl &)),
+	  this,
+	  SLOT(slot_save_recent_file(const QImage &, const QUrl &)));
+  m_ui.tab->setTabToolTip
+    (m_ui.tab->addTab(page,
+		      QIcon(":/wise.png"),
+		      QFileInfo(file_name).fileName()), file_name);
+  m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(page));
+  page->set_page_mode(m_settings->page_mode());
 }
 
 void wise::closeEvent(QCloseEvent *event)
@@ -433,6 +432,10 @@ void wise::slot_recent_files(void)
   if(view == nullptr)
     {
       view = new wise_recent_files_view(this);
+      connect(this,
+	      &wise::recent_file_saved,
+	      view,
+	      &wise_recent_files_view::slot_gather);
     }
 
   m_ui.action_Close_Page->setEnabled(true);
@@ -501,6 +504,7 @@ void wise::slot_save_recent_file(const QImage &image, const QUrl &url)
   }
 
   QSqlDatabase::removeDatabase(connection_name);
+  emit recent_file_saved();
 }
 
 void wise::slot_screen_mode(void)

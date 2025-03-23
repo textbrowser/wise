@@ -30,6 +30,7 @@
 
 #include "wise.h"
 
+#include <QFuture>
 #include <QGraphicsDropShadowEffect>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneHoverEvent>
@@ -178,22 +179,26 @@ class wise_recent_files_view: public QGraphicsView
  public:
   wise_recent_files_view(QWidget *parent);
   QAction *menu_action(void) const;
-  void populate(const QVectorQPairQImageQString &vector);
 
  public slots:
+  void slot_gather(void);
   void slot_open(void);
 
  private:
   QAction *m_menu_action;
+  QFuture<void> m_gather_future;
   QStringList selected_file_names(void) const;
   void enterEvent(QEnterEvent *event);
+  void gather(void);
   void keyPressEvent(QKeyEvent *event);
   void mouseDoubleClickEvent(QMouseEvent *event);
 
  private slots:
+  void slot_populate(const QVectorQPairQImageQString &vector);
   void slot_remove(QGraphicsItem *item);
 
  signals:
+  void gathered(const QVectorQPairQImageQString &vector);
   void open_file(const QString &file_name);
   void open_file(void);
   void remove(const QString &file_name);
