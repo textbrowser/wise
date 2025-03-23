@@ -219,7 +219,6 @@ void wise_recent_files_view::slot_populate
 	(QFileInfo(vector.at(i).second).isReadable() ?
 	 item->pixmap() : missing);
       item->setSelected(file_names.contains(vector.at(i).second));
-      item->setToolTip(vector.at(i).second);
       scene()->addItem(item);
 
       if(column_index >= columns)

@@ -30,6 +30,7 @@
 
 #include "wise.h"
 
+#include <QFileInfo>
 #include <QFuture>
 #include <QGraphicsDropShadowEffect>
 #include <QGraphicsPixmapItem>
@@ -71,6 +72,7 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
   }
 
  private:
+  QPainterPath m_file_name_text;
   QPainterPath m_remove_button;
   QPointF m_hover_point;
   QString m_file_name;
@@ -126,10 +128,12 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
     pen.setJoinStyle(Qt::RoundJoin);
     pen.setStyle(Qt::SolidLine);
     pen.setWidthF(0.0);
+    painter->save();
     painter->setBrush(QBrush(pixmap()));
     painter->setPen(pen);
     painter->setRenderHint(QPainter::Antialiasing, true);
     painter->drawRoundedRect(boundingRect(), radius, radius); // Order.
+    painter->restore();
 
     QIcon const static icon(":/clear.svg");
 
@@ -141,9 +145,8 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
       m_remove_button.closeSubpath() :
       (void) 0;
     pen.setColor(QColor(222, 141, 174));
-    pen.setJoinStyle(Qt::RoundJoin);
-    pen.setStyle(Qt::SolidLine);
     pen.setWidthF(3.5);
+    painter->save();
     painter->setPen(pen);
     painter->drawPath(m_remove_button);
     painter->fillPath
@@ -151,6 +154,38 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
        m_remove_button.contains(m_hover_point) ?
        QColor(Qt::black) : QColor(Qt::white));
     icon.paint(painter, m_remove_button.boundingRect().toRect());
+    painter->restore();
+
+    auto const default_font(painter->font());
+    auto const font_metrics(painter->fontMetrics());
+    auto const text(QFileInfo(m_file_name).fileName());
+    auto const text_width = font_metrics.horizontalAdvance(text);
+
+    m_file_name_text.isEmpty() ?
+      m_file_name_text.addRoundedRect
+      (10.5 + boundingRect().topLeft().x(),
+       8.5 + boundingRect().topLeft().y(),
+       static_cast<qreal> (5 + text_width),
+       static_cast<qreal> (5 + font_metrics.height()),
+       5.0,
+       5.0),
+      m_file_name_text.closeSubpath() :
+      (void) 0;
+    pen.setColor(QColor(Qt::black));
+    pen.setWidthF(2.5);
+    painter->save();
+    painter->setPen(pen);
+    painter->drawPath(m_file_name_text);
+    painter->fillPath(m_file_name_text, QColor(Qt::black));
+    painter->restore();
+    pen.setColor(QColor(Qt::white));
+    painter->save();
+    painter->setPen(pen);
+    painter->drawText
+      (12.5 + boundingRect().topLeft().x(),
+       23.5 + boundingRect().topLeft().y(),
+       text);
+    painter->restore();
 
     if(option->state & (QStyle::State_HasFocus | QStyle::State_Selected))
       {
@@ -163,7 +198,9 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
 	rect.setX(-offset + rect.x());
 	rect.setY(-offset + rect.y());
 	path.addRoundedRect(rect, radius, radius);
+	painter->save();
 	painter->fillPath(path, QColor(222, 141, 174, 100)); // Sassy Pink
+	painter->restore();
       }
   }
 
