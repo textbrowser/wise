@@ -158,7 +158,10 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
 
     auto const default_font(painter->font());
     auto const font_metrics(painter->fontMetrics());
-    auto const text(QFileInfo(m_file_name).fileName());
+    auto const text
+      (font_metrics.elidedText(QFileInfo(m_file_name).fileName(),
+			       Qt::ElideRight,
+			       -50 + boundingRect().width()));
     auto const text_width = font_metrics.horizontalAdvance(text);
 
     m_file_name_text.isEmpty() ?
