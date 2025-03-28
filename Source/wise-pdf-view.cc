@@ -173,6 +173,7 @@ wise_pdf_view::wise_pdf_view
   m_ui.case_sensitive->setVisible(false);
   m_ui.contents->setModel(m_bookmark_model);
 #ifdef Q_OS_ANDROID
+  m_ui.left_panel->setChecked(false);
   m_ui.print->setVisible(false);
 #endif
   m_ui.search_frame->setVisible(false);
@@ -213,6 +214,10 @@ wise_pdf_view::wise_pdf_view
 	  &QToolButton::clicked,
 	  this,
 	  &wise_pdf_view::slot_last_page);
+  connect(m_ui.left_panel,
+	  &QToolButton::clicked,
+	  this,
+	  &wise_pdf_view::slot_show_left_panel);
   connect(m_ui.next_page,
 	  &QToolButton::clicked,
 	  m_ui.page,
@@ -624,6 +629,11 @@ void wise_pdf_view::slot_select_page(int value)
 {
   m_pdf_view->pageNavigator()->jump(-1 + value, QPointF());
   prepare_widget_states();
+}
+
+void wise_pdf_view::slot_show_left_panel(void)
+{
+  m_ui.splitter->widget(0)->setVisible(m_ui.left_panel->isChecked());
 }
 
 void wise_pdf_view::slot_view_size_activated(int index)

@@ -17,6 +17,39 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
+      <widget class="QToolButton" name="left_panel">
+       <property name="toolTip">
+        <string>Left Panel</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../Icons/icons.qrc">
+         <normaloff>:/left-panel.png</normaloff>:/left-panel.png</iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <widget class="QToolButton" name="first_page">
        <property name="toolTip">
         <string>First Page</string>
@@ -24,12 +57,6 @@
        <property name="icon">
         <iconset resource="../Icons/icons.qrc">
          <normaloff>:/first-page.svg</normaloff>:/first-page.svg</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>50</width>
-         <height>50</height>
-        </size>
        </property>
       </widget>
      </item>
@@ -41,19 +68,6 @@
        <property name="icon">
         <iconset resource="../Icons/icons.qrc">
          <normaloff>:/previous-page.svg</normaloff>:/previous-page.svg</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>50</width>
-         <height>50</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Page</string>
        </property>
       </widget>
      </item>
@@ -85,12 +99,6 @@
         <iconset resource="../Icons/icons.qrc">
          <normaloff>:/next-page.svg</normaloff>:/next-page.svg</iconset>
        </property>
-       <property name="iconSize">
-        <size>
-         <width>50</width>
-         <height>50</height>
-        </size>
-       </property>
       </widget>
      </item>
      <item>
@@ -101,19 +109,6 @@
        <property name="icon">
         <iconset resource="../Icons/icons.qrc">
          <normaloff>:/last-page.svg</normaloff>:/last-page.svg</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>50</width>
-         <height>50</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>View</string>
        </property>
       </widget>
      </item>
@@ -146,12 +141,6 @@
         <iconset resource="../Icons/icons.qrc">
          <normaloff>:/zoom-in.png</normaloff>:/zoom-in.png</iconset>
        </property>
-       <property name="iconSize">
-        <size>
-         <width>50</width>
-         <height>50</height>
-        </size>
-       </property>
        <property name="shortcut">
         <string>Ctrl+=</string>
        </property>
@@ -168,12 +157,6 @@
        <property name="icon">
         <iconset resource="../Icons/icons.qrc">
          <normaloff>:/zoom-out.png</normaloff>:/zoom-out.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>50</width>
-         <height>50</height>
-        </size>
        </property>
        <property name="shortcut">
         <string>Ctrl+-</string>
@@ -202,12 +185,6 @@
         <iconset resource="../Icons/icons.qrc">
          <normaloff>:/print.svg</normaloff>:/print.svg</iconset>
        </property>
-       <property name="iconSize">
-        <size>
-         <width>50</width>
-         <height>50</height>
-        </size>
-       </property>
       </widget>
      </item>
      <item>
@@ -221,12 +198,6 @@
        <property name="icon">
         <iconset resource="../Icons/icons.qrc">
          <normaloff>:/search.svg</normaloff>:/search.svg</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>50</width>
-         <height>50</height>
-        </size>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -283,7 +254,7 @@
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
-      <widget class="QGroupBox" name="groupBox">
+      <widget class="QGroupBox" name="contents_groupbox">
        <property name="title">
         <string>Contents</string>
        </property>
@@ -427,12 +398,6 @@
          <iconset resource="../Icons/icons.qrc">
           <normaloff>:/next-page.svg</normaloff>:/next-page.svg</iconset>
         </property>
-        <property name="iconSize">
-         <size>
-          <width>25</width>
-          <height>25</height>
-         </size>
-        </property>
        </widget>
       </item>
       <item>
@@ -443,12 +408,6 @@
         <property name="icon">
          <iconset resource="../Icons/icons.qrc">
           <normaloff>:/previous-page.svg</normaloff>:/previous-page.svg</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>25</width>
-          <height>25</height>
-         </size>
         </property>
        </widget>
       </item>
@@ -468,6 +427,7 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>left_panel</tabstop>
   <tabstop>first_page</tabstop>
   <tabstop>previous_page</tabstop>
   <tabstop>page</tabstop>
@@ -486,6 +446,7 @@
   <tabstop>find_next</tabstop>
   <tabstop>find_previous</tabstop>
   <tabstop>case_sensitive</tabstop>
+  <tabstop>search_show</tabstop>
  </tabstops>
  <resources>
   <include location="../Icons/icons.qrc"/>
