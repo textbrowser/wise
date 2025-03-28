@@ -78,7 +78,6 @@ QSize wise_tab_bar::tabSizeHint(int index) const
     {
       const int preferred_tab_width = 250;
 
-      size.setHeight(10 + size.height());
       size.setWidth(preferred_tab_width);
     }
 
