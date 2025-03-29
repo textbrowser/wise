@@ -62,6 +62,7 @@ class wise: public QMainWindow
   void slot_close_tab(int index);
   void slot_close_tab(void);
   void slot_find(void);
+  void slot_open_pdf_files(const QString &file_name);
   void slot_open_pdf_files(void);
   void slot_page_moved(int from, int to);
   void slot_page_selected(int index);

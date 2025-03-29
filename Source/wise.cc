@@ -78,9 +78,9 @@ wise::wise(void):QMainWindow(nullptr)
 	  this,
 	  SLOT(slot_close_tab(void)));
   connect(m_ui.action_Open_PDF_Files,
-	  &QAction::triggered,
+	  SIGNAL(triggered(void)),
 	  this,
-	  &wise::slot_open_pdf_files);
+	  SLOT(slot_open_pdf_files(void)));
   connect(m_ui.action_Print,
 	  &QAction::triggered,
 	  this,
@@ -350,6 +350,13 @@ void wise::slot_find(void)
     page->find();
 }
 
+void wise::slot_open_pdf_files(const QString &file)
+{
+  QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+  add_pdf_page(file);
+  QApplication::restoreOverrideCursor();
+}
+
 void wise::slot_open_pdf_files(void)
 {
   QFileDialog dialog(this);
@@ -436,6 +443,14 @@ void wise::slot_recent_files(void)
 	      &wise::recent_file_saved,
 	      view,
 	      &wise_recent_files_view::slot_gather);
+      connect(view,
+	      SIGNAL(open_file(const QString &)),
+	      this,
+	      SLOT(slot_open_pdf_files(const QString &)));
+      connect(view,
+	      SIGNAL(open_file(void)),
+	      this,
+	      SLOT(slot_open_pdf_files(void)));
     }
 
   m_ui.action_Close_Page->setEnabled(true);
