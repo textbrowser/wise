@@ -555,7 +555,7 @@ void wise::slot_settings(void)
     }
 
   m_ui.action_Close_Page->setEnabled(true);
-  m_ui.tab->addTab(m_settings, QIcon(":/settings.png"), tr("Wise Settings"));
+  m_ui.tab->addTab(m_settings, QIcon(":/settings.svg"), tr("Wise Settings"));
   m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(m_settings));
   m_ui.tab->setTabToolTip
     (m_ui.tab->indexOf(m_settings), tr("Wise Settings"));
