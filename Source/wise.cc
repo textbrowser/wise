@@ -350,6 +350,34 @@ void wise::slot_find(void)
     page->find();
 }
 
+void wise::slot_forget_recent_file(const QString &file_name)
+{
+  QApplication::setOverrideCursor(Qt::WaitCursor);
+
+  QString connection_name("slot_forget_recent_file");
+
+  {
+    auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));
+
+    db.setDatabaseName
+      (home_path() + QDir::separator() + "wise-recent-files.db");
+
+    if(db.open())
+      {
+	QSqlQuery query(db);
+
+	query.prepare("DELETE FROM wise_recent_files WHERE file_name = ?");
+	query.addBindValue(file_name);
+	query.exec();
+      }
+
+    db.close();
+  }
+
+  QSqlDatabase::removeDatabase(connection_name);
+  QApplication::restoreOverrideCursor();
+}
+
 void wise::slot_open_pdf_files(const QString &file)
 {
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -451,6 +479,10 @@ void wise::slot_recent_files(void)
 	      SIGNAL(open_file(void)),
 	      this,
 	      SLOT(slot_open_pdf_files(void)));
+      connect(view,
+	      SIGNAL(remove(const QString &)),
+	      this,
+	      SLOT(slot_forget_recent_file(const QString &)));
     }
 
   m_ui.action_Close_Page->setEnabled(true);

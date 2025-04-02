@@ -246,4 +246,5 @@ void wise_recent_files_view::slot_remove(QGraphicsItem *item)
 
   scene()->removeItem(item);
   delete item;
+  QTimer::singleShot(50, this, SLOT(slot_gather(void)));
 }
