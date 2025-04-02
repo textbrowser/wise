@@ -32,6 +32,8 @@
 
 #include <QTimer>
 
+#define WISE_VERSION_STRING "2025.04.05"
+
 class wise_settings;
 typedef QVector<QPair<QImage, QString> > QVectorQPairQImageQString;
 
@@ -40,7 +42,6 @@ class wise: public QMainWindow
   Q_OBJECT
 
  public:
-  QString static WISE_VERSION_STRING;
   wise(void);
   ~wise();
   QString static home_path(void);

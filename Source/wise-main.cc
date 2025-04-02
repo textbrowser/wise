@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
   CocoaInitializer ci;
 #endif
   QCoreApplication::setApplicationName("Wise");
-  QCoreApplication::setApplicationVersion(wise::WISE_VERSION_STRING);
+  QCoreApplication::setApplicationVersion(WISE_VERSION_STRING);
   QCoreApplication::setOrganizationName("Wise");
   QSettings::setDefaultFormat(QSettings::IniFormat);
   QSettings::setPath

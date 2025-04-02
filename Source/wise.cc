@@ -41,8 +41,6 @@
 #include <QSqlQuery>
 #include <QTextBrowser>
 
-QString wise::WISE_VERSION_STRING = "2025.04.01";
-
 wise::wise(void):QMainWindow(nullptr)
 {
   m_settings = new wise_settings(this);

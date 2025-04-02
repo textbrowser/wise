@@ -30,12 +30,6 @@ then
     done
 fi
 
-FILE="Source/wise.cc"
-
-sed -i \
-    's/\(WISE_VERSION_STRING "\)[0-9]\+\(\.[0-9]\+\)*"/\1'"$VERSION"'"/' \
-    $FILE
-
 FILE="Android/AndroidManifest.xml"
 
 sed -i \
@@ -43,5 +37,11 @@ sed -i \
     $FILE
 sed -i \
     's/\(android:versionName="\)[0-9]\+\(\.[0-9]\+\)*"/\1'"$VERSION"'"/' \
+    $FILE
+
+FILE="Source/wise.h"
+
+sed -i \
+    's/\(WISE_VERSION_STRING "\)[0-9]\+\(\.[0-9]\+\)*"/\1'"$VERSION"'"/' \
     $FILE
 echo "Please modify ReleaseNotes.html."
