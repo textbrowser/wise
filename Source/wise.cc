@@ -59,7 +59,9 @@ wise::wise(void):QMainWindow(nullptr)
   m_ui.tab->setTabsClosable(true);
   m_ui.tool_bar->addAction(m_ui.action_Open_PDF_Files);
   m_ui.tool_bar->addAction(m_ui.action_Recent_Files);
+  m_ui.tool_bar->addSeparator();
   m_ui.tool_bar->addAction(m_ui.action_Release_Notes);
+  m_ui.tool_bar->addSeparator();
   m_ui.tool_bar->addAction(m_ui.action_Settings);
   m_ui.tool_bar->setIconSize(QSize(25, 25));
   new QShortcut(tr("Ctrl+F"), this, SLOT(slot_find(void)));
