@@ -141,6 +141,7 @@ wise::wise(void):QMainWindow(nullptr)
 #endif
   process_terminal();
   restore();
+  slot_recent_files();
 }
 
 wise::~wise()
