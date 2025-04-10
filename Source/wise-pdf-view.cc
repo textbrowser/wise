@@ -260,17 +260,10 @@ wise_pdf_view::wise_pdf_view
 	  &QItemSelectionModel::currentChanged,
 	  this,
 	  &wise_pdf_view::slot_search_view_selected);
-#ifdef Q_OS_ANDROID
   connect(m_ui.view_size,
 	  &QToolButton::clicked,
 	  this,
 	  &wise_pdf_view::slot_show_menu);
-#else
-  connect(m_ui.view_size,
-	  &QToolButton::clicked,
-	  m_ui.view_size,
-	  &QToolButton::showMenu);
-#endif
   connect(m_ui.zoom_in,
 	  &QToolButton::clicked,
 	  this,
@@ -664,8 +657,15 @@ void wise_pdf_view::slot_show_menu(void)
 
   if(tool_button && tool_button->menu())
     {
+#ifdef Q_OS_ANDROID
       tool_button->menu()->setMinimumWidth(size().width());
       tool_button->menu()->exec();
+#else
+      tool_button->menu()->setMinimumWidth
+	(qMax(tool_button->menu()->size().width(),
+	      tool_button->size().width()));
+      tool_button->showMenu();
+#endif
     }
 }
 
