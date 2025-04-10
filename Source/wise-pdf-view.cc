@@ -179,6 +179,7 @@ wise_pdf_view::wise_pdf_view
 #endif
   m_ui.search_frame->setVisible(false);
   m_ui.search_view->setModel(m_search_model);
+  m_ui.view_size->setMenu(new QMenu(this));
   connect(m_document,
 	  SIGNAL(statusChanged(QPdfDocument::Status)),
 	  this,
@@ -259,10 +260,17 @@ wise_pdf_view::wise_pdf_view
 	  &QItemSelectionModel::currentChanged,
 	  this,
 	  &wise_pdf_view::slot_search_view_selected);
+#ifdef Q_OS_ANDROID
+  connect(m_ui.view_size,
+	  &QToolButton::clicked,
+	  this,
+	  &wise_pdf_view::slot_show_menu);
+#else
   connect(m_ui.view_size,
 	  &QToolButton::clicked,
 	  m_ui.view_size,
 	  &QToolButton::showMenu);
+#endif
   connect(m_ui.zoom_in,
 	  &QToolButton::clicked,
 	  this,
@@ -281,18 +289,14 @@ wise_pdf_view::wise_pdf_view
   m_ui.splitter->setSizes(QList<int> () << 200 << 1);
   m_ui.splitter->setStretchFactor(0, 0);
   m_ui.splitter->setStretchFactor(1, 1);
-
-  auto menu = new QMenu(this);
-
-  connect(menu->addAction(tr("View-Fit")),
+  connect(m_ui.view_size->menu()->addAction(tr("View-Fit")),
 	  &QAction::triggered,
 	  this,
 	  &wise_pdf_view::slot_view_size_activated);
-  connect(menu->addAction(tr("View-Width")),
+  connect(m_ui.view_size->menu()->addAction(tr("View-Width")),
 	  &QAction::triggered,
 	  this,
 	  &wise_pdf_view::slot_view_size_activated);
-  m_ui.view_size->setMenu(menu);
 #ifdef Q_OS_MACOS
   m_ui.view_size->setStyleSheet
     ("QToolButton {border: none; padding-right: 15px}"
@@ -652,6 +656,17 @@ void wise_pdf_view::slot_select_page(int value)
 void wise_pdf_view::slot_show_left_panel(void)
 {
   m_ui.splitter->widget(0)->setVisible(m_ui.left_panel->isChecked());
+}
+
+void wise_pdf_view::slot_show_menu(void)
+{
+  auto tool_button = qobject_cast<QToolButton *> (sender());
+
+  if(tool_button && tool_button->menu())
+    {
+      tool_button->menu()->setMinimumWidth(size().width());
+      tool_button->menu()->exec();
+    }
 }
 
 void wise_pdf_view::slot_view_size_activated(void)
