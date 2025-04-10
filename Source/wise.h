@@ -77,6 +77,7 @@ class wise: public QMainWindow
   void slot_screen_mode(void);
   void slot_select_page(void);
   void slot_settings(void);
+  void slot_view_tool_bar(void);
 
  signals:
   void recent_file_saved(void);

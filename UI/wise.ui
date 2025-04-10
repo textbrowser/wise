@@ -63,6 +63,8 @@
     <addaction name="action_Screen_Mode"/>
     <addaction name="separator"/>
     <addaction name="action_Recent_Files"/>
+    <addaction name="separator"/>
+    <addaction name="action_Tool_Bar"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
     <property name="title">
@@ -91,7 +93,7 @@
   </widget>
   <widget class="QToolBar" name="tool_bar">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>Wise: Tools</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -177,6 +179,17 @@
    </property>
    <property name="text">
     <string>&amp;Recent Files</string>
+   </property>
+  </action>
+  <action name="action_Tool_Bar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Tool Bar</string>
    </property>
   </action>
  </widget>

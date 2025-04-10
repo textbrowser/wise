@@ -105,6 +105,10 @@ wise::wise(void):QMainWindow(nullptr)
 	  &QAction::triggered,
 	  this,
 	  &wise::slot_screen_mode);
+  connect(m_ui.action_Tool_Bar,
+	  &QAction::triggered,
+	  this,
+	  &wise::slot_view_tool_bar);
   connect(m_ui.menu_Pages,
 	  &QMenu::aboutToShow,
 	  this,
@@ -141,7 +145,6 @@ wise::wise(void):QMainWindow(nullptr)
 #endif
   process_terminal();
   restore();
-  slot_recent_files();
 }
 
 wise::~wise()
@@ -267,17 +270,21 @@ void wise::process_terminal(void)
     if(list.at(i).endsWith(".pdf", Qt::CaseInsensitive))
       add_pdf_page(list.at(i));
 
+  m_ui.tab->count() == 0 ? slot_recent_files() : (void) 0;
   QApplication::restoreOverrideCursor();
 }
 
 void wise::restore(void)
 {
+  m_ui.action_Tool_Bar->setChecked
+    (QSettings().value("view_tool_bar", true).toBool());
   restoreGeometry(QSettings().value("geometry").toByteArray());
   restoreState(QSettings().value("state").toByteArray());
   isFullScreen() ?
     m_ui.action_Screen_Mode->setText(tr("&Normal Screen")) :
     m_ui.action_Screen_Mode->setText(tr("&Full Screen"));
   prepare_icons();
+  slot_view_tool_bar();
 }
 
 void wise::slot_about(void)
@@ -592,4 +599,10 @@ void wise::slot_settings(void)
   m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(m_settings));
   m_ui.tab->setTabToolTip
     (m_ui.tab->indexOf(m_settings), tr("Wise Settings"));
+}
+
+void wise::slot_view_tool_bar(void)
+{
+  QSettings().setValue("view_tool_bar", m_ui.action_Tool_Bar->isChecked());
+  m_ui.tool_bar->setVisible(m_ui.action_Tool_Bar->isChecked());
 }
