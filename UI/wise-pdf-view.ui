@@ -113,23 +113,22 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="view_size">
-       <property name="currentIndex">
-        <number>1</number>
+      <widget class="QToolButton" name="view_size">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
        </property>
-       <property name="sizeAdjustPolicy">
-        <enum>QComboBox::AdjustToContents</enum>
+       <property name="text">
+        <string>View-Width</string>
        </property>
-       <item>
-        <property name="text">
-         <string>View-Fit</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Width-Fit</string>
-        </property>
-       </item>
+       <property name="popupMode">
+        <enum>QToolButton::MenuButtonPopup</enum>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
+       </property>
       </widget>
      </item>
      <item>
@@ -439,7 +438,6 @@
   <tabstop>page</tabstop>
   <tabstop>next_page</tabstop>
   <tabstop>last_page</tabstop>
-  <tabstop>view_size</tabstop>
   <tabstop>zoom_in</tabstop>
   <tabstop>zoom_out</tabstop>
   <tabstop>print</tabstop>

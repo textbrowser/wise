@@ -30,6 +30,7 @@
 
 #include <QKeyEvent>
 #include <QListView>
+#include <QMenu>
 #include <QPainter>
 #include <QPdfBookmarkModel>
 #include <QPdfPageNavigator>
@@ -259,9 +260,9 @@ wise_pdf_view::wise_pdf_view
 	  this,
 	  &wise_pdf_view::slot_search_view_selected);
   connect(m_ui.view_size,
-	  SIGNAL(activated(int)),
-	  this,
-	  SLOT(slot_view_size_activated(int)));
+	  &QToolButton::clicked,
+	  m_ui.view_size,
+	  &QToolButton::showMenu);
   connect(m_ui.zoom_in,
 	  &QToolButton::clicked,
 	  this,
@@ -280,11 +281,29 @@ wise_pdf_view::wise_pdf_view
   m_ui.splitter->setSizes(QList<int> () << 200 << 1);
   m_ui.splitter->setStretchFactor(0, 0);
   m_ui.splitter->setStretchFactor(1, 1);
+
+  auto menu = new QMenu(this);
+
+  connect(menu->addAction(tr("View-Fit")),
+	  &QAction::triggered,
+	  this,
+	  &wise_pdf_view::slot_view_size_activated);
+  connect(menu->addAction(tr("View-Width")),
+	  &QAction::triggered,
+	  this,
+	  &wise_pdf_view::slot_view_size_activated);
+  m_ui.view_size->setMenu(menu);
+#ifdef Q_OS_MACOS
+  m_ui.view_size->setStyleSheet
+    ("QToolButton {border: none; padding-right: 15px}"
+     "QToolButton::menu-button {border: none; width: 15px;}");
+#endif
   m_url = url;
   new QShortcut(tr("Ctrl+0"), this, SLOT(slot_zoom_reset(void)));
   prepare();
   prepare_widget_states();
   slot_search_count_changed();
+  slot_show_left_panel();
   QTimer::singleShot(10, this, SLOT(slot_load_document(void)));
 }
 
@@ -332,17 +351,18 @@ void wise_pdf_view::prepare(void)
     }
 
   foreach(auto tool_button, findChildren<QToolButton *> ())
-    {
-      tool_button->setArrowType(Qt::NoArrow);
-      tool_button->setAutoRaise(true);
-      tool_button->setIconSize(QSize(25, 25));
+    if(m_ui.view_size != tool_button)
+      {
+	tool_button->setArrowType(Qt::NoArrow);
+	tool_button->setAutoRaise(true);
+	tool_button->setIconSize(QSize(25, 25));
 #if defined(Q_OS_ANDROID) || defined(Q_OS_MACOS)
-      tool_button->setStyleSheet
-	("QToolButton {border: none;}"
-	 "QToolButton::menu-button {border: none;}"
-	 "QToolButton::menu-indicator {image: none;}");
+	tool_button->setStyleSheet
+	  ("QToolButton {border: none;}"
+	   "QToolButton::menu-button {border: none;}"
+	   "QToolButton::menu-indicator {image: none;}");
 #endif
-    }
+      }
 
   m_ui.contents->expandAll();
   m_ui.meta->resizeColumnToContents(0);
@@ -355,27 +375,25 @@ void wise_pdf_view::prepare(void)
 
 void wise_pdf_view::prepare_view_size(void)
 {
-  auto const percent = static_cast<int> (100.0 * m_pdf_view->zoomFactor());
-  auto const index = m_ui.view_size->findText(QString("%1%").arg(percent));
+  QStringList list;
+  auto const percent
+    (QString("%1%").arg(static_cast<int> (100.0 * m_pdf_view->zoomFactor())));
 
-  if(index < 0)
-    {
-      QStringList list;
+  foreach(auto action, m_ui.view_size->menu()->actions())
+    list << action->text();
 
-      for(int i = 0; i < m_ui.view_size->count(); i++)
-	list << m_ui.view_size->itemText(i);
+  if(!list.contains(percent))
+    list << percent;
 
-      list << QString("%1%").arg(percent);
-      std::sort(list.begin(), list.end(), numeric_sort);
-      m_ui.view_size->blockSignals(true);
-      m_ui.view_size->clear();
-      m_ui.view_size->addItems(list);
-      m_ui.view_size->blockSignals(false);
-      m_ui.view_size->setCurrentIndex
-	(m_ui.view_size->findText(QString("%1%").arg(percent)));
-    }
-  else
-    m_ui.view_size->setCurrentIndex(index);
+  m_ui.view_size->menu()->clear();
+  m_ui.view_size->setText(percent);
+  std::sort(list.begin(), list.end(), numeric_sort);
+
+  foreach(auto const &string, list)
+    connect(m_ui.view_size->menu()->addAction(string),
+	    &QAction::triggered,
+	    this,
+	    &wise_pdf_view::slot_view_size_activated);
 }
 
 void wise_pdf_view::prepare_widget_states(void)
@@ -636,9 +654,14 @@ void wise_pdf_view::slot_show_left_panel(void)
   m_ui.splitter->widget(0)->setVisible(m_ui.left_panel->isChecked());
 }
 
-void wise_pdf_view::slot_view_size_activated(int index)
+void wise_pdf_view::slot_view_size_activated(void)
 {
-  auto const zoom_factor = m_ui.view_size->itemText(index).remove('%').toInt();
+  auto action = qobject_cast<QAction *> (sender());
+
+  if(!action)
+    return;
+
+  auto const zoom_factor = action->text().remove('%').toInt();
 
   if(zoom_factor != 0)
     {
@@ -649,12 +672,13 @@ void wise_pdf_view::slot_view_size_activated(int index)
     {
       m_pdf_view->setZoomFactor(1.0);
 
-      if(m_ui.view_size->currentText() == tr("View-Fit"))
+      if(action->text() == tr("View-Fit"))
 	m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitInView);
       else
 	m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitToWidth);
     }
 
+  m_ui.view_size->setText(action->text());
   prepare_widget_states();
 }
 

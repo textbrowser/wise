@@ -33,6 +33,9 @@ wise_settings::wise_settings(QWidget *parent):QWidget(parent)
 {
   m_ui.setupUi(this);
   m_ui.proxy_group_box->setVisible(false);
+#ifdef Q_OS_ANDROID
+  m_ui.render_mode->setEnabled(false);
+#endif
   restore();
 
   foreach(auto check_box, findChildren<QCheckBox *> ())
