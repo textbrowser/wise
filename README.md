@@ -8,7 +8,7 @@ program for reading portable documents.
 <li>Qt 6.8 LTS and newer are necessary.</li>
 </ul>
 
-<h3><b>Release Notes</b></h3>
+<h4><b>Release Notes</b></h4>
 
 <p>2025.04.11 Release</p>
 <ul>
