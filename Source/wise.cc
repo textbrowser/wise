@@ -277,7 +277,7 @@ void wise::process_terminal(void)
 void wise::restore(void)
 {
   m_ui.action_Tool_Bar->setChecked
-    (QSettings().value("view_tool_bar", true).toBool());
+    (QSettings().value("view_tool_bar", false).toBool());
   restoreGeometry(QSettings().value("geometry").toByteArray());
   restoreState(QSettings().value("state").toByteArray());
   isFullScreen() ?

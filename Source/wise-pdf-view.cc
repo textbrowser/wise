@@ -173,10 +173,8 @@ wise_pdf_view::wise_pdf_view
   m_ui.setupUi(this);
   m_ui.case_sensitive->setVisible(false);
   m_ui.contents->setModel(m_bookmark_model);
-#ifdef Q_OS_ANDROID
   m_ui.left_panel->setChecked(false);
   m_ui.print->setVisible(false);
-#endif
   m_ui.search_frame->setVisible(false);
   m_ui.search_view->setModel(m_search_model);
   m_ui.view_size->setMenu(new QMenu(this));
