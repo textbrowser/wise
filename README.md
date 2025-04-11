@@ -1,5 +1,21 @@
 Wise is a wonderfully-interactive and simple educational
 program for reading portable documents.
 
-- Android, Linux, MacOS, PiOS, Windows.
-- Qt 6.8 LTS and newer are necessary.
+<b>Version 2025.04.11 is the newest LTS release.</b>
+
+<ul>
+<li>Android, Linux, MacOS, PiOS, Windows.</li>
+<li>Qt 6.8 LTS and newer are necessary.</li>
+</ul>
+
+<h3><b>Release Notes</b></h3>
+
+<p>2025.04.11 Release</p>
+<ul>
+<li>Android combination boxes are displayed as menus.</li>
+<li>Android packages for ARM32 and ARM64.</li>
+<li>Android scrolling is achieved with two fingers.</li>
+<li>Qt LTS 6.8 is required. Only Android packages are included.</li>
+<li>The blue-balloon-papa release!</li>
+<li>Wisdom arrives.</li>
+</ul>
