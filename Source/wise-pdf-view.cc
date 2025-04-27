@@ -364,6 +364,7 @@ void wise_pdf_view::prepare(void)
   m_ui.meta->resizeColumnToContents(1);
   m_ui.page->setMaximum(m_document->pageCount());
   m_ui.page->setMinimum(1); // The document's page count may be zero.
+  m_ui.page->setSuffix(tr(" of %1").arg(m_ui.page->maximum()));
   m_ui.page->setToolTip
     (QString("[%1, %2]").arg(m_ui.page->minimum()).arg(m_ui.page->maximum()));
 }
