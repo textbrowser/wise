@@ -10,6 +10,12 @@ program for reading portable documents.
 
 <b>Release Notes</b>
 
+<p>2025.04.26 Release</p>
+<ul>
+<li>Another blue-balloon-papa release!</li>
+<li>Page a of b.</li>
+</ul>
+
 <p>2025.04.11 Release</p>
 <ul>
 <li>Android combination boxes are displayed as menus.</li>
