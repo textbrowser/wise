@@ -10,6 +10,11 @@ program for reading portable documents.
 
 <b>Release Notes</b>
 
+<p>2025.04.27 Release</p>
+<ul>
+<li>Elegant recent-files view.</li>
+</ul>
+
 <p>2025.04.26 Release</p>
 <ul>
 <li>Another blue-balloon-papa release!</li>
