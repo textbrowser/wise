@@ -67,17 +67,6 @@ QAction *wise_recent_files_view::menu_action(void) const
   return m_menu_action;
 }
 
-QStringList wise_recent_files_view::selected_file_names(void) const
-{
-  QMap<QString, char> map;
-
-  foreach(auto item, scene()->selectedItems())
-    if(item)
-      map[item->data(Qt::UserRole).toString()] = 0;
-
-  return map.keys();
-}
-
 void wise_recent_files_view::enterEvent(QEnterEvent *event)
 {
   QGraphicsView::enterEvent(event);
@@ -129,13 +118,7 @@ void wise_recent_files_view::keyPressEvent(QKeyEvent *event)
 
   if(event)
     if(event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
-      slot_open();
-}
-
-void wise_recent_files_view::mouseDoubleClickEvent(QMouseEvent *event)
-{
-  QGraphicsView::mouseDoubleClickEvent(event);
-  slot_open();
+      emit open_file();
 }
 
 void wise_recent_files_view::slot_gather(void)
@@ -148,23 +131,11 @@ void wise_recent_files_view::slot_gather(void)
 #endif
 }
 
-void wise_recent_files_view::slot_open(void)
-{
-  auto const list(selected_file_names());
-
-  if(list.isEmpty())
-    emit open_file();
-  else
-    foreach(auto const &file_name, list)
-      emit open_file(file_name);
-}
-
 void wise_recent_files_view::slot_populate
 (const QVectorQPairQImageQString &vector)
 {
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
-  auto const file_names(selected_file_names());
   auto const h_value = horizontalScrollBar()->value();
   auto const v_value = verticalScrollBar()->value();
 
@@ -190,6 +161,10 @@ void wise_recent_files_view::slot_populate
 	(QPixmap::fromImage(vector.at(i).first));
 
       connect(item,
+	      SIGNAL(open(const QString &)),
+	      this,
+	      SIGNAL(open_file(const QString &)));
+      connect(item,
 	      SIGNAL(remove(QGraphicsItem *)),
 	      this,
 	      SLOT(slot_remove(QGraphicsItem *)));
@@ -197,9 +172,9 @@ void wise_recent_files_view::slot_populate
 	      SIGNAL(remove(const QString &)),
 	      this,
 	      SIGNAL(remove(const QString &)));
-      effect->setBlurRadius(10.0);
-      effect->setColor(QColor(Qt::gray));
-      effect->setOffset(2.5, 2.5);
+      effect->setBlurRadius(0.0);
+      effect->setColor(QColor(59, 59, 59));
+      effect->setOffset(0.0, 0.0);
 
       auto const height = 25.0 + item->boundingRect().size().height();
       auto const width = 25.0 + item->boundingRect().size().width();
@@ -213,12 +188,10 @@ void wise_recent_files_view::slot_populate
       column_index += 1;
       item->setData(Qt::UserRole, vector.at(i).second);
       item->set_file_name(vector.at(i).second);
-      item->setFlag(QGraphicsItem::ItemIsSelectable, true);
       item->setGraphicsEffect(effect);
       item->setPixmap
 	(QFileInfo(vector.at(i).second).isReadable() ?
 	 item->pixmap() : missing);
-      item->setSelected(file_names.contains(vector.at(i).second));
       scene()->addItem(item);
 
       if(column_index >= columns)

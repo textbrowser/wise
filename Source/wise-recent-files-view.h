@@ -47,6 +47,7 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
   wise_recent_files_view_item(const QPixmap &pixmap):
     QObject(), QGraphicsPixmapItem(pixmap)
   {
+    m_show_remove_button = false;
     setAcceptHoverEvents(true);
     setCacheMode(QGraphicsItem::NoCache);
     setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
@@ -76,11 +77,15 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
   QPainterPath m_remove_button;
   QPointF m_hover_point;
   QString m_file_name;
+  bool m_show_remove_button;
 
   void hoverEnterEvent(QGraphicsSceneHoverEvent *event)
   {
     QGraphicsPixmapItem::hoverEnterEvent(event);
     m_hover_point = event ? event->pos() : QPointF();
+    m_show_remove_button = true;
+    prepare_effect_on_hover_enter();
+    setCursor(QCursor(Qt::PointingHandCursor));
     update();
   }
 
@@ -88,6 +93,9 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
   {
     QGraphicsPixmapItem::hoverLeaveEvent(event);
     m_hover_point = QPointF();
+    m_show_remove_button = false;
+    prepare_effect_on_hover_leave();
+    setCursor(QCursor(Qt::ArrowCursor));
     update();
   }
 
@@ -106,16 +114,23 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
 	return;
       }
 
-    m_remove_button.contains
-      (event->pos()) ? emit remove(m_file_name) : (void) 0;
-    m_remove_button.contains(event->pos()) ? emit remove(this) : (void) 0;
+    if(m_remove_button.contains(event->pos()))
+      {
+	setCursor(QCursor(Qt::ArrowCursor));
+	emit remove(m_file_name);
+	emit remove(this);
+      }
+    else
+      open(m_file_name);
   }
 
   void paint(QPainter *painter,
 	     const QStyleOptionGraphicsItem *option,
 	     QWidget *widget)
   {
-    if(!option || !painter)
+    Q_UNUSED(option);
+
+    if(!painter)
       {
 	QGraphicsPixmapItem::paint(painter, option, widget);
 	return;
@@ -124,7 +139,7 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
     QPen pen;
     const qreal static radius = 7.5;
 
-    pen.setColor(QColor(Qt::white));
+    pen.setColor(QColor(211, 211, 211));
     pen.setJoinStyle(Qt::RoundJoin);
     pen.setStyle(Qt::SolidLine);
     pen.setWidthF(0.0);
@@ -137,7 +152,7 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
 
     QIcon const static icon(":/clear.svg");
 
-    m_remove_button.isEmpty() ?
+    m_remove_button.isEmpty() && m_show_remove_button ?
       m_remove_button.addEllipse(-31.5 + boundingRect().topRight().x(),
 				 8.5 + boundingRect().topRight().y(),
 				 25.0,
@@ -189,25 +204,26 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
        23.5 + boundingRect().topLeft().y(),
        text);
     painter->restore();
+  }
 
-    if(option->state & (QStyle::State_HasFocus | QStyle::State_Selected))
-      {
-	QPainterPath path;
-	auto rect(boundingRect());
-	const qreal static offset = 5.0;
+  void prepare_effect_on_hover_enter(void)
+  {
+    auto effect = qobject_cast<QGraphicsDropShadowEffect *> (graphicsEffect());
 
-	rect.setHeight(offset + rect.height());
-	rect.setWidth(offset + rect.width());
-	rect.setX(-offset + rect.x());
-	rect.setY(-offset + rect.y());
-	path.addRoundedRect(rect, radius, radius);
-	painter->save();
-	painter->fillPath(path, QColor(222, 141, 174, 100)); // Sassy Pink
-	painter->restore();
-      }
+    if(effect)
+      effect->setBlurRadius(50.0);
+  }
+
+  void prepare_effect_on_hover_leave(void)
+  {
+    auto effect = qobject_cast<QGraphicsDropShadowEffect *> (graphicsEffect());
+
+    if(effect)
+      effect->setBlurRadius(0.0);
   }
 
  signals:
+  void open(const QString &file_name);
   void remove(QGraphicsItem *item);
   void remove(const QString &file_name);
 };
@@ -222,16 +238,13 @@ class wise_recent_files_view: public QGraphicsView
 
  public slots:
   void slot_gather(void);
-  void slot_open(void);
 
  private:
   QAction *m_menu_action;
   QFuture<void> m_gather_future;
-  QStringList selected_file_names(void) const;
   void enterEvent(QEnterEvent *event);
   void gather(void);
   void keyPressEvent(QKeyEvent *event);
-  void mouseDoubleClickEvent(QMouseEvent *event);
 
  private slots:
   void slot_populate(const QVectorQPairQImageQString &vector);
