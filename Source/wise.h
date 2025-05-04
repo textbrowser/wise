@@ -32,7 +32,7 @@
 
 #include <QTimer>
 
-#define WISE_VERSION_STRING "2025.04.27"
+#define WISE_VERSION_STRING "2025.05.03"
 
 class wise_settings;
 typedef QVector<QPair<QImage, QString> > QVectorQPairQImageQString;
@@ -77,6 +77,7 @@ class wise: public QMainWindow
   void slot_screen_mode(void);
   void slot_select_page(void);
   void slot_settings(void);
+  void slot_view_tab_bar(void);
   void slot_view_tool_bar(void);
 
  signals:

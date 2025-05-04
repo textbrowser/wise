@@ -64,6 +64,7 @@
     <addaction name="separator"/>
     <addaction name="action_Recent_Files"/>
     <addaction name="separator"/>
+    <addaction name="action_Tab_Bar"/>
     <addaction name="action_Tool_Bar"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
@@ -186,7 +187,18 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>&amp;Tool Bar</string>
+    <string>Tool Bar</string>
+   </property>
+  </action>
+  <action name="action_Tab_Bar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Tab Bar</string>
    </property>
   </action>
  </widget>

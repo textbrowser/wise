@@ -105,6 +105,10 @@ wise::wise(void):QMainWindow(nullptr)
 	  &QAction::triggered,
 	  this,
 	  &wise::slot_screen_mode);
+  connect(m_ui.action_Tab_Bar,
+	  &QAction::triggered,
+	  this,
+	  &wise::slot_view_tab_bar);
   connect(m_ui.action_Tool_Bar,
 	  &QAction::triggered,
 	  this,
@@ -276,6 +280,8 @@ void wise::process_terminal(void)
 
 void wise::restore(void)
 {
+  m_ui.action_Tab_Bar->setChecked
+    (QSettings().value("view_tab_bar", true).toBool());
   m_ui.action_Tool_Bar->setChecked
     (QSettings().value("view_tool_bar", false).toBool());
   restoreGeometry(QSettings().value("geometry").toByteArray());
@@ -284,6 +290,7 @@ void wise::restore(void)
     m_ui.action_Screen_Mode->setText(tr("&Normal Screen")) :
     m_ui.action_Screen_Mode->setText(tr("&Full Screen"));
   prepare_icons();
+  slot_view_tab_bar();
   slot_view_tool_bar();
 }
 
@@ -599,6 +606,12 @@ void wise::slot_settings(void)
   m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(m_settings));
   m_ui.tab->setTabToolTip
     (m_ui.tab->indexOf(m_settings), tr("Wise Settings"));
+}
+
+void wise::slot_view_tab_bar(void)
+{
+  QSettings().setValue("view_tab_bar", m_ui.action_Tab_Bar->isChecked());
+  m_ui.tab->tabBar()->setVisible(m_ui.action_Tab_Bar->isChecked());
 }
 
 void wise::slot_view_tool_bar(void)
