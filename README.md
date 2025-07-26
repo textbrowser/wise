@@ -1,12 +1,12 @@
 Wise is a wonderfully-interactive and simple educational
 program for reading portable documents.
 
-<b>Version 2025.04.11 is the newest LTS release.</b>
-
 <ul>
 <li>Android, Linux, MacOS, PiOS, Windows.</li>
 <li>Qt 6.8 LTS and newer are necessary.</li>
 </ul>
+
+<b>Version 2025.04.11 is the newest LTS release.</b>
 
 <b>Release Notes</b>
 
