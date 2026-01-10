@@ -48,11 +48,18 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <widget class="QMenu" name="menu_Recent_Files">
+     <property name="title">
+      <string>Recent Files</string>
+     </property>
+    </widget>
     <addaction name="action_Open_PDF_Files"/>
     <addaction name="separator"/>
     <addaction name="action_Close_Page"/>
     <addaction name="separator"/>
     <addaction name="action_Print"/>
+    <addaction name="separator"/>
+    <addaction name="menu_Recent_Files"/>
     <addaction name="separator"/>
     <addaction name="action_Quit"/>
    </widget>
@@ -199,6 +206,11 @@
    </property>
    <property name="text">
     <string>Tab Bar</string>
+   </property>
+  </action>
+  <action name="actionEmpty">
+   <property name="text">
+    <string>Empty</string>
    </property>
   </action>
  </widget>

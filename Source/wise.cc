@@ -55,6 +55,7 @@ wise::wise(void):QMainWindow(nullptr)
   m_ui.action_Print->setVisible(false);
 #endif
   m_ui.menu_Pages->setStyleSheet("QMenu {menu-scrollable: 1;}");
+  m_ui.menu_Recent_Files->setStyleSheet("QMenu {menu-scrollable: 1;}");
   m_ui.tab->setMovable(true);
   m_ui.tab->setTabsClosable(true);
   m_ui.tool_bar->addAction(m_ui.action_Open_PDF_Files);
