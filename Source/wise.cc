@@ -118,6 +118,10 @@ wise::wise(void):QMainWindow(nullptr)
 	  &QMenu::aboutToShow,
 	  this,
 	  &wise::slot_about_to_show_pages_menu);
+  connect(m_ui.menu_Recent_Files,
+	  &QMenu::aboutToShow,
+	  this,
+	  &wise::slot_about_to_show_recent_files_menu);
   connect(m_ui.tab,
 	  SIGNAL(currentChanged(int)),
 	  this,
@@ -342,6 +346,80 @@ void wise::slot_about_to_show_pages_menu(void)
   prepare_pages_menu();
 }
 
+void wise::slot_about_to_show_recent_files_menu(void)
+{
+  QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+  m_ui.menu_Recent_Files->clear();
+  connect(m_ui.menu_Recent_Files->addAction(tr("Clear")),
+	  &QAction::triggered,
+	  this,
+	  &wise::slot_clear_recent_files);
+
+  QString const connection_name("slot_about_to_show_recent_files_menu");
+
+  {
+    auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));
+
+    db.setDatabaseName
+      (home_path() + QDir::separator() + "wise-recent-files.db");
+
+    if(db.open())
+      {
+	QSqlQuery query(db);
+
+	query.setForwardOnly(true);
+
+	if(query.exec("SELECT file_name FROM wise_recent_files ORDER BY 1"))
+	  while(query.next())
+	    {
+	      if(m_ui.menu_Recent_Files->actions().size() == 1)
+		m_ui.menu_Recent_Files->addSeparator();
+
+	      auto action = new QAction(query.value(0).toString(), this);
+
+	      action->setData(query.value(0).toString());
+	      connect(action,
+		      &QAction::triggered,
+		      this,
+		      &wise::slot_open_pdf_file);
+	      m_ui.menu_Recent_Files->addAction(action);
+	    }
+      }
+
+    db.close();
+  }
+
+  QSqlDatabase::removeDatabase(connection_name);
+  QApplication::restoreOverrideCursor();
+}
+
+void wise::slot_clear_recent_files(void)
+{
+  QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+
+  QString const connection_name("slot_clear_recent_files");
+
+  {
+    auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));
+
+    db.setDatabaseName
+      (home_path() + QDir::separator() + "wise-recent-files.db");
+
+    if(db.open())
+      {
+	QSqlQuery query(db);
+
+	query.exec("DELETE FROM wise_recent_files");
+      }
+
+    db.close();
+  }
+
+  QSqlDatabase::removeDatabase(connection_name);
+  QApplication::restoreOverrideCursor();
+  emit recent_files_cleared();
+}
+
 void wise::slot_close_tab(int index)
 {
   m_ui.action_Close_Page->setEnabled(m_ui.tab->count() > 1);
@@ -391,6 +469,18 @@ void wise::slot_forget_recent_file(const QString &file_name)
   }
 
   QSqlDatabase::removeDatabase(connection_name);
+  QApplication::restoreOverrideCursor();
+}
+
+void wise::slot_open_pdf_file(void)
+{
+  auto action = qobject_cast<QAction *> (sender());
+
+  if(!action)
+    return;
+
+  QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+  add_pdf_page(action->data().toString());
   QApplication::restoreOverrideCursor();
 }
 
@@ -485,6 +575,10 @@ void wise::slot_recent_files(void)
       view = new wise_recent_files_view(this);
       connect(this,
 	      &wise::recent_file_saved,
+	      view,
+	      &wise_recent_files_view::slot_gather);
+      connect(this,
+	      &wise::recent_files_cleared,
 	      view,
 	      &wise_recent_files_view::slot_gather);
       connect(view,

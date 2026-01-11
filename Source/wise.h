@@ -60,10 +60,13 @@ class wise: public QMainWindow
  private slots:
   void slot_about(void);
   void slot_about_to_show_pages_menu(void);
+  void slot_about_to_show_recent_files_menu(void);
+  void slot_clear_recent_files(void);
   void slot_close_tab(int index);
   void slot_close_tab(void);
   void slot_find(void);
   void slot_forget_recent_file(const QString &file_name);
+  void slot_open_pdf_file(void);
   void slot_open_pdf_files(const QString &file_name);
   void slot_open_pdf_files(void);
   void slot_page_moved(int from, int to);
@@ -82,6 +85,7 @@ class wise: public QMainWindow
 
  signals:
   void recent_file_saved(void);
+  void recent_files_cleared(void);
 };
 
 #endif
