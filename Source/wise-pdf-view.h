@@ -87,6 +87,7 @@ class wise_pdf_view: public QWidget
   QUrl m_url;
   Ui_wise_pdf_view m_ui;
   wise_pdf_view_view *m_pdf_view;
+  void keyPressEvent(QKeyEvent *event);
   void prepare(void);
   void prepare_view_size(void);
   void prepare_widget_states(void);

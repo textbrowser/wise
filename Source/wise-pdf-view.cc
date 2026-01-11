@@ -313,6 +313,23 @@ void wise_pdf_view::find(void)
   m_ui.search_show->setChecked(true);
 }
 
+void wise_pdf_view::keyPressEvent(QKeyEvent *event)
+{
+  QWidget::keyPressEvent(event);
+
+  if(event)
+    {
+      if(event->key() == Qt::Key_Escape)
+	{
+	  if(m_ui.search_show->isChecked())
+	    {
+	      m_pdf_view->setFocus();
+	      m_ui.search_show->setChecked(false);
+	    }
+	}
+    }
+}
+
 void wise_pdf_view::prepare(void)
 {
   m_ui.meta->setRowCount(0);
