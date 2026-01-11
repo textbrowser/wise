@@ -48,7 +48,7 @@ QMAKE_CXXFLAGS_RELEASE += -Wall \
                           -funroll-loops \
                           -fwrapv \
                           -pedantic \
-                          -std=c++17
+                          -std=c++20
 } else:freebsd-* {
 QMAKE_CXXFLAGS_RELEASE += -Wall \
                           -Wcast-align \
