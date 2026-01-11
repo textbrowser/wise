@@ -6,9 +6,15 @@ program for reading portable documents.
 <li>Qt 6.8 LTS and newer are necessary.</li>
 </ul>
 
-<b>Version 2025.04.11 is the newest LTS release.</b>
+<b>Version 2026.01.11 is the newest LTS release.</b>
 
 <b>Release Notes</b>
+
+<p>2026.01.11</p>
+<ul>
+<li>Android C++20.</li>
+<li>New File -> Recent Files.</li>
+</ul>
 
 <p>2025.05.03 Release</p>
 <ul>
