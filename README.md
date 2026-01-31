@@ -10,6 +10,11 @@ program for reading portable documents.
 
 <b>Release Notes</b>
 
+<p>2026.01.31</p>
+<ul>
+<li>Debian distribution via official Qt 6.</li>
+</ul>
+
 <p>2026.01.11</p>
 <ul>
 <li>Android C++20.</li>
