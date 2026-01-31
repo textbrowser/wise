@@ -36,8 +36,9 @@ cp -p ~/Qt/6.8.3/gcc_64/lib/libicuuc.so.73 ./opt/wise/Lib/.
 cp -pr ~/Qt/6.8.3/gcc_64/plugins ./opt/wise/.
 chmod -x,g+w ./opt/wise/Lib/*
 ~/Qt/6.8.3/gcc_64/bin/qmake -o Makefile wise.pro && make -j $(nproc)
-cp -p ./Wise ./opt/wise/.
 cp -p ./Icons/wise.png ./opt/wise/.
+cp -p ./Wise ./opt/wise/.
+cp -p ./wise.sh ./opt/wise/.
 find ./opt/wise/plugins -name '*.so' -exec chmod -x {} \;
 mkdir -p wise-debian.d/opt
 mkdir -p wise-debian.d/usr/share/applications
