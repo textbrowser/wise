@@ -1,0 +1,9 @@
+Architecture: amd64
+Maintainer: f83043e79dc03a0abfbcbc376879a97d66f2cacb@protonmail.ch
+Package: Wise
+Priority: optional
+Section: Educational
+Version: 2026.01.31
+Description: Wise
+ Welcome to Wise!
+ A dooble.desktop file will also be installed in /usr/share/applications/.

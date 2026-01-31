@@ -1,0 +1,4 @@
+https://www.debian.org/doc/manuals/maint-guide/dreq.en.html
+
+> dpkg -S $(objdump -p ./Wise 2>/dev/null | grep NEEDED) 2>/dev/null | \
+  awk '{print $1}' | sed s/:amd64://g | sort -u
