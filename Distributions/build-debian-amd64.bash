@@ -29,7 +29,9 @@ cp -p ~/Qt/6.8.3/gcc_64/lib/libQt6Pdf.so.6 ./opt/wise/Lib/.
 cp -p ~/Qt/6.8.3/gcc_64/lib/libQt6PdfWidgets.so.6 ./opt/wise/Lib/.
 cp -p ~/Qt/6.8.3/gcc_64/lib/libQt6PrintSupport.so.6 ./opt/wise/Lib/.
 cp -p ~/Qt/6.8.3/gcc_64/lib/libQt6Sql.so.6 ./opt/wise/Lib/.
+cp -p ~/Qt/6.8.3/gcc_64/lib/libQt6Svg.so.6 ./opt/wise/Lib/.
 cp -p ~/Qt/6.8.3/gcc_64/lib/libQt6Widgets.so.6 ./opt/wise/Lib/.
+cp -p ~/Qt/6.8.3/gcc_64/lib/libQt6XcbQpa.so.6 ./opt/wise/Lib/.
 cp -p ~/Qt/6.8.3/gcc_64/lib/libicudata.so.73 ./opt/wise/Lib/.
 cp -p ~/Qt/6.8.3/gcc_64/lib/libicui18n.so.73 ./opt/wise/Lib/.
 cp -p ~/Qt/6.8.3/gcc_64/lib/libicuuc.so.73 ./opt/wise/Lib/.

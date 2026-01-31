@@ -16,11 +16,15 @@ then
 elif [ -r /opt/wise/Wise ] && [ -x /opt/wise/Wise ]
 then
     echo "Launching an official Wise."
+    export LD_LIBRARY_PATH=/opt/wise/Lib
+    export QT_PLUGIN_PATH=/opt/wise/plugins
     /opt/wise/Wise "$@"
     exit $?
 elif [ -r /usr/local/wise/Wise ] && [ -x /usr/local/wise/Wise ]
 then
     echo "Launching an official Wise."
+    export LD_LIBRARY_PATH=/usr/local/wise/Lib
+    export QT_PLUGIN_PATH=/usr/local/wise/plugins
     /usr/local/wise/Wise "$@"
     exit $?
 else
