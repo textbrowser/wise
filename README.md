@@ -10,24 +10,24 @@ program for reading portable documents.
 
 <b>Release Notes</b>
 
-<p>2026.01.31</p>
+<p><b>2026.01.31 Release</b></p>
 <ul>
 <li>Debian distribution via official Qt 6.</li>
 </ul>
 
-<p>2026.01.11</p>
+<p><b>2026.01.11 Release</b></p>
 <ul>
 <li>Android C++20.</li>
 <li>New File -> Recent Files.</li>
 </ul>
 
-<p>2025.05.03 Release</p>
+<p><b>2025.05.03 Release</b></p>
 <ul>
 <li>Another blue-balloon-papa release!</li>
 <li>New View -> Tab Bar option.</li>
 </ul>
 
-<p>2025.04.27 Release</p>
+<p><b>2025.04.27 Release</b></p>
 <ul>
 <li>Elegant recent-files view.</li>
 </ul>
