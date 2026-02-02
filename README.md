@@ -32,13 +32,13 @@ program for reading portable documents.
 <li>Elegant recent-files view.</li>
 </ul>
 
-<p>2025.04.26 Release</p>
+<p><b>2025.04.26 Release></b></p>
 <ul>
 <li>Another blue-balloon-papa release!</li>
 <li>Page a of b.</li>
 </ul>
 
-<p>2025.04.11 Release</p>
+<p><b>2025.04.11 Release</b></p>
 <ul>
 <li>Android combination boxes are displayed as menus.</li>
 <li>Android packages for ARM32 and ARM64.</li>
