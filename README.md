@@ -32,7 +32,7 @@ program for reading portable documents.
 <li>Elegant recent-files view.</li>
 </ul>
 
-<p><b>2025.04.26 Release></b></p>
+<p><b>2025.04.26 Release</b></p>
 <ul>
 <li>Another blue-balloon-papa release!</li>
 <li>Page a of b.</li>
