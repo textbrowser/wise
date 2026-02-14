@@ -126,34 +126,34 @@ void wise_recent_files_view::resizeEvent(QResizeEvent *event)
   QGraphicsView::resizeEvent(event);
 
   auto const columns = static_cast<int> (qMax(1.0, width() / (40.0 + 256.0)));
-  const qreal offseth = 15.0;
-  const qreal offsetw = 15.0;
-  int columnIndex = 0;
-  int rowIndex = 0;
+  const qreal offset_h = 15.0;
+  const qreal offset_w = 15.0;
+  int column_index = 0;
+  int row_index = 0;
 
   foreach(auto item, items())
     {
       auto const height = 25.0 + item->boundingRect().size().height();
       auto const width = 25.0 + item->boundingRect().size().width();
 
-      if(rowIndex == 0)
-	item->setPos(columnIndex * width + offsetw, offseth);
+      if(row_index == 0)
+	item->setPos(column_index * width + offset_w, offset_h);
       else
 	item->setPos
-	  (columnIndex * width + offsetw, height * rowIndex + offseth);
+	  (column_index * width + offset_w, height * row_index + offset_h);
 
-      columnIndex += 1;
+      column_index += 1;
 
-      if(columnIndex >= columns)
+      if(column_index >= columns)
 	{
-	  columnIndex = 0;
-	  rowIndex += 1;
+	  column_index = 0;
+	  row_index += 1;
 	}
     }
 
   auto rect(scene()->itemsBoundingRect());
 
-  rect.setHeight(offseth + rect.height());
+  rect.setHeight(offset_h + rect.height());
   rect.setX(0.0);
   rect.setY(0.0);
   setSceneRect(rect);
