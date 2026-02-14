@@ -167,7 +167,7 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
     painter->fillPath
       (m_remove_button,
        m_remove_button.contains(m_hover_point) ?
-       QColor(Qt::black) : QColor(Qt::white));
+       QColor(106, 165, 195) : QColor(Qt::white));
     icon.paint(painter, m_remove_button.boundingRect().toRect());
     painter->restore();
 
@@ -189,12 +189,12 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
        5.0),
       m_file_name_text.closeSubpath() :
       (void) 0;
-    pen.setColor(QColor(Qt::black));
+    pen.setColor(QColor(132, 157, 207));
     pen.setWidthF(2.5);
     painter->save();
     painter->setPen(pen);
     painter->drawPath(m_file_name_text);
-    painter->fillPath(m_file_name_text, QColor(Qt::black));
+    painter->fillPath(m_file_name_text, QColor(12, 53, 136));
     painter->restore();
     pen.setColor(QColor(Qt::white));
     painter->save();
