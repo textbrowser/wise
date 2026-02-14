@@ -2,7 +2,7 @@ Wise is a wonderfully-interactive and simple educational
 program for reading portable documents.
 
 <ul>
-<li>Android, Linux, MacOS, PiOS, Windows.</li>
+<li>Android, Unix, Windows.</li>
 <li>Qt 6.8 LTS and newer are necessary.</li>
 </ul>
 
