@@ -59,7 +59,7 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
 
   QRectF boundingRect(void) const
   {
-    return QRectF(0.0, 0.0, 372.0, 240.0);
+    return QRectF(0.0, 0.0, 256.0, 256.0);
   }
 
   QString file_name(void) const
@@ -245,6 +245,7 @@ class wise_recent_files_view: public QGraphicsView
   void enterEvent(QEnterEvent *event);
   void gather(void);
   void keyPressEvent(QKeyEvent *event);
+  void resizeEvent(QResizeEvent *event);
 
  private slots:
   void slot_populate(const QVectorQPairQImageQString &vector);

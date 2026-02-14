@@ -32,7 +32,7 @@
 
 #include <QTimer>
 
-#define WISE_VERSION_STRING "2026.01.31"
+#define WISE_VERSION_STRING "2026.02.14"
 
 class wise_settings;
 typedef QVector<QPair<QImage, QString> > QVectorQPairQImageQString;

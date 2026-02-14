@@ -121,6 +121,44 @@ void wise_recent_files_view::keyPressEvent(QKeyEvent *event)
       emit open_file();
 }
 
+void wise_recent_files_view::resizeEvent(QResizeEvent *event)
+{
+  QGraphicsView::resizeEvent(event);
+
+  auto const columns = static_cast<int> (qMax(1.0, width() / (40.0 + 256.0)));
+  const qreal offseth = 15.0;
+  const qreal offsetw = 15.0;
+  int columnIndex = 0;
+  int rowIndex = 0;
+
+  foreach(auto item, items())
+    {
+      auto const height = 25.0 + item->boundingRect().size().height();
+      auto const width = 25.0 + item->boundingRect().size().width();
+
+      if(rowIndex == 0)
+	item->setPos(columnIndex * width + offsetw, offseth);
+      else
+	item->setPos
+	  (columnIndex * width + offsetw, height * rowIndex + offseth);
+
+      columnIndex += 1;
+
+      if(columnIndex >= columns)
+	{
+	  columnIndex = 0;
+	  rowIndex += 1;
+	}
+    }
+
+  auto rect(scene()->itemsBoundingRect());
+
+  rect.setHeight(offseth + rect.height());
+  rect.setX(0.0);
+  rect.setY(0.0);
+  setSceneRect(rect);
+}
+
 void wise_recent_files_view::slot_gather(void)
 {
   if(m_gather_future.isFinished())
@@ -150,9 +188,9 @@ void wise_recent_files_view::slot_populate
   int column_index = 0;
   int row_index = 0;
 
-  if(missing.size() != QSize(372, 240))
+  if(missing.size() != QSize(256, 256))
     missing = missing.scaled
-      (372, 240, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+      (256, 256, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
   for(int i = 0; i < vector.size(); i++)
     {
