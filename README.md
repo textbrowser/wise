@@ -10,6 +10,14 @@ program for reading portable documents.
 
 <b>Release Notes</b>
 
+<p><b>2026.02.14 Release</b></p>
+<ul>
+<li>Adjust the number of columns in the recent-files-view on
+  resize events.</li>
+<li>New recent-display item colors.</li>
+<li>New recent-display item size of 256, 256.</li>
+</ul>
+
 <p><b>2026.01.31 Release</b></p>
 <ul>
 <li>Debian distribution via official Qt 6.</li>
