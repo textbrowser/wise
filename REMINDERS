@@ -24,4 +24,5 @@ Remaining Items
 - Fonts.
 - MacOS bundle.
 - Perhaps retain a file's view (current page, current view, etc.).
+- Reload a file if it changed on disk. Option.
 - Rotations.
