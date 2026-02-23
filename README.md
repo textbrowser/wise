@@ -10,7 +10,7 @@ program for reading portable documents.
 
 <b>Release Notes</b>
 
-<p><b>2026.02.22 Release</b></p>
+<p><b>2026.02.23 Release</b></p>
 <ul>
 <li>New single-page page-mode option.</li>
 </ul>
