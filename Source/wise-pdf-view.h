@@ -66,6 +66,10 @@ class wise_pdf_view_view: public QPdfView
 
  private:
   void keyPressEvent(QKeyEvent *event);
+
+ signals:
+  void jump_to_end(void);
+  void jump_to_beginning(void);
 };
 
 class wise_pdf_view: public QWidget

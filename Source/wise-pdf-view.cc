@@ -147,10 +147,20 @@ void wise_pdf_view_view::keyPressEvent(QKeyEvent *event)
 
       if(keyboard_modifiers == Qt::ControlModifier)
 	{
-	  if(event->key() == Qt::Key_End)
-	    verticalScrollBar()->setValue(verticalScrollBar()->maximum());
-	  else if(event->key() == Qt::Key_Home)
-	    verticalScrollBar()->setValue(0);
+	  if(pageMode() == QPdfView::PageMode::MultiPage)
+	    {
+	      if(event->key() == Qt::Key_End)
+		verticalScrollBar()->setValue(verticalScrollBar()->maximum());
+	      else if(event->key() == Qt::Key_Home)
+		verticalScrollBar()->setValue(0);
+	    }
+	  else
+	    {
+	      if(event->key() == Qt::Key_End)
+		emit jump_to_end();
+	      else
+		emit jump_to_beginning();
+	    }
 	}
     }
 }
@@ -182,6 +192,14 @@ wise_pdf_view::wise_pdf_view
 	  SIGNAL(statusChanged(QPdfDocument::Status)),
 	  this,
 	  SLOT(slot_document_status_changed(QPdfDocument::Status)));
+  connect(m_pdf_view,
+	  &wise_pdf_view_view::jump_to_beginning,
+	  this,
+	  &wise_pdf_view::slot_first_page);
+  connect(m_pdf_view,
+	  &wise_pdf_view_view::jump_to_end,
+	  this,
+	  &wise_pdf_view::slot_last_page);
   connect(m_pdf_view->verticalScrollBar(),
 	  SIGNAL(valueChanged(int)),
 	  this,
