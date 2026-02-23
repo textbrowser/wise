@@ -556,7 +556,11 @@ void wise_pdf_view::slot_load_document(void)
   auto const state = m_document->load(m_url.path());
 
   if(state == QPdfDocument::Error::None)
-    save_first_page();
+    {
+      m_ui.contents->scrollToTop();
+      m_ui.meta->scrollToTop();
+      save_first_page();
+    }
 
   m_ui.password_frame->setVisible
     (state == QPdfDocument::Error::IncorrectPassword);
