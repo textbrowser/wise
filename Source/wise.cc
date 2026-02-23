@@ -202,6 +202,10 @@ void wise::add_pdf_page(const QString &file_name)
 
   auto page = new wise_pdf_view(QUrl::fromLocalFile(file_name), this);
 
+  connect(m_settings,
+	  SIGNAL(changed(void)),
+	  page,
+	  SLOT(slot_settings_changed(void)));
   connect(page,
 	  SIGNAL(save_recent_file(const QImage &, const QUrl &)),
 	  this,

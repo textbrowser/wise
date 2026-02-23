@@ -137,6 +137,7 @@ void wise_settings::slot_check_box_state_changed(int state)
 
   QSettings().setValue
     (QString("settings/%1").arg(check_box->objectName()), state);
+  emit changed();
 }
 
 void wise_settings::slot_combination_box_current_index_changed(int index)
@@ -148,4 +149,5 @@ void wise_settings::slot_combination_box_current_index_changed(int index)
 
   QSettings().setValue
     (QString("settings/%1").arg(combination_box->objectName()), index);
+  emit changed();
 }

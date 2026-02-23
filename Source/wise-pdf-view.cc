@@ -165,7 +165,7 @@ wise_pdf_view::wise_pdf_view
   m_page_renderer->setRenderMode(wise_settings::render_mode());
   m_pdf_view = new wise_pdf_view_view(this);
   m_pdf_view->setDocument(m_document);
-  m_pdf_view->setPageMode(QPdfView::PageMode::MultiPage);
+  m_pdf_view->setPageMode(wise_settings::page_mode());
   m_pdf_view->setPageSpacing(0);
   m_pdf_view->setSearchModel(m_search_model = new QPdfSearchModel(this));
   m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitToWidth);
@@ -660,6 +660,12 @@ void wise_pdf_view::slot_select_page(int value)
 {
   m_pdf_view->pageNavigator()->jump(-1 + value, QPointF());
   prepare_widget_states();
+}
+
+void wise_pdf_view::slot_settings_changed(void)
+{
+  m_page_renderer->setRenderMode(wise_settings::render_mode());
+  m_pdf_view->setPageMode(wise_settings::page_mode());
 }
 
 void wise_pdf_view::slot_show_left_panel(void)

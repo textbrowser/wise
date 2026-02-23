@@ -33,6 +33,11 @@
          <string>Multiple</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>Single</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item>

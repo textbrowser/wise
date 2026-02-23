@@ -111,6 +111,7 @@ class wise_pdf_view: public QWidget
   void slot_search_view_selected
     (const QModelIndex &current, const QModelIndex &previous);
   void slot_select_page(int value);
+  void slot_settings_changed(void);
   void slot_show_left_panel(void);
   void slot_show_menu(void);
   void slot_view_size_activated(void);
