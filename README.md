@@ -1,5 +1,5 @@
-Wise is a wonderfully-interactive and simple educational
-program for reading portable documents.
+Wise is a <b>wonderfully</b>-<b>interactive</b> and <b>simple</b>
+<b>educational</b> program for reading portable documents.
 
 <ul>
 <li>Android, Unix, Windows.</li>
@@ -12,6 +12,8 @@ program for reading portable documents.
 
 <p><b>2026.02.23 Release</b></p>
 <ul>
+<li>Detect if a PDF file was changed on disk and
+prompt for a reload.</li>
 <li>New single-page page-mode option.</li>
 </ul>
 
