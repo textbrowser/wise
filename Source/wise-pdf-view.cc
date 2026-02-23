@@ -684,6 +684,7 @@ void wise_pdf_view::slot_settings_changed(void)
 {
   m_page_renderer->setRenderMode(wise_settings::render_mode());
   m_pdf_view->setPageMode(wise_settings::page_mode());
+  slot_first_page();
 }
 
 void wise_pdf_view::slot_show_left_panel(void)
