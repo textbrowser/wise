@@ -30,6 +30,7 @@
 
 #include "ui_wise-pdf-view.h"
 
+#include <QFileSystemWatcher>
 #include <QPdfDocument>
 #include <QPdfView>
 #include <QStyledItemDelegate>
@@ -86,6 +87,7 @@ class wise_pdf_view: public QWidget
   void set_page_mode(const QPdfView::PageMode page_mode);
 
  private:
+  QFileSystemWatcher m_file_system_watcher;
   QPdfBookmarkModel *m_bookmark_model;
   QPdfDocument *m_document;
   QPdfPageRenderer *m_page_renderer;
@@ -104,12 +106,14 @@ class wise_pdf_view: public QWidget
   void slot_contents_selected
     (const QModelIndex &current, const QModelIndex &previous);
   void slot_document_status_changed(QPdfDocument::Status status);
+  void slot_file_changed(const QString &path);
   void slot_first_page(void);
   void slot_last_page(void);
   void slot_load_document(void);
   void slot_password_changed(void);
   void slot_print(QPrinter *printer);
   void slot_print(void);
+  void slot_reload_document(void);
   void slot_scrolled(int value);
   void slot_search(void);
   void slot_search_count_changed(void);

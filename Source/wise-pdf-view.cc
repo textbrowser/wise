@@ -183,6 +183,8 @@ wise_pdf_view::wise_pdf_view
 {
   m_bookmark_model = new QPdfBookmarkModel(this);
   m_bookmark_model->setDocument(m_document = new QPdfDocument(this));
+  m_file_system_watcher.addPath(url.path()) ?
+    (void) 0 : (void) (qDebug() << tr("Cannot monitor %1.").arg(url.path()));
   m_page_renderer = new QPdfPageRenderer(this);
   m_page_renderer->setDocument(m_document);
   m_page_renderer->setRenderMode(wise_settings::render_mode());
@@ -198,9 +200,14 @@ wise_pdf_view::wise_pdf_view
   m_ui.contents->setModel(m_bookmark_model);
   m_ui.left_panel->setChecked(false);
   m_ui.print->setVisible(false);
+  m_ui.reload_frame->setVisible(false);
   m_ui.search_frame->setVisible(false);
   m_ui.search_view->setModel(m_search_model);
   m_ui.view_size->setMenu(new QMenu(this));
+  connect(&m_file_system_watcher,
+	  SIGNAL(fileChanged(const QString &)),
+	  this,
+	  SLOT(slot_file_changed(const QString &)));
   connect(m_document,
 	  SIGNAL(statusChanged(QPdfDocument::Status)),
 	  this,
@@ -283,6 +290,18 @@ wise_pdf_view::wise_pdf_view
 	  SIGNAL(clicked(void)),
 	  this,
 	  SLOT(slot_print(void)));
+  connect(m_ui.reload_no,
+	  &QPushButton::clicked,
+	  m_ui.reload_frame,
+	  &QFrame::hide);
+  connect(m_ui.reload_yes,
+	  &QPushButton::clicked,
+	  m_ui.reload_frame,
+	  &QFrame::hide);
+  connect(m_ui.reload_yes,
+	  &QPushButton::clicked,
+	  this,
+	  &wise_pdf_view::slot_reload_document);
   connect(m_ui.search,
 	  &QLineEdit::returnPressed,
 	  this,
@@ -509,9 +528,17 @@ void wise_pdf_view::slot_document_status_changed(QPdfDocument::Status status)
 {
   if(status == QPdfDocument::Status::Ready)
     {
+      m_search_model->setSearchString("");
+      m_ui.page->setValue(m_ui.page->minimum());
+      m_ui.search->setText("");
       prepare();
       prepare_widget_states();
     }
+}
+
+void wise_pdf_view::slot_file_changed(const QString &path)
+{
+  m_ui.reload_frame->setVisible(m_url.path() == path);
 }
 
 void wise_pdf_view::slot_first_page(void)
@@ -616,6 +643,11 @@ void wise_pdf_view::slot_print(void)
   QApplication::processEvents();
   dialog->exec();
   QApplication::processEvents();
+}
+
+void wise_pdf_view::slot_reload_document(void)
+{
+  QTimer::singleShot(10, this, SLOT(slot_load_document(void)));
 }
 
 void wise_pdf_view::slot_scrolled(int value)
