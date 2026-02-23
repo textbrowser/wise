@@ -139,8 +139,6 @@ wise_pdf_view_view::wise_pdf_view_view(QWidget *parent):QPdfView(parent)
 
 void wise_pdf_view_view::keyPressEvent(QKeyEvent *event)
 {
-  QPdfView::keyPressEvent(event);
-
   if(event)
     {
       auto const keyboard_modifiers(QGuiApplication::keyboardModifiers());
@@ -176,6 +174,8 @@ void wise_pdf_view_view::keyPressEvent(QKeyEvent *event)
 	    }
 	}
     }
+
+  QPdfView::keyPressEvent(event);
 }
 
 wise_pdf_view::wise_pdf_view
