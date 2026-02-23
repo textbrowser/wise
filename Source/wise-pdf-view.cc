@@ -216,11 +216,13 @@ wise_pdf_view::wise_pdf_view
   connect(m_pdf_view,
 	  &wise_pdf_view_view::jump_to_next,
 	  m_ui.page,
-	  &QSpinBox::stepUp);
+	  &QSpinBox::stepUp,
+	  Qt::QueuedConnection);
   connect(m_pdf_view,
 	  &wise_pdf_view_view::jump_to_previous,
 	  m_ui.page,
-	  &QSpinBox::stepDown);
+	  &QSpinBox::stepDown,
+	  Qt::QueuedConnection);
   connect(m_pdf_view->verticalScrollBar(),
 	  SIGNAL(valueChanged(int)),
 	  this,
