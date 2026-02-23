@@ -70,6 +70,8 @@ class wise_pdf_view_view: public QPdfView
  signals:
   void jump_to_end(void);
   void jump_to_beginning(void);
+  void jump_to_next(void);
+  void jump_to_previous(void);
 };
 
 class wise_pdf_view: public QWidget

@@ -162,6 +162,19 @@ void wise_pdf_view_view::keyPressEvent(QKeyEvent *event)
 		emit jump_to_beginning();
 	    }
 	}
+      else if(keyboard_modifiers == Qt::NoModifier)
+	{
+	  if(pageMode() == QPdfView::PageMode::SinglePage)
+	    {
+	      if(event->key() == Qt::Key_PageDown &&
+		 verticalScrollBar()->maximum() == verticalScrollBar()->value())
+		emit jump_to_next();
+	      else if(event->key() == Qt::Key_PageUp &&
+		      verticalScrollBar()->minimum() ==
+		      verticalScrollBar()->value())
+		emit jump_to_previous();
+	    }
+	}
     }
 }
 
@@ -200,6 +213,14 @@ wise_pdf_view::wise_pdf_view
 	  &wise_pdf_view_view::jump_to_end,
 	  this,
 	  &wise_pdf_view::slot_last_page);
+  connect(m_pdf_view,
+	  &wise_pdf_view_view::jump_to_next,
+	  m_ui.page,
+	  &QSpinBox::stepUp);
+  connect(m_pdf_view,
+	  &wise_pdf_view_view::jump_to_previous,
+	  m_ui.page,
+	  &QSpinBox::stepDown);
   connect(m_pdf_view->verticalScrollBar(),
 	  SIGNAL(valueChanged(int)),
 	  this,
