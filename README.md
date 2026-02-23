@@ -14,6 +14,8 @@ Wise is a <b>wonderfully</b>-<b>interactive</b> and <b>simple</b>
 <ul>
 <li>Detect if a PDF file was changed on disk and
 prompt for a reload.</li>
+<li>Display the search result's page after a search
+result is selected.</li>
 <li>New single-page page-mode option.</li>
 </ul>
 
