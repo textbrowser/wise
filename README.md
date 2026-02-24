@@ -10,6 +10,11 @@ Wise is a <b>wonderfully</b>-<b>interactive</b> and <b>simple</b>
 
 <b>Release Notes</b>
 
+<p><b>2026.02.24 Release</b></p>
+<ul>
+<li>Include release notes in the software.</li>
+</ul>
+
 <p><b>2026.02.23 Release</b></p>
 <ul>
 <li>Detect if a PDF file was changed on disk and
