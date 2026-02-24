@@ -731,7 +731,9 @@ void wise_pdf_view::slot_search_view_selected
   m_pdf_view->setCurrentSearchResultIndex(row);
   m_ui.find_next->setEnabled(-1 + m_search_model->count() > row);
   m_ui.find_previous->setEnabled(0 < row);
+  m_ui.page->blockSignals(true);
   m_ui.page->setValue(1 + page);
+  m_ui.page->blockSignals(false);
 }
 
 void wise_pdf_view::slot_select_page(int value)
