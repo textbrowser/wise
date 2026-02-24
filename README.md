@@ -8,8 +8,6 @@ Wise is a <b>wonderfully</b>-<b>interactive</b> and <b>simple</b>
 
 <b>Version 2026.01.11 is the newest LTS release.</b>
 
-![](https://github.com/textbrowser/wise/blob/master/Images/wise.png?raw=true)
-
 <b>Release Notes</b>
 
 <p><b>2026.02.24 Release</b></p>
@@ -71,3 +69,5 @@ result is selected.</li>
 <li>The blue-balloon-papa release!</li>
 <li>Wisdom arrives.</li>
 </ul>
+
+![](https://github.com/textbrowser/wise/blob/master/Images/wise.png?raw=true)
