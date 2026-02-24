@@ -70,4 +70,4 @@ result is selected.</li>
 <li>Wisdom arrives.</li>
 </ul>
 
-![Wise](https://github.com/textbrowser/wise/blob/master/Images/wise.png?raw=true)
+![](https://github.com/textbrowser/wise/blob/main/Images/wise.png?raw=true)
