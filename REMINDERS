@@ -14,6 +14,7 @@ Completed Items
 - Recent files.
 - Recent-file view. As in Glitch.
 - Release notes.
+- Reload a file if it changed on disk. Option.
 - Search.
 - Settings.
 - Zoom-zoom.
@@ -24,5 +25,4 @@ Remaining Items
 - Fonts.
 - MacOS bundle.
 - Perhaps retain a file's view (current page, current view, etc.).
-- Reload a file if it changed on disk. Option.
 - Rotations.

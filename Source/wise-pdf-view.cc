@@ -198,6 +198,7 @@ wise_pdf_view::wise_pdf_view
   m_ui.setupUi(this);
   m_ui.case_sensitive->setVisible(false);
   m_ui.contents->setModel(m_bookmark_model);
+  m_ui.error_frame->setVisible(false);
   m_ui.left_panel->setChecked(false);
   m_ui.print->setVisible(false);
   m_ui.reload_frame->setVisible(false);
@@ -553,17 +554,66 @@ void wise_pdf_view::slot_last_page(void)
 
 void wise_pdf_view::slot_load_document(void)
 {
-  auto const state = m_document->load(m_url.path());
+  m_ui.error_frame->setVisible(false);
+  m_ui.password_frame->setVisible(false);
 
-  if(state == QPdfDocument::Error::None)
+  switch(m_document->load(m_url.path()))
     {
-      m_ui.contents->scrollToTop();
-      m_ui.meta->scrollToTop();
-      save_first_page();
+    case QPdfDocument::Error::DataNotYetAvailable:
+      {
+	m_ui.error_frame->setVisible(true);
+	m_ui.error_label->setText
+	  (tr("<html><b>Error loading document "
+	      "(data not available).</b></html>"));
+	break;
+      }
+    case QPdfDocument::Error::FileNotFound:
+      {
+	m_ui.error_frame->setVisible(true);
+	m_ui.error_label->setText
+	  (tr("<html><b>Error loading document (file not found).</b></html>"));
+	break;
+      }
+    case QPdfDocument::Error::IncorrectPassword:
+      {
+	m_ui.password_frame->setVisible(true);
+	break;
+      }
+    case QPdfDocument::Error::InvalidFileFormat:
+      {
+	m_ui.error_frame->setVisible(true);
+	m_ui.error_label->setText
+	  (tr("<html><b>Error loading document "
+	      "(invalid file format).</b></html>"));
+	break;
+      }
+    case QPdfDocument::Error::None:
+      {
+	m_ui.contents->scrollToTop();
+	m_ui.meta->scrollToTop();
+	save_first_page();
+	break;
+      }
+    case QPdfDocument::Error::Unknown:
+      {
+	m_ui.error_frame->setVisible(true);
+	m_ui.error_label->setText
+	  (tr("<html><b>Error loading document (unknown).</b></html>"));
+	break;
+      }
+    case QPdfDocument::Error::UnsupportedSecurityScheme:
+      {
+	m_ui.error_frame->setVisible(true);
+	m_ui.error_label->setText
+	  (tr("<html><b>Error loading document "
+	      "(unsupported security scheme).</b></html>"));
+	break;
+      }
+    default:
+      {
+	break;
+      }
     }
-
-  m_ui.password_frame->setVisible
-    (state == QPdfDocument::Error::IncorrectPassword);
 }
 
 void wise_pdf_view::slot_password_changed(void)
