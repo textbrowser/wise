@@ -11,6 +11,7 @@ Completed Items
 - Pages menu.
 - Passwords.
 - Print.
+- Qt version in About.
 - Recent files.
 - Recent-file view. As in Glitch.
 - Release notes.
@@ -25,5 +26,4 @@ Remaining Items
 - Fonts.
 - MacOS bundle.
 - Perhaps retain a file's view (current page, current view, etc.).
-- Qt version in About.
 - Rotations.

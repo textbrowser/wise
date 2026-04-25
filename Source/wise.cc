@@ -321,7 +321,7 @@ void wise::slot_about(void)
       message_box->setText
 	(tr("<html><b>Wise</b> Version %1<br>"
 	    "Architecture %2.<br>"
-	    "Compiled on %3, %4.<br>"
+	    "Compiled on %3, %4. Qt version %5.<br>"
 	    "Made with love by textbrower.<br>"
 	    "<b>Wonderfully-interactive and simple education program "
 	    "for reading portable documents.</b><br>"
@@ -332,7 +332,8 @@ void wise::slot_about(void)
 	 arg(WISE_VERSION_STRING).
 	 arg(QSysInfo::currentCpuArchitecture()).
 	 arg(__DATE__).
-	 arg(__TIME__));
+	 arg(__TIME__).
+	 arg(QT_VERSION_STR));
       message_box->setTextFormat(Qt::RichText);
       message_box->setWindowIcon(windowIcon());
       message_box->setWindowModality(Qt::NonModal);
