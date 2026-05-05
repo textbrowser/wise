@@ -38,7 +38,10 @@ cp -p Distributions/wise.desktop wise-debian.d/usr/share/applications/.
 
 if [ "$(uname -m)" = "aarch64" ]
 then
-    cp -pr Distributions/PiOS wise-debian.d/DEBIAN
+    cp -pr Distributions/PiOS32 wise-debian.d/DEBIAN
+elif [ "$(uname -m)" = "armv7l" ]
+then
+    cp -pr Distributions/PiOS64 wise-debian.d/DEBIAN
 else
     cp -pr Distributions/DEBIAN-NATIVE wise-debian.d/DEBIAN
 fi
