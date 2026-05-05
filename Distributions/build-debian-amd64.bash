@@ -47,7 +47,7 @@ mkdir -p wise-debian.d/usr/share/applications
 cp -p Distributions/wise.desktop wise-debian.d/usr/share/applications/.
 cp -pr Distributions/DEBIAN wise-debian.d/DEBIAN
 cp -r ./opt/wise wise-debian.d/opt/.
-fakeroot dpkg-deb --build wise-debian.d Wise-2026.01.31_amd64.deb
+fakeroot dpkg-deb --build wise-debian.d Wise-0000.00.00_amd64.deb
 make distclean
 rm -fr ./opt
 rm -fr wise-debian.d

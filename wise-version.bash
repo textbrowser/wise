@@ -12,23 +12,17 @@ then
     exit 1
 fi
 
-if [ -r Distributions/*/control ]
-then
-    for file in Distributions/*/control
-    do
-	sed -i "s/Version: .*/Version: $VERSION/" $file
-    done
-fi
+for file in "Distributions/*/control"
+do
+    sed -i "s/Version: .*/Version: $VERSION/" $file
+done
 
-if [ -r Distributions/build* ]
-then
-    for file in Distributions/build*
-    do
-	sed -i \
+for file in "Distributions/build*"
+do
+    sed -i \
 	"s/Wise-[[:digit:]]\+\.[[:digit:]]\+\.[[:digit:]]\+/Wise-$VERSION/" \
 	$file
-    done
-fi
+done
 
 FILE="Android/AndroidManifest.xml"
 
