@@ -31,8 +31,9 @@ fi
 
 cp -p ./Icons/wise.png ./opt/wise/.
 cp -p ./Wise ./opt/wise/.
-cp -p ./wise.sh /opt/wise/.
+cp -p ./wise.sh ./opt/wise/.
 mkdir -p wise-debian.d/opt
+mkdir -p wise-debian.d/usr/share/applications
 cp -p Distributions/wise.desktop wise-debian.d/usr/share/applications/.
 
 if [ "$(uname -m)" = "aarch64" ]
