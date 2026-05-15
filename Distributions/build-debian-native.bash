@@ -36,23 +36,28 @@ mkdir -p wise-debian.d/opt
 mkdir -p wise-debian.d/usr/share/applications
 cp -p Distributions/wise.desktop wise-debian.d/usr/share/applications/.
 
-if [ "$(uname -m)" = "aarch64" ]
-then
-    cp -pr Distributions/PiOS32 wise-debian.d/DEBIAN
-elif [ "$(uname -m)" = "armv7l" ]
+architecture="$(dpkg --print-architecture)"
+
+if [ $architecture = "arm64" ]
 then
     cp -pr Distributions/PiOS64 wise-debian.d/DEBIAN
+elif [ $architecture = "armhf" ]
+then
+    cp -pr Distributions/PiOS32 wise-debian.d/DEBIAN
 else
-    cp -pr Distributions/DEBIAN-NATIVE wise-debian.d/DEBIAN
+    cp -pr Distributions/KUBUNTU-NATIVE wise-debian.d/DEBIAN
 fi
 
 cp -r ./opt/wise wise-debian.d/opt/.
 
-if [ "$(uname -m)" = "aarch64" ]
+if [ $architecture = "arm64" ]
 then
-    fakeroot dpkg-deb --build wise-debian.d Wise-2026.05.10_native_arm64.deb
+    fakeroot dpkg-deb --build wise-debian.d Wise-2026.05.15_PiOS_arm64.deb
+elif [ $architecture = "armhf" ]
+then
+    fakeroot dpkg-deb --build wise-debian.d Wise-2026.05.15_PiOS_arm32.deb
 else
-    fakeroot dpkg-deb --build wise-debian.d Wise-2026.05.10_native_amd64.deb
+    fakeroot dpkg-deb --build wise-debian.d Wise-2026.05.15_Kubuntu_amd64.deb
 fi
 
 make distclean
