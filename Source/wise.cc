@@ -380,7 +380,15 @@ void wise::slot_about_to_show_recent_files_menu(void)
 	      if(m_ui.menu_Recent_Files->actions().size() == 1)
 		m_ui.menu_Recent_Files->addSeparator();
 
-	      auto action = new QAction(query.value(0).toString(), this);
+	      QAction *action = nullptr;
+	      QFileInfo const fileInfo(query.value(0).toString());
+
+	      if(fileInfo.isReadable())
+		action = new QAction(query.value(0).toString(), this);
+	      else
+		action = new QAction
+		  (tr("(NOT READABLE) %1").
+		   arg(query.value(0).toString()), this);
 
 	      action->setData(query.value(0).toString());
 	      connect(action,
