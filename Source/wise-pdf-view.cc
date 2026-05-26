@@ -340,6 +340,7 @@ wise_pdf_view::wise_pdf_view
   m_ui.contents_splitter->setStretchFactor(1, 0);
   m_ui.contents_splitter->setStretchFactor(2, 0);
   m_ui.frame->layout()->addWidget(m_pdf_view);
+  m_ui.page_mode->setText(tr("Single"));
   m_ui.password_frame->setVisible(false);
   m_ui.search_view->setItemDelegate
     (new wise_pdf_view_search_view_item_delegate(this));
@@ -394,16 +395,10 @@ void wise_pdf_view::keyPressEvent(QKeyEvent *event)
 {
   QWidget::keyPressEvent(event);
 
-  if(event)
+  if(event && event->key() == Qt::Key_Escape && m_ui.search_show->isChecked())
     {
-      if(event->key() == Qt::Key_Escape)
-	{
-	  if(m_ui.search_show->isChecked())
-	    {
-	      m_pdf_view->setFocus();
-	      m_ui.search_show->setChecked(false);
-	    }
-	}
+      m_pdf_view->setFocus();
+      m_ui.search_show->setChecked(false);
     }
 }
 
