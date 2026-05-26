@@ -97,18 +97,10 @@ QPdfPageRenderer::RenderMode wise_settings::render_mode(void)
     return QPdfPageRenderer::RenderMode::MultiThreaded;
 }
 
-QPdfView::PageMode wise_settings::page_mode(void)
-{
-  wise_settings settings(nullptr);
-
-  if(settings.m_ui.page_mode->currentText() == tr("Multiple"))
-    return QPdfView::PageMode::MultiPage;
-  else
-    return QPdfView::PageMode::SinglePage;
-}
-
 void wise_settings::restore(void)
 {
+  QSettings().remove("settings/page_mode");
+
   foreach(auto check_box, findChildren<QCheckBox *> ())
     {
       auto const key(QString("settings/%1").arg(check_box->objectName()));

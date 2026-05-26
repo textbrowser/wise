@@ -190,7 +190,7 @@ wise_pdf_view::wise_pdf_view
   m_page_renderer->setRenderMode(wise_settings::render_mode());
   m_pdf_view = new wise_pdf_view_view(this);
   m_pdf_view->setDocument(m_document);
-  m_pdf_view->setPageMode(wise_settings::page_mode());
+  m_pdf_view->setPageMode(QPdfView::PageMode::SinglePage);
   m_pdf_view->setPageSpacing(0);
   m_pdf_view->setSearchModel(m_search_model = new QPdfSearchModel(this));
   m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitToWidth);
@@ -200,6 +200,7 @@ wise_pdf_view::wise_pdf_view
   m_ui.contents->setModel(m_bookmark_model);
   m_ui.error_frame->setVisible(false);
   m_ui.left_panel->setChecked(false);
+  m_ui.page_mode->setMenu(new QMenu(this));
   m_ui.print->setVisible(false);
   m_ui.reload_frame->setVisible(false);
   m_ui.search_frame->setVisible(false);
@@ -275,6 +276,10 @@ wise_pdf_view::wise_pdf_view
 	  SIGNAL(valueChanged(int)),
 	  this,
 	  SLOT(slot_select_page(int)));
+  connect(m_ui.page_mode,
+	  &QToolButton::clicked,
+	  this,
+	  &wise_pdf_view::slot_show_menu);
   connect(m_ui.password,
 	  &QLineEdit::returnPressed,
 	  this,
@@ -341,6 +346,14 @@ wise_pdf_view::wise_pdf_view
   m_ui.splitter->setSizes(QList<int> () << 200 << 1);
   m_ui.splitter->setStretchFactor(0, 0);
   m_ui.splitter->setStretchFactor(1, 1);
+  connect(m_ui.page_mode->menu()->addAction(tr("Multiple")),
+	  &QAction::triggered,
+	  this,
+	  &wise_pdf_view::slot_page_mode_activated);
+  connect(m_ui.page_mode->menu()->addAction(tr("Single")),
+	  &QAction::triggered,
+	  this,
+	  &wise_pdf_view::slot_page_mode_activated);
   connect(m_ui.view_size->menu()->addAction(tr("View-Fit")),
 	  &QAction::triggered,
 	  this,
@@ -350,6 +363,9 @@ wise_pdf_view::wise_pdf_view
 	  this,
 	  &wise_pdf_view::slot_view_size_activated);
 #ifdef Q_OS_MACOS
+  m_ui.page_mode->setStyleSheet
+    ("QToolButton {border: none; padding-right: 15px}"
+     "QToolButton::menu-button {border: none; width: 15px;}");
   m_ui.view_size->setStyleSheet
     ("QToolButton {border: none; padding-right: 15px}"
      "QToolButton::menu-button {border: none; width: 15px;}");
@@ -424,7 +440,8 @@ void wise_pdf_view::prepare(void)
     }
 
   foreach(auto tool_button, findChildren<QToolButton *> ())
-    if(m_ui.view_size != tool_button)
+    if(m_ui.page_mode != tool_button &&
+       m_ui.view_size != tool_button)
       {
 	tool_button->setArrowType(Qt::NoArrow);
 	tool_button->setAutoRaise(true);
@@ -493,11 +510,6 @@ void wise_pdf_view::save_first_page(void)
 {
   emit save_recent_file
     (m_document->render(0, 2 * m_document->pagePointSize(0).toSize()), m_url);
-}
-
-void wise_pdf_view::set_page_mode(const QPdfView::PageMode page_mode)
-{
-  m_pdf_view->setPageMode(page_mode);
 }
 
 void wise_pdf_view::slot_case_sensitive_toggled(bool state)
@@ -614,6 +626,21 @@ void wise_pdf_view::slot_load_document(void)
 	break;
       }
     }
+}
+
+void wise_pdf_view::slot_page_mode_activated(void)
+{
+  auto action = qobject_cast<QAction *> (sender());
+
+  if(!action)
+    return;
+
+  if(action && action->text() == tr("Multiple"))
+    m_pdf_view->setPageMode(QPdfView::PageMode::MultiPage);
+  else
+    m_pdf_view->setPageMode(QPdfView::PageMode::SinglePage);
+
+  m_ui.page_mode->setText(action->text());
 }
 
 void wise_pdf_view::slot_password_changed(void)
@@ -795,7 +822,6 @@ void wise_pdf_view::slot_select_page(int value)
 void wise_pdf_view::slot_settings_changed(void)
 {
   m_page_renderer->setRenderMode(wise_settings::render_mode());
-  m_pdf_view->setPageMode(wise_settings::page_mode());
   slot_contents_selected
     (m_ui.contents->selectionModel()->currentIndex(), QModelIndex());
   slot_search_view_selected

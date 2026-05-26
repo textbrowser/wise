@@ -215,7 +215,6 @@ void wise::add_pdf_page(const QString &file_name)
 		      QIcon(":/wise.png"),
 		      QFileInfo(file_name).fileName()), file_name);
   m_ui.tab->setCurrentIndex(m_ui.tab->indexOf(page));
-  page->set_page_mode(m_settings->page_mode());
 }
 
 void wise::closeEvent(QCloseEvent *event)

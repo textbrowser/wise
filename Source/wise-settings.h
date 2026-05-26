@@ -43,7 +43,6 @@ class wise_settings: public QWidget
   ~wise_settings();
   QPdfDocumentRenderOptions static render_options(void);
   QPdfPageRenderer::RenderMode static render_mode(void);
-  QPdfView::PageMode static page_mode(void);
 
  private:
   Ui_wise_settings m_ui;

@@ -230,6 +230,25 @@
       </widget>
      </item>
      <item>
+      <widget class="QToolButton" name="page_mode">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Multiple</string>
+       </property>
+       <property name="popupMode">
+        <enum>QToolButton::ToolButtonPopupMode::MenuButtonPopup</enum>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QToolButton" name="view_size">
        <property name="minimumSize">
         <size>
@@ -520,6 +539,7 @@
   <tabstop>page</tabstop>
   <tabstop>next_page</tabstop>
   <tabstop>last_page</tabstop>
+  <tabstop>page_mode</tabstop>
   <tabstop>view_size</tabstop>
   <tabstop>zoom_in</tabstop>
   <tabstop>zoom_out</tabstop>

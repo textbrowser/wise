@@ -84,7 +84,6 @@ class wise_pdf_view: public QWidget
   ~wise_pdf_view();
   void find(void);
   void print(void);
-  void set_page_mode(const QPdfView::PageMode page_mode);
 
  private:
   QFileSystemWatcher m_file_system_watcher;
@@ -110,6 +109,7 @@ class wise_pdf_view: public QWidget
   void slot_first_page(void);
   void slot_last_page(void);
   void slot_load_document(void);
+  void slot_page_mode_activated(void);
   void slot_password_changed(void);
   void slot_print(QPrinter *printer);
   void slot_print(void);
