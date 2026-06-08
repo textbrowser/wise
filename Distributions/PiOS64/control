@@ -10,7 +10,7 @@ Maintainer: f83043e79dc03a0abfbcbc376879a97d66f2cacb@protonmail.ch
 Package: Wise
 Priority: optional
 Section: Internet
-Version: 2026.06.06
+Version: 2026.06.12
 Description: Wise Portable Document Reader
  Welcome to Wise on PiOS!
  A wise.desktop file will also be installed in /usr/share/applications/.
