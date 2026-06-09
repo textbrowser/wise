@@ -232,6 +232,11 @@ wise_pdf_view::wise_pdf_view
 	  m_ui.page,
 	  &QSpinBox::stepDown,
 	  Qt::QueuedConnection);
+  connect(m_pdf_view,
+	  &wise_pdf_view_view::pageModeChanged,
+	  this,
+	  &wise_pdf_view::slot_page_mode_changed,
+	  Qt::QueuedConnection);
   connect(m_pdf_view->verticalScrollBar(),
 	  SIGNAL(valueChanged(int)),
 	  this,
@@ -244,8 +249,8 @@ wise_pdf_view::wise_pdf_view
 	  SIGNAL(toggled(bool)),
 	  this,
 	  SLOT(slot_case_sensitive_toggled(bool)));
-  connect(m_ui.contents->selectionModel(),
-	  &QItemSelectionModel::currentChanged,
+  connect(m_ui.contents,
+	  &QTreeView::clicked,
 	  this,
 	  &wise_pdf_view::slot_contents_selected);
   connect(m_ui.find_next,
@@ -513,17 +518,14 @@ void wise_pdf_view::slot_case_sensitive_toggled(bool state)
   slot_search();
 }
 
-void wise_pdf_view::slot_contents_selected
-(const QModelIndex &current, const QModelIndex &previous)
+void wise_pdf_view::slot_contents_selected(const QModelIndex &index)
 {
-  Q_UNUSED(previous);
-
-  if(!current.isValid())
+  if(!index.isValid())
     return;
 
-  auto const page = current.data
+  auto const page = index.data
     (static_cast<int> (QPdfBookmarkModel::Role::Page)).toInt();
-  auto const zoom_level = current.data
+  auto const zoom_level = index.data
     (static_cast<int> (QPdfBookmarkModel::Role::Level)).toReal();
 
   m_pdf_view->pageNavigator()->jump(page, QPointF(), zoom_level);
@@ -636,6 +638,12 @@ void wise_pdf_view::slot_page_mode_activated(void)
     m_pdf_view->setPageMode(QPdfView::PageMode::SinglePage);
 
   m_ui.page_mode->setText(action->text());
+}
+
+void wise_pdf_view::slot_page_mode_changed(QPdfView::PageMode page_mode)
+{
+  Q_UNUSED(page_mode);
+  slot_contents_selected(m_ui.contents->currentIndex());
 }
 
 void wise_pdf_view::slot_password_changed(void)
@@ -817,8 +825,7 @@ void wise_pdf_view::slot_select_page(int value)
 void wise_pdf_view::slot_settings_changed(void)
 {
   m_page_renderer->setRenderMode(wise_settings::render_mode());
-  slot_contents_selected
-    (m_ui.contents->selectionModel()->currentIndex(), QModelIndex());
+  slot_contents_selected(m_ui.contents->selectionModel()->currentIndex());
   slot_search_view_selected
     (m_ui.search_view->selectionModel()->currentIndex(), QModelIndex());
 }
