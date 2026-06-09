@@ -643,7 +643,7 @@ void wise_pdf_view::slot_page_mode_activated(void)
 void wise_pdf_view::slot_page_mode_changed(QPdfView::PageMode page_mode)
 {
   Q_UNUSED(page_mode);
-  slot_contents_selected(m_ui.contents->currentIndex());
+  slot_select_page(m_ui.page->value());
 }
 
 void wise_pdf_view::slot_password_changed(void)
