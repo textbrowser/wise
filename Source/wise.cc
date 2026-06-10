@@ -459,6 +459,13 @@ void wise::slot_close_current_page(void)
 
 void wise::slot_close_other_pages(void)
 {
+  QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+
+  for(int i = m_ui.tab->count() - 1; i >= 0; i--)
+    if(i != m_ui.tab->currentIndex())
+      slot_close_tab(i);
+
+  QApplication::restoreOverrideCursor();
 }
 
 void wise::slot_close_tab(int index)
