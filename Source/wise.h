@@ -61,6 +61,9 @@ class wise: public QMainWindow
   void slot_about(void);
   void slot_about_to_show_pages_menu(void);
   void slot_about_to_show_recent_files_menu(void);
+  void slot_close_all_pages(void);
+  void slot_close_current_page(void);
+  void slot_close_other_pages(void);
   void slot_clear_recent_files(void);
   void slot_close_tab(int index);
   void slot_close_tab(void);

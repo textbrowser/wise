@@ -241,6 +241,15 @@ void wise::prepare_pages_menu(void)
 {
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
   m_ui.menu_Pages->clear();
+  m_ui.menu_Pages->addAction
+    (tr("Close All Pages"), this, SLOT(slot_close_all_pages(void)))->setEnabled
+    (m_ui.tab->count() > 0);
+  m_ui.menu_Pages->addAction
+    (tr("Close Current Page"), this, SLOT(slot_close_current_page(void)))->
+    setEnabled(m_ui.tab->count() > 0);
+  m_ui.menu_Pages->addAction
+    (tr("Close Other Pages"), this, SLOT(slot_close_other_pages(void)))->
+    setEnabled(m_ui.tab->count() > 1);
 
   auto group = m_ui.menu_Pages->findChild<QActionGroup *> ();
 
@@ -259,6 +268,7 @@ void wise::prepare_pages_menu(void)
 	      this,
 	      &wise::slot_select_page);
       group->addAction(action);
+      i == 0 ? (void) m_ui.menu_Pages->addSeparator() : (void) 0;
       m_ui.menu_Pages->addAction(action);
     }
 
@@ -430,6 +440,25 @@ void wise::slot_clear_recent_files(void)
   QSqlDatabase::removeDatabase(connection_name);
   QApplication::restoreOverrideCursor();
   emit recent_files_cleared();
+}
+
+void wise::slot_close_all_pages(void)
+{
+  QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+
+  for(int i = m_ui.tab->count() - 1; i >= 0; i--)
+    slot_close_tab(i);
+
+  QApplication::restoreOverrideCursor();
+}
+
+void wise::slot_close_current_page(void)
+{
+  slot_close_tab(m_ui.tab->currentIndex());
+}
+
+void wise::slot_close_other_pages(void)
+{
 }
 
 void wise::slot_close_tab(int index)
