@@ -38,6 +38,7 @@ QMAKE_CXXFLAGS_RELEASE += -Wall \
                           -Wextra \
                           -Wfloat-equal \
                           -Wformat=2 \
+                          -Wno-c++20-attribute-extensions \
                           -Woverloaded-virtual \
                           -Wpointer-arith \
                           -Wstack-protector \
@@ -56,6 +57,7 @@ QMAKE_CXXFLAGS_RELEASE += -Wall \
                           -Werror \
                           -Wextra \
                           -Wformat=2 \
+                          -Wno-c++20-attribute-extensions \
                           -Woverloaded-virtual \
                           -Wpointer-arith \
                           -Wstack-protector \
@@ -74,6 +76,7 @@ QMAKE_CXXFLAGS_RELEASE += -Wall \
                           -Wenum-compare \
                           -Wextra \
                           -Wformat=2 \
+                          -Wno-c++20-attribute-extensions \
                           -Woverloaded-virtual \
                           -Wpointer-arith \
                           -Wstack-protector \
