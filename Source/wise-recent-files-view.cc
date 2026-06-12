@@ -91,7 +91,7 @@ void wise_recent_files_view::gather(void)
 	query.setForwardOnly(true);
 
 	if(query.exec("SELECT file_name, image FROM wise_recent_files "
-		      "ORDER BY 1"))
+		      "ORDER BY file_name"))
 	  while(m_gather_future.isCanceled() == false && query.next())
 	    {
 	      QFileInfo const file_info(query.value(0).toString());
@@ -225,11 +225,11 @@ void wise_recent_files_view::slot_populate
 
       column_index += 1;
       item->setData(Qt::UserRole, vector.at(i).second);
-      item->set_file_name(vector.at(i).second);
       item->setGraphicsEffect(effect);
       item->setPixmap
 	(QFileInfo(vector.at(i).second).isReadable() ?
 	 item->pixmap() : missing);
+      item->set_file_name(vector.at(i).second);
       scene()->addItem(item);
 
       if(column_index >= columns)
