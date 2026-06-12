@@ -151,13 +151,9 @@ QMAKE_DISTCLEAN += -r Wise.d
 }
 
 win32 {
-QMAKE_DISTCLEAN += del /F /Q .qmake* \
-                   rmdir /Q /S Temporary \
-                   rmdir /Q /S debug \
-                   rmdir /Q /S release
+QMAKE_DISTCLEAN += rm -fr .qmake* Temporary debug release
 } else {
-QMAKE_DISTCLEAN += -f .qmake* \
-                   -fr Temporary
+QMAKE_DISTCLEAN += -f .qmake* -fr Temporary
 }
 
 QMAKE_STRIP = echo
