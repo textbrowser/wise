@@ -131,7 +131,7 @@ void wise_recent_files_view::resizeEvent(QResizeEvent *event)
   int column_index = 0;
   int row_index = 0;
 
-  foreach(auto item, items())
+  foreach(auto item, scene()->items(Qt::AscendingOrder))
     {
       auto const height = 25.0 + item->boundingRect().size().height();
       auto const width = 25.0 + item->boundingRect().size().width();
