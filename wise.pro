@@ -217,11 +217,14 @@ android: include(/home/saturn/Android/Sdk/android_openssl/openssl.pri)
 macx {
 macdeployqt.extra = $$[QT_INSTALL_BINS]/macdeployqt Wise.d/Wise.app \
                     -executable=Wise.d/Wise.app/Contents/MacOS/Wise
-macdeployqt.path = Wise.app
-preinstall.extra = rm -fr Wise.d/Wise.app
-preinstall.path = Wise.d
+macdeployqt.path  = Wise.app
+preinstall.extra  = rm -fr Wise.d/Wise.app
+preinstall.path   = Wise.d
+wise.extra        = cp -r ./Wise.app Wise.d/.
+wise.path         = Wise.d
 
 INSTALLS = preinstall \
+           wise \
            macdeployqt
 }
 
