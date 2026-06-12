@@ -159,7 +159,7 @@ QMAKE_DISTCLEAN += -f .qmake* -fr Temporary
 QMAKE_STRIP = echo
 
 macx {
-ICON = wise.icns
+ICON = Icons/wise.icns
 }
 
 win32 {
