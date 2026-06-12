@@ -84,7 +84,7 @@ QMAKE_CXXFLAGS_RELEASE += -Wall \
                           -funroll-loops \
                           -fwrapv \
                           -pedantic \
-                          -std=c++17
+                          -std=c++20
 QMAKE_MACOSX_DEPLOYMENT_TARGET = 12.0
 } else:win32 {
 QMAKE_CXXFLAGS_RELEASE += -Wall \
