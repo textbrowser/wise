@@ -59,7 +59,7 @@ wise_recent_files_view::wise_recent_files_view(QWidget *parent):
 
   viewport()->setAttribute(Qt::WA_AcceptTouchEvents, false);
 #endif
-  slot_gather();
+  QTimer::singleShot(50, this, SLOT(slot_gather(void)));
 }
 
 QAction *wise_recent_files_view::menu_action(void) const
