@@ -66,7 +66,7 @@ QMAKE_CXXFLAGS_RELEASE += -Wall \
                           -funroll-loops \
                           -fwrapv \
                           -pedantic \
-                          -std=c++17
+                          -std=c++20
 } else:macx {
 QMAKE_CXXFLAGS_RELEASE += -Wall \
                           -Wcast-align \
@@ -107,7 +107,7 @@ QMAKE_CXXFLAGS_RELEASE += -Wall \
                           -fwrapv \
                           -pedantic \
                           -pie \
-                          -std=c++17
+                          -std=c++20
 } else {
 QMAKE_CXXFLAGS_RELEASE += -Wall \
                           -Wcast-qual \
@@ -134,7 +134,7 @@ QMAKE_CXXFLAGS_RELEASE += -Wall \
                           -fwrapv \
                           -pedantic \
                           -pie \
-                          -std=c++17
+                          -std=c++20
 contains(QMAKE_HOST.arch, ppc) {
 QMAKE_CXXFLAGS_RELEASE -= -Wformat-overflow=2 \
                           -Wstringop-overflow=4
@@ -142,7 +142,7 @@ QMAKE_CXXFLAGS_RELEASE -= -Wformat-overflow=2 \
 }
 
 greaterThan(QT_MAJOR_VERSION, 5) {
-QMAKE_CXXFLAGS_RELEASE += -std=c++17
+QMAKE_CXXFLAGS_RELEASE += -std=c++20
 QMAKE_CXXFLAGS_RELEASE -= -std=c++11
 }
 
