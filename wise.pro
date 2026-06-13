@@ -1,18 +1,19 @@
 macx {
-dmg.commands = make install && hdiutil create Wise.d.dmg -srcfolder Wise.d
+dmg.commands        = make install && \
+                      hdiutil create Wise.d.dmg -srcfolder Wise.d
 QMAKE_EXTRA_TARGETS += dmg
 }
 
 unix {
-purge.commands = find . -name \'*~\' -exec rm {} \;
+purge.commands      = find . -name \'*~\' -exec rm {} \;
 QMAKE_EXTRA_TARGETS += purge
 }
 
-CONFIG += qt release warn_on
-DEFINES +=
-LANGUAGE = C++
+CONFIG      += qt release warn_on
+DEFINES     +=
+LANGUAGE    = C++
 QMAKE_CLEAN += Wise
-QT += concurrent gui network printsupport sql widgets
+QT          += concurrent gui network printsupport sql widgets
 
 contains(QMAKE_HOST.arch, armv7l) {
 QMAKE_CXXFLAGS_RELEASE += -march=armv7
@@ -172,22 +173,22 @@ RC_FILE = Icons/wise.rc
 INCLUDEPATH += Source
 
 macx {
-LIBS += -framework AppKit -framework Cocoa
+LIBS              += -framework AppKit -framework Cocoa
 OBJECTIVE_HEADERS += Source/CocoaInitializer.h
 OBJECTIVE_SOURCES += Source/CocoaInitializer.mm
 } else {
 LIBS +=
 }
 
-MOC_DIR = Temporary/moc
+MOC_DIR     = Temporary/moc
 OBJECTS_DIR = Temporary/obj
-RCC_DIR = Temporary/rcc
-RESOURCES = Documentation/documentation.qrc Icons/icons.qrc
-UI_DIR = Temporary/ui
+RCC_DIR     = Temporary/rcc
+RESOURCES   = Documentation/documentation.qrc Icons/icons.qrc
+UI_DIR      = Temporary/ui
 
-FORMS += UI/wise.ui \
-         UI/wise-pdf-view.ui \
-         UI/wise-settings.ui
+FORMS   += UI/wise.ui \
+           UI/wise-pdf-view.ui \
+           UI/wise-settings.ui
 HEADERS += Source/wise.h \
            Source/wise-pdf-view.h \
            Source/wise-recent-files-view.h \
@@ -201,11 +202,10 @@ SOURCES += Source/wise.cc \
            Source/wise-settings.cc \
            Source/wise-tab.cc \
            Source/wise-tab-bar.cc
-TRANSLATIONS =
 
 PROJECTNAME = Wise
-TARGET = Wise
-TEMPLATE = app
+TARGET      = Wise
+TEMPLATE    = app
 
 android {
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/Android
@@ -232,10 +232,12 @@ INSTALLS = preinstall \
 }
 
 win32 {
-plugins.files = $$[QT_INSTALL_PLUGINS]\\*
-plugins.path = release\\plugins\\.
-qt.files = Qt\\qt.conf
-qt.path = release\\.
+bat.files         = Distributions/wise-darkmode.bat
+bat.path          = release\\.
+plugins.files     = $$[QT_INSTALL_PLUGINS]\\*
+plugins.path      = release\\plugins\\.
+qt.files          = Qt\\qt.conf
+qt.path           = release\\.
 qtlibraries.files = $$[QT_INSTALL_BINS]\\Qt*Core.dll \
                     $$[QT_INSTALL_BINS]\\Qt*Gui.dll \
                     $$[QT_INSTALL_BINS]\\Qt*Network.dll \
