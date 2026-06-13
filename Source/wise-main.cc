@@ -49,6 +49,10 @@ int main(int argc, char *argv[])
   QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar, true);
 #endif
 
+#if defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
+  qputenv("QT_STYLE_OVERRIDE", "Fusion");
+#endif
+
   QApplication application(argc, argv);
 
   application.setWindowIcon(QIcon(":/wise.png"));
