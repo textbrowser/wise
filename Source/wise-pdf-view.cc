@@ -642,8 +642,8 @@ void wise_pdf_view::slot_page_mode_activated(void)
 
 void wise_pdf_view::slot_page_mode_changed(QPdfView::PageMode page_mode)
 {
+  QTimer::singleShot(10, this, SLOT(slot_select_page(void)));
   Q_UNUSED(page_mode);
-  slot_select_page(m_ui.page->value());
 }
 
 void wise_pdf_view::slot_password_changed(void)
@@ -824,7 +824,15 @@ void wise_pdf_view::slot_select_page(int value)
 
 void wise_pdf_view::slot_select_page(void)
 {
-  slot_select_page(m_ui.page->value());
+  if(m_ui.page->value() == 1)
+    return;
+
+  /*
+  ** The multiple-page mode requires special logic.
+  */
+
+  m_ui.page->stepDown();
+  m_ui.page->stepUp();
 }
 
 void wise_pdf_view::slot_settings_changed(void)
