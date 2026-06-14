@@ -250,7 +250,8 @@ qtlibraries.files = $$[QT_INSTALL_BINS]\\Qt*Core.dll \
                     $$[QT_INSTALL_BINS]\\libwinpthread-*.dll
 qtlibraries.path = release\\.
 
-INSTALLS = plugins \
+INSTALLS = bat \
+           plugins \
            qt \
            qtlibraries
 }
