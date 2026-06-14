@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 # Alexis Megas.
 
+if [ ! -e "~/Qt/6.8.3/gcc_64/lib" ]
+then
+    echo "The directory ~/Qt/6.8.3/gcc_64/lib does not exist."
+    exit 1
+fi
+
 if [ ! -x /usr/bin/dpkg-deb ]
 then
     echo "Please install dpkg-deb."
