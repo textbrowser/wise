@@ -822,6 +822,11 @@ void wise_pdf_view::slot_select_page(int value)
   prepare_widget_states();
 }
 
+void wise_pdf_view::slot_select_page(void)
+{
+  slot_select_page(m_ui.page->value());
+}
+
 void wise_pdf_view::slot_settings_changed(void)
 {
   m_page_renderer->setRenderMode(wise_settings::render_mode());
