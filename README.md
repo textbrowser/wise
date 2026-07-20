@@ -15,7 +15,7 @@ Wise is a <b>wonderfully</b>-<b>interactive</b> and <b>simple</b>
 <li>C++20.</li>
 <li>First LTS release of 2026: Kubuntu 26.04 AMD64, PiOS 13 ARM64,
   MacOS 15 Universal, Windows 11 AMD64.</li>
-<li>Fusion style for MacOS.</li>
+<li>Fusion style for MacOS and Windows.</li>
 <li>Moved Settings -> Page Mode into PDF view.</li>
 <li>New Pages -> Close All Pages, Pages -> Close Current Page,
   Pages -> Close Other Pages.</li>
