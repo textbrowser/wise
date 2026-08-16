@@ -9,7 +9,7 @@ Depends: libqt6core6t64,
 Maintainer: f83043e79dc03a0abfbcbc376879a97d66f2cacb@protonmail.ch
 Package: Wise
 Priority: optional
-Section: Educational
+Section: Education
 Version: 2026.06.14
 Description: Wise Portable Document Reader
  Welcome to Wise on PiOS!
