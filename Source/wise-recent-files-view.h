@@ -171,7 +171,6 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
     icon.paint(painter, m_remove_button.boundingRect().toRect());
     painter->restore();
 
-    auto const default_font(painter->font());
     auto const font_metrics(painter->fontMetrics());
     auto const text
       (font_metrics.elidedText(QFileInfo(m_file_name).fileName(),

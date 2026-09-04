@@ -338,11 +338,11 @@ void wise::slot_about(void)
 	    "<a href=\"https://textbrowser.github.io/wise\">"
 	    "https://textbrowser.github.io/wise</a> "
 	    "for project information.</html>").
-	 arg(WISE_VERSION_STRING).
-	 arg(QSysInfo::currentCpuArchitecture()).
-	 arg(__DATE__).
-	 arg(__TIME__).
-	 arg(QT_VERSION_STR));
+	 arg(WISE_VERSION_STRING,
+	     QSysInfo::currentCpuArchitecture(),
+	     __DATE__,
+	     __TIME__,
+	     QT_VERSION_STR));
       message_box->setTextFormat(Qt::RichText);
       message_box->setWindowIcon(windowIcon());
       message_box->setWindowModality(Qt::NonModal);
