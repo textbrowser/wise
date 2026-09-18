@@ -27,7 +27,9 @@
 
 #include "wise-pdf-view.h"
 #include "wise-settings.h"
+#include "wise.h"
 
+#include <QDir>
 #include <QKeyEvent>
 #include <QListView>
 #include <QMenu>
@@ -40,6 +42,8 @@
 #include <QPrinter>
 #include <QScrollBar>
 #include <QShortcut>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 #include <QTimer>
 
 qreal static maximum_zoom_factor = 10.0;
@@ -512,6 +516,43 @@ void wise_pdf_view::save_first_page(void)
     (m_document->render(0, 2 * m_document->pagePointSize(0).toSize()), m_url);
 }
 
+void wise_pdf_view::save_setting(const QString &key, const QVariant &value)
+{
+  if(key.trimmed().isEmpty() || value.isNull())
+    return;
+
+  QString const connection_name("save_setting");
+
+  {
+    auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));
+
+    db.setDatabaseName
+      (wise::home_path() + QDir::separator() + "wise-recent-files.db");
+
+    if(db.open())
+      {
+	QSqlQuery query(db);
+
+	query.exec("CREATE TABLE IF NOT EXISTS wise_file_settings ("
+		   "file_name TEXT NOT NULL, "
+		   "key TEXT NOT NULL, "
+		   "value TEXT NOT NULL, "
+		   "PRIMARY KEY(file_name, key))");
+	query.prepare
+	  ("INSERT OR REPLACE INTO wise_file_settings "
+	   "(file_name, key, value) VALUES (?, ?, ?)");
+	query.addBindValue(QFileInfo(m_url.path()).absoluteFilePath());
+	query.addBindValue(key.trimmed());
+	query.addBindValue(value);
+	query.exec();
+      }
+
+    db.close();
+  }
+
+  QSqlDatabase::removeDatabase(connection_name);
+}
+
 void wise_pdf_view::slot_case_sensitive_toggled(bool state)
 {
   Q_UNUSED(state);
@@ -638,6 +679,7 @@ void wise_pdf_view::slot_page_mode_activated(void)
     m_pdf_view->setPageMode(QPdfView::PageMode::SinglePage);
 
   m_ui.page_mode->setText(action->text());
+  save_setting("page-mode", static_cast<int> (m_pdf_view->pageMode()));
 }
 
 void wise_pdf_view::slot_page_mode_changed(QPdfView::PageMode page_mode)

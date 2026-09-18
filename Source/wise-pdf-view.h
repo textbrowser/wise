@@ -99,6 +99,7 @@ class wise_pdf_view: public QWidget
   void prepare_view_size(void);
   void prepare_widget_states(void);
   void save_first_page(void);
+  void save_setting(const QString &key, const QVariant &value);
 
  private slots:
   void slot_case_sensitive_toggled(bool state);

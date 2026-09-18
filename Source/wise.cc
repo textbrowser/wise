@@ -25,10 +25,10 @@
 ** WISE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "wise.h"
 #include "wise-pdf-view.h"
 #include "wise-recent-files-view.h"
 #include "wise-settings.h"
+#include "wise.h"
 
 #include <QActionGroup>
 #include <QBuffer>
