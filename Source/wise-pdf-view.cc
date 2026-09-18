@@ -934,6 +934,8 @@ void wise_pdf_view::slot_view_size_activated(void)
 
   m_ui.view_size->setText(action->text());
   prepare_widget_states();
+  save_setting("zoom-factor", m_pdf_view->zoomFactor());
+  save_setting("zoom-mode", static_cast<int> (m_pdf_view->zoomMode()));
 }
 
 void wise_pdf_view::slot_zoom_in(void)
