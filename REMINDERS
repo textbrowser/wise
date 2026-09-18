@@ -21,6 +21,7 @@ Completed Items
 - Reload a file if it changed on disk. Option.
 - Search.
 - Settings.
+- Windows also includes Fusion as default style. Mention in release notes.
 - Zoom-zoom.
 
 Remaining Items
@@ -29,4 +30,3 @@ Remaining Items
 - Fonts.
 - Perhaps retain a file's view (current page, current view, etc.).
 - Rotations. Not simple?
-- Windows also includes Fusion as default style. Mention in release notes.
