@@ -182,8 +182,7 @@ void wise_pdf_view_view::keyPressEvent(QKeyEvent *event)
   QPdfView::keyPressEvent(event);
 }
 
-wise_pdf_view::wise_pdf_view
-(const QUrl &url, QWidget *parent):QWidget(parent)
+wise_pdf_view::wise_pdf_view(const QUrl &url, QWidget *parent):QWidget(parent)
 {
   m_bookmark_model = new QPdfBookmarkModel(this);
   m_bookmark_model->setDocument(m_document = new QPdfDocument(this));
@@ -393,6 +392,39 @@ wise_pdf_view::~wise_pdf_view()
 {
 }
 
+QVariant wise_pdf_view::restore_setting(const QString &key) const
+{
+  QString const connection_name("restore_setting");
+  QVariant value;
+
+  {
+    auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));
+
+    db.setDatabaseName
+      (wise::home_path() + QDir::separator() + "wise-recent-files.db");
+
+    if(db.open())
+      {
+	QSqlQuery query(db);
+
+	query.setForwardOnly(true);
+	query.prepare
+	  ("SELECT value FROM wise_file_settings WHERE "
+	   "file_name = ? AND key = ?");
+	query.addBindValue(QFileInfo(m_url.path()).absoluteFilePath());
+	query.addBindValue(key.trimmed());
+
+	if(query.exec() && query.next())
+	  value = query.value(0);
+      }
+
+    db.close();
+  }
+
+  QSqlDatabase::removeDatabase(connection_name);
+  return value;
+}
+
 void wise_pdf_view::find(void)
 {
   m_ui.search->selectAll();
@@ -514,6 +546,13 @@ void wise_pdf_view::save_first_page(void)
 {
   emit save_recent_file
     (m_document->render(0, 2 * m_document->pagePointSize(0).toSize()), m_url);
+  m_pdf_view->setPageMode
+    (QPdfView::PageMode(restore_setting("page-mode").toInt()));
+
+  if(m_pdf_view->pageMode() == QPdfView::PageMode::MultiPage)
+    m_ui.page_mode->setText(tr("Multiple"));
+  else
+    m_ui.page_mode->setText(tr("Single"));
 }
 
 void wise_pdf_view::save_setting(const QString &key, const QVariant &value)
@@ -648,7 +687,7 @@ void wise_pdf_view::slot_load_document(void)
       {
 	m_ui.error_frame->setVisible(true);
 	m_ui.error_label->setText
-	  (tr("<html><b>Error loading document (unknown).</b></html>"));
+	  (tr("<html><b>Error loading document (unknown error).</b></html>"));
 	break;
       }
     case QPdfDocument::Error::UnsupportedSecurityScheme:
