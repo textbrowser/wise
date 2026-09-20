@@ -548,11 +548,32 @@ void wise_pdf_view::save_first_page(void)
     (m_document->render(0, 2 * m_document->pagePointSize(0).toSize()), m_url);
   m_pdf_view->setPageMode
     (QPdfView::PageMode(restore_setting("page-mode").toInt()));
+  m_pdf_view->setZoomMode
+    (QPdfView::ZoomMode(restore_setting("zoom-mode").toInt()));
 
   if(m_pdf_view->pageMode() == QPdfView::PageMode::MultiPage)
     m_ui.page_mode->setText(tr("Multiple"));
   else
     m_ui.page_mode->setText(tr("Single"));
+
+  if(m_pdf_view->zoomMode() == QPdfView::ZoomMode::Custom)
+    {
+      auto const zoom_factor = qBound
+	(1.0, restore_setting("zoom-factor").toDouble(), 16.0);
+
+      m_pdf_view->setZoomFactor(zoom_factor);
+      m_pdf_view->setZoomMode(QPdfView::ZoomMode::Custom);
+    }
+  else if(m_pdf_view->zoomMode() == QPdfView::ZoomMode::FitInView)
+    {
+      m_pdf_view->setZoomFactor(1.0);
+      m_ui.view_size->setText(tr("View-Fit"));
+    }
+  else
+    {
+      m_pdf_view->setZoomFactor(1.0);
+      m_ui.view_size->setText(tr("View-Width"));
+    }
 }
 
 void wise_pdf_view::save_setting(const QString &key, const QVariant &value)
@@ -984,6 +1005,8 @@ void wise_pdf_view::slot_zoom_in(void)
   m_ui.zoom_out->setEnabled(true);
   prepare_view_size();
   prepare_widget_states();
+  save_setting("zoom-factor", m_pdf_view->zoomFactor());
+  save_setting("zoom-mode", static_cast<int> (m_pdf_view->zoomMode()));
 }
 
 void wise_pdf_view::slot_zoom_out(void)
@@ -993,6 +1016,8 @@ void wise_pdf_view::slot_zoom_out(void)
   m_ui.zoom_in->setEnabled(true);
   prepare_view_size();
   prepare_widget_states();
+  save_setting("zoom-factor", m_pdf_view->zoomFactor());
+  save_setting("zoom-mode", static_cast<int> (m_pdf_view->zoomMode()));
 }
 
 void wise_pdf_view::slot_zoom_reset(void)
@@ -1003,4 +1028,6 @@ void wise_pdf_view::slot_zoom_reset(void)
   m_ui.zoom_out->setEnabled(true);
   prepare_view_size();
   prepare_widget_states();
+  save_setting("zoom-factor", m_pdf_view->zoomFactor());
+  save_setting("zoom-mode", static_cast<int> (m_pdf_view->zoomMode()));
 }
