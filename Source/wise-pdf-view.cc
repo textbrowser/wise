@@ -184,6 +184,7 @@ void wise_pdf_view_view::keyPressEvent(QKeyEvent *event)
 
 wise_pdf_view::wise_pdf_view(const QUrl &url, QWidget *parent):QWidget(parent)
 {
+  qRegisterMetaType<QPdfDocument::Status> ("QPdfDocumentStatus");
   m_bookmark_model = new QPdfBookmarkModel(this);
   m_bookmark_model->setDocument(m_document = new QPdfDocument(this));
   m_file_system_watcher.addPath(url.path()) ?
@@ -216,7 +217,8 @@ wise_pdf_view::wise_pdf_view(const QUrl &url, QWidget *parent):QWidget(parent)
   connect(m_document,
 	  SIGNAL(statusChanged(QPdfDocument::Status)),
 	  this,
-	  SLOT(slot_document_status_changed(QPdfDocument::Status)));
+	  SLOT(slot_document_status_changed(QPdfDocument::Status)),
+	  Qt::QueuedConnection);
   connect(m_pdf_view,
 	  &wise_pdf_view_view::jump_to_beginning,
 	  this,
@@ -493,11 +495,13 @@ void wise_pdf_view::prepare(void)
   m_ui.contents->expandAll();
   m_ui.meta->resizeColumnToContents(0);
   m_ui.meta->resizeColumnToContents(1);
+  m_ui.page->blockSignals(true); // Restore "page" setting.
   m_ui.page->setMaximum(m_document->pageCount());
   m_ui.page->setMinimum(1); // The document's page count may be zero.
   m_ui.page->setSuffix(tr(" of %1").arg(m_ui.page->maximum()));
   m_ui.page->setToolTip
     (QString("[%1, %2]").arg(m_ui.page->minimum()).arg(m_ui.page->maximum()));
+  m_ui.page->blockSignals(false); // Restore "page" setting.
 }
 
 void wise_pdf_view::prepare_view_size(void)
@@ -640,11 +644,9 @@ void wise_pdf_view::slot_document_status_changed(QPdfDocument::Status status)
 {
   if(status == QPdfDocument::Status::Ready)
     {
+      m_ui.page->setMaximum(m_document->pageCount());
+      m_ui.page->setValue(restore_setting("page").toInt());
       m_search_model->setSearchString("");
-      m_ui.page->setValue
-	(qBound(m_ui.page->minimum(),
-		restore_setting("page").toInt(),
-		m_ui.page->maximum()));
       m_ui.search->setText("");
       prepare();
       prepare_widget_states();
@@ -692,6 +694,7 @@ void wise_pdf_view::slot_load_document(void)
       }
     case QPdfDocument::Error::IncorrectPassword:
       {
+	m_ui.password->setFocus();
 	m_ui.password_frame->setVisible(true);
 	break;
       }
@@ -757,6 +760,7 @@ void wise_pdf_view::slot_page_mode_changed(QPdfView::PageMode page_mode)
 void wise_pdf_view::slot_password_changed(void)
 {
   m_document->setPassword(m_ui.password->text());
+  m_ui.password->setFocus();
   m_ui.password_frame->setVisible
     (m_document->load(m_url.path()) == QPdfDocument::Error::IncorrectPassword);
 }
