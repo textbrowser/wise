@@ -155,7 +155,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The &lt;span style=&quot; font-weight:700;&quot;&gt;Page Mode&lt;/span&gt; and &lt;span style=&quot; font-weight:700;&quot;&gt;Zoom Mode&lt;/span&gt; are retained for future sessions of this file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Page&lt;/span&gt;, &lt;span style=&quot; font-weight:700;&quot;&gt;Page Mode&lt;/span&gt;, and &lt;span style=&quot; font-weight:700;&quot;&gt;Zoom Mode&lt;/span&gt; are retained for future sessions of this file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>

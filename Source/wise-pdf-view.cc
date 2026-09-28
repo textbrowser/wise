@@ -633,6 +633,7 @@ void wise_pdf_view::slot_contents_selected(const QModelIndex &index)
   m_ui.page->blockSignals(true);
   m_ui.page->setValue(1 + page);
   m_ui.page->blockSignals(false);
+  save_setting("page", m_ui.page->value());
 }
 
 void wise_pdf_view::slot_document_status_changed(QPdfDocument::Status status)
@@ -640,7 +641,10 @@ void wise_pdf_view::slot_document_status_changed(QPdfDocument::Status status)
   if(status == QPdfDocument::Status::Ready)
     {
       m_search_model->setSearchString("");
-      m_ui.page->setValue(m_ui.page->minimum());
+      m_ui.page->setValue
+	(qBound(m_ui.page->minimum(),
+		restore_setting("page").toInt(),
+		m_ui.page->maximum()));
       m_ui.search->setText("");
       prepare();
       prepare_widget_states();
@@ -655,11 +659,13 @@ void wise_pdf_view::slot_file_changed(const QString &path)
 void wise_pdf_view::slot_first_page(void)
 {
   m_ui.page->setValue(m_ui.page->minimum());
+  save_setting("page", m_ui.page->value());
 }
 
 void wise_pdf_view::slot_last_page(void)
 {
   m_ui.page->setValue(m_ui.page->maximum());
+  save_setting("page", m_ui.page->value());
 }
 
 void wise_pdf_view::slot_load_document(void)
@@ -841,6 +847,7 @@ void wise_pdf_view::slot_scrolled(int value)
   Q_UNUSED(value);
   m_ui.page->setValue(1 + m_pdf_view->pageNavigator()->currentPage());
   prepare_widget_states();
+  save_setting("page", m_ui.page->value());
 }
 
 void wise_pdf_view::slot_search(void)
@@ -916,6 +923,7 @@ void wise_pdf_view::slot_search_view_selected
   m_ui.page->blockSignals(true);
   m_ui.page->setValue(1 + page);
   m_ui.page->blockSignals(false);
+  save_setting("page", m_ui.page->value());
 }
 
 void wise_pdf_view::slot_select_page(int value)
