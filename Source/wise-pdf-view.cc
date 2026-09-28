@@ -930,6 +930,7 @@ void wise_pdf_view::slot_select_page(int value)
 {
   m_pdf_view->pageNavigator()->jump(-1 + value, QPointF());
   prepare_widget_states();
+  save_setting("page", value);
 }
 
 void wise_pdf_view::slot_select_page(void)
@@ -943,6 +944,7 @@ void wise_pdf_view::slot_select_page(void)
 
   m_ui.page->stepDown();
   m_ui.page->stepUp();
+  save_setting("page", m_ui.page->value());
 }
 
 void wise_pdf_view::slot_settings_changed(void)
