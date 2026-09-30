@@ -19,7 +19,9 @@ QMAKE_CXXFLAGS_RELEASE += -march=armv7
 }
 
 contains(QMAKE_HOST.arch, x86_64) {
+macx {
 QMAKE_APPLE_DEVICE_ARCHS = arm64 x86_64
+}
 }
 
 qtHaveModule(pdf) {
