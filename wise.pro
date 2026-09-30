@@ -18,6 +18,10 @@ contains(QMAKE_HOST.arch, armv7l) {
 QMAKE_CXXFLAGS_RELEASE += -march=armv7
 }
 
+contains(QMAKE_HOST.arch, x86_64) {
+QMAKE_APPLE_DEVICE_ARCHS = arm64 x86_64
+}
+
 qtHaveModule(pdf) {
 qtHaveModule(pdfwidgets) {
 QT += pdf pdfwidgets
