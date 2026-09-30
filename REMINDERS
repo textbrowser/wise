@@ -13,6 +13,7 @@ Completed Items
 - Page icons.
 - Pages menu.
 - Passwords.
+- Perhaps retain a file's view (current page, current view, etc.).
 - Print.
 - Qt version in About.
 - Recent files.
@@ -28,5 +29,4 @@ Remaining Items
 
 - Download-PDF feature. Include a proxy.
 - Fonts.
-- Perhaps retain a file's view (current page, current view, etc.).
 - Rotations. Not simple?

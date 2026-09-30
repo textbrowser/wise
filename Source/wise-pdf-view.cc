@@ -46,7 +46,7 @@
 #include <QSqlQuery>
 #include <QTimer>
 
-qreal static maximum_zoom_factor = 10.0;
+qreal static maximum_zoom_factor = 16.0;
 qreal static minimum_zoom_factor = 0.25;
 qreal static zoom_constant = 2.0;
 
@@ -563,10 +563,12 @@ void wise_pdf_view::save_first_page(void)
   if(m_pdf_view->zoomMode() == QPdfView::ZoomMode::Custom)
     {
       auto const zoom_factor = qBound
-	(1.0, restore_setting("zoom-factor").toDouble(), 16.0);
+	(minimum_zoom_factor, restore_setting("zoom-factor").toDouble(),
+	 maximum_zoom_factor);
 
       m_pdf_view->setZoomFactor(zoom_factor);
       m_pdf_view->setZoomMode(QPdfView::ZoomMode::Custom);
+      prepare_view_size();
     }
   else if(m_pdf_view->zoomMode() == QPdfView::ZoomMode::FitInView)
     {
