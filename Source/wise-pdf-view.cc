@@ -563,7 +563,8 @@ void wise_pdf_view::save_first_page(void)
   if(m_pdf_view->zoomMode() == QPdfView::ZoomMode::Custom)
     {
       auto const zoom_factor = qBound
-	(minimum_zoom_factor, restore_setting("zoom-factor").toDouble(),
+	(minimum_zoom_factor,
+	 restore_setting("zoom-factor").toDouble(),
 	 maximum_zoom_factor);
 
       m_pdf_view->setZoomFactor(zoom_factor);
