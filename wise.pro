@@ -1,6 +1,5 @@
 macx {
-dmg.commands        = make install && \
-                      hdiutil create Wise.d.dmg -srcfolder Wise.d
+dmg.commands        = hdiutil create Wise.d.dmg -srcfolder Wise.d
 QMAKE_EXTRA_TARGETS += dmg
 }
 
