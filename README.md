@@ -6,9 +6,17 @@ Wise is a <b>wonderfully</b>-<b>interactive</b> and <b>simple</b>
 <li>Qt 6.8 LTS and newer are necessary.</li>
 </ul>
 
-<b>Version 2026.06.14 is the newest LTS release.</b>
+<b>Version 2026.10.03 is the newest LTS release.</b>
 
 <b>Release Notes</b>
+
+<p><b>2026.10.03 Release</b></p>
+<ul>
+<li>LTS release: Kubuntu 26.04 AMD64, PiOS 13 ARM64,
+  MacOS 15 Universal, Windows 11 AMD64.</li>
+<li>Retain page, page mode, and zoom mode per file.</li>
+<li>Signed MacOS release.</li>
+</ul>
 
 <p><b>2026.06.14 Release</b></p>
 <ul>
