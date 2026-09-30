@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Alexis Megas.
 
-if [ ! -e wise.macos.pro ]
+if [ ! -e wise.pro ]
 then
     echo "Please issue $0 from the primary directory."
     exit 1
@@ -32,7 +32,7 @@ done
 if [ -x "$qmake" ]
 then
     echo "Found $qmake."
-    $qmake -o Makefile wise.macos.pro 1>/dev/null 2>/dev/null
+    $qmake -o Makefile wise.pro 1>/dev/null 2>/dev/null
 else
     echo "Cannot locate qmake. Please install the official Qt."
     exit 1
