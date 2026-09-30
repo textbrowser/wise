@@ -52,7 +52,7 @@ then
 fi
 
 echo "Building Wise.d.dmg."
-make dmg 1>dev/null 2>/dev/null
+make dmg 1>/dev/null 2>/dev/null
 
 if [ ! -r Wise.d.dmg ]
 then
