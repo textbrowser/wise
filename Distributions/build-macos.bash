@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Alexis Megas.
 
-if [ ! -e biblioteq.macos.pro ]
+if [ ! -e wise.macos.pro ]
 then
     echo "Please issue $0 from the primary directory."
     exit 1
@@ -32,19 +32,17 @@ done
 if [ -x "$qmake" ]
 then
     echo "Found $qmake."
-    $qmake -o Makefile biblioteq.macos.pro 1>/dev/null 2>/dev/null
+    $qmake -o Makefile wise.macos.pro 1>/dev/null 2>/dev/null
 else
     echo "Cannot locate qmake. Please install the official Qt."
     exit 1
 fi
 
-VERSION="$(grep 'BIBLIOTEQ_VERSION ' Source/biblioteq.h | awk '{print $3}' | sed 's/"//g')"
-
-echo "Making BiblioteQ."
+echo "Making Wise."
 make -j $(sysctl -n hw.ncpu) 1>/dev/null 2>/dev/null
 make install 1>/dev/null 2>/dev/null
-echo "Signing ./BiblioteQ.d/BiblioteQ.app."
-codesign --deep --force -s "textbrowser" ./BiblioteQ.d/BiblioteQ.app \
+echo "Signing ./Wise.d/Wise.app."
+codesign --deep --force -s "textbrowser" ./Wise.d/Wise.app \
 	 1>/dev/null 2>/dev/null
 
 if [ ! $? -eq 0 ]
@@ -53,15 +51,15 @@ then
     exit 1
 fi
 
-echo "Building BiblioteQ.d.dmg."
+echo "Building Wise.d.dmg."
 make dmg 1>dev/null 2>/dev/null
 
-if [ ! -r BiblioteQ.d.dmg ]
+if [ ! -r Wise.d.dmg ]
 then
-    echo "BiblioteQ.d.dmg is not a readable file."
+    echo "Wise.d.dmg is not a readable file."
     exit 1
 fi
 
-mv BiblioteQ.d.dmg BiblioteQ-${VERSION}_Universal.dmg
+mv Wise.d.dmg Wise-2026.10.03_Universal.dmg
 make distclean 1>/dev/null 2>/dev/null
-rm -fr ./BiblioteQ.d
+rm -fr ./Wise.d
