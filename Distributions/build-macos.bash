@@ -31,7 +31,7 @@ done
 
 if [ -x "$qmake" ]
 then
-    echo "Found $qmake."
+    echo "Found $qmake. Creating Makefile."
     $qmake -o Makefile wise.pro 1>/dev/null 2>/dev/null
 else
     echo "Cannot locate qmake. Please install the official Qt."
