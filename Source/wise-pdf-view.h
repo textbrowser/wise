@@ -94,7 +94,8 @@ class wise_pdf_view: public QWidget
   QUrl m_url;
   Ui_wise_pdf_view m_ui;
   wise_pdf_view_view *m_pdf_view;
-  QVariant restore_setting(const QString &key) const;
+  QVariant restore_setting
+    (const QString &key, const QVariant &default_value = QVariant()) const;
   void keyPressEvent(QKeyEvent *event);
   void prepare(void);
   void prepare_view_size(void);

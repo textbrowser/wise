@@ -394,10 +394,11 @@ wise_pdf_view::~wise_pdf_view()
 {
 }
 
-QVariant wise_pdf_view::restore_setting(const QString &key) const
+QVariant wise_pdf_view::restore_setting
+(const QString &key, const QVariant &default_value) const
 {
   QString const connection_name("restore_setting");
-  QVariant value;
+  QVariant value(default_value);
 
   {
     auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));
@@ -553,7 +554,9 @@ void wise_pdf_view::save_first_page(void)
   m_pdf_view->setPageMode
     (QPdfView::PageMode(restore_setting("page-mode").toInt()));
   m_pdf_view->setZoomMode
-    (QPdfView::ZoomMode(restore_setting("zoom-mode").toInt()));
+    (QPdfView::ZoomMode
+    (restore_setting
+    ("zoom-mode", static_cast<int> (QPdfView::ZoomMode::FitToWidth)).toInt()));
 
   if(m_pdf_view->pageMode() == QPdfView::PageMode::MultiPage)
     m_ui.page_mode->setText(tr("Multiple"));
@@ -564,7 +567,7 @@ void wise_pdf_view::save_first_page(void)
     {
       auto const zoom_factor = qBound
 	(minimum_zoom_factor,
-	 restore_setting("zoom-factor").toDouble(),
+	 restore_setting("zoom-factor", 1.0).toDouble(),
 	 maximum_zoom_factor);
 
       m_pdf_view->setZoomFactor(zoom_factor);
