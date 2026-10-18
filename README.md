@@ -10,6 +10,13 @@ Wise is a <b>wonderfully</b>-<b>interactive</b> and <b>simple</b>
 
 <b>Release Notes</b>
 
+<p><b>2026.10.18 Release</b></p>
+<ul>
+<li>Default of 1.0 zoom-factor.</li>
+<li>Default of View-Width page-mode.</li>
+<li>QT_STYLE_OVERRIDE setting.</li>
+</ul>
+
 <p><b>2026.10.03 Release</b></p>
 <ul>
 <li>LTS release: Kubuntu 26.04 AMD64, PiOS 13 ARM64,
