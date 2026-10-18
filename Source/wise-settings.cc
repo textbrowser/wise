@@ -32,6 +32,10 @@
 wise_settings::wise_settings(QWidget *parent):QWidget(parent)
 {
   m_ui.setupUi(this);
+  connect(m_ui.style_override,
+	  &QLineEdit::returnPressed,
+	  this,
+	  &wise_settings::slot_save_style_override);
   m_ui.proxy_group_box->setVisible(false);
 #ifdef Q_OS_ANDROID
   m_ui.render_mode->setEnabled(false);
@@ -118,6 +122,9 @@ void wise_settings::restore(void)
 		QSettings().value(key).toInt(),
 		combination_box->count() - 1));
     }
+
+  m_ui.style_override->setText
+    (QSettings().value("settings/style_override").toString().trimmed());
 }
 
 void wise_settings::slot_check_box_state_changed(int state)
@@ -141,5 +148,13 @@ void wise_settings::slot_combination_box_current_index_changed(int index)
 
   QSettings().setValue
     (QString("settings/%1").arg(combination_box->objectName()), index);
+  emit changed();
+}
+
+void wise_settings::slot_save_style_override(void)
+{
+  QSettings().setValue
+    ("settings/style_override", m_ui.style_override->text().trimmed());
+  m_ui.style_override->selectAll();
   emit changed();
 }

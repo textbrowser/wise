@@ -51,6 +51,7 @@ class wise_settings: public QWidget
  private slots:
   void slot_check_box_state_changed(int state);
   void slot_combination_box_current_index_changed(int index);
+  void slot_save_style_override(void);
 
  signals:
   void changed(void);
