@@ -49,9 +49,17 @@ int main(int argc, char *argv[])
   QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar, true);
 #endif
 
-#if defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
-  qputenv("QT_STYLE_OVERRIDE", "Fusion");
-#endif
+  QCoreApplication::setApplicationName("Wise");
+  QCoreApplication::setApplicationVersion(WISE_VERSION_STRING);
+  QCoreApplication::setOrganizationName("Wise");
+  QSettings::setDefaultFormat(QSettings::IniFormat);
+  QSettings::setPath
+    (QSettings::IniFormat, QSettings::UserScope, wise::home_path());
+
+  auto const variable
+    (QSettings().value("settings/style_override").toByteArray().trimmed());
+
+  qputenv("QT_STYLE_OVERRIDE", variable);
 
   QApplication application(argc, argv);
 
@@ -68,12 +76,6 @@ int main(int argc, char *argv[])
 
   CocoaInitializer ci;
 #endif
-  QCoreApplication::setApplicationName("Wise");
-  QCoreApplication::setApplicationVersion(WISE_VERSION_STRING);
-  QCoreApplication::setOrganizationName("Wise");
-  QSettings::setDefaultFormat(QSettings::IniFormat);
-  QSettings::setPath
-    (QSettings::IniFormat, QSettings::UserScope, wise::home_path());
 
   int rc = 0;
 
