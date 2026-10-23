@@ -46,9 +46,10 @@ int main(int argc, char *argv[])
 
 #if defined(Q_OS_ANDROID)
 #else
+  QCoreApplication::setAttribute(Qt::AA_DontUseNativeDialogs, true);
   QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar, true);
+  QCoreApplication::setAttribute(Qt::AA_NativeWindows, false);
 #endif
-
   QCoreApplication::setApplicationName("Wise");
   QCoreApplication::setApplicationVersion(WISE_VERSION_STRING);
   QCoreApplication::setOrganizationName("Wise");
