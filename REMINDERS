@@ -15,6 +15,7 @@ Completed Items
 - Passwords.
 - Perhaps retain a file's view (current page, current view, etc.).
 - Print.
+- Qt style override.
 - Qt version in About.
 - Recent files.
 - Recent-file view. As in Glitch.
@@ -29,5 +30,4 @@ Remaining Items
 
 - Download-PDF feature. Include a proxy.
 - Fonts.
-- Qt style override.
 - Rotations. Not simple?
