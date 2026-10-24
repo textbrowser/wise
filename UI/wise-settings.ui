@@ -172,7 +172,7 @@
      <item>
       <widget class="QLineEdit" name="style_override">
        <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Please press the Enter key to save the style override. Wise must be restarted after a style is configured.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Please press the Enter key to save the style override. May override QT_QPA_PLATFORMTHEME. Wise must be restarted after a style is configured.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="placeholderText">
         <string>QT_STYLE_OVERRIDE</string>
