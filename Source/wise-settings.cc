@@ -27,7 +27,17 @@
 
 #include "wise-settings.h"
 
+#include <QCompleter>
 #include <QSettings>
+#include <QStyleFactory>
+
+static QStringList sort(const QStringList &list)
+{
+  auto sorted(list);
+
+  std::sort(sorted.begin(), sorted.end());
+  return sorted;
+}
 
 wise_settings::wise_settings(QWidget *parent):QWidget(parent)
 {
@@ -40,6 +50,11 @@ wise_settings::wise_settings(QWidget *parent):QWidget(parent)
 #ifdef Q_OS_ANDROID
   m_ui.render_mode->setEnabled(false);
 #endif
+  m_ui.style_override->setCompleter
+    (new QCompleter(sort(QStyleFactory::keys()), this));
+  m_ui.style_override->completer()->setCaseSensitivity(Qt::CaseInsensitive);
+  m_ui.style_override->completer()->setCompletionMode
+    (QCompleter::UnfilteredPopupCompletion);
   restore();
 
   foreach(auto check_box, findChildren<QCheckBox *> ())
