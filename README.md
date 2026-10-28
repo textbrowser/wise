@@ -10,6 +10,11 @@ Wise is a <b>wonderfully</b>-<b>interactive</b> and <b>simple</b>
 
 <b>Release Notes</b>
 
+<p><b>2026.10.28 Release</b></p>
+<ul>
+<li>New completer for Style Override setting.</li>
+</ul>
+
 <p><b>2026.10.18 Release</b></p>
 <ul>
 <li>Default of 1.0 zoom-factor.</li>
