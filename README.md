@@ -10,6 +10,14 @@ Wise is a <b>wonderfully</b>-<b>interactive</b> and <b>simple</b>
 
 <b>Release Notes</b>
 
+<p><b>2026.11.17 Release</b></p>
+<ul>
+<li>Clear the password field after a password-protected PDF
+  is processed correctly.</li>
+<li>Restore settings after a password-protected PDF is
+  processed.</li>
+</ul>
+
 <p><b>2026.10.28 Release</b></p>
 <ul>
 <li>New completer for Style Override setting.</li>
