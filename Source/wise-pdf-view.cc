@@ -656,6 +656,7 @@ void wise_pdf_view::slot_document_status_changed(QPdfDocument::Status status)
       m_ui.search->setText("");
       prepare();
       prepare_widget_states();
+      save_first_page();
     }
 }
 
@@ -716,7 +717,6 @@ void wise_pdf_view::slot_load_document(void)
       {
 	m_ui.contents->scrollToTop();
 	m_ui.meta->scrollToTop();
-	save_first_page();
 	break;
       }
     case QPdfDocument::Error::Unknown:
