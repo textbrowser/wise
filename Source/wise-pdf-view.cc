@@ -650,9 +650,10 @@ void wise_pdf_view::slot_document_status_changed(QPdfDocument::Status status)
 {
   if(status == QPdfDocument::Status::Ready)
     {
+      m_search_model->setSearchString("");
       m_ui.page->setMaximum(m_document->pageCount());
       m_ui.page->setValue(restore_setting("page").toInt());
-      m_search_model->setSearchString("");
+      m_ui.password->clear();
       m_ui.search->setText("");
       prepare();
       prepare_widget_states();
