@@ -399,6 +399,7 @@ wise_pdf_view::wise_pdf_view(const QUrl &url, QWidget *parent):QWidget(parent)
 
 wise_pdf_view::~wise_pdf_view()
 {
+  m_save_page_timer.stop();
   slot_save_page();
 }
 
@@ -656,6 +657,11 @@ void wise_pdf_view::slot_contents_selected(const QModelIndex &index)
 
 void wise_pdf_view::slot_document_status_changed(QPdfDocument::Status status)
 {
+  m_file_system_watcher.removePath(m_url.toLocalFile());
+  m_file_system_watcher.addPath(m_url.toLocalFile()) ?
+    (void) 0 :
+    (void) (qDebug() << tr("Cannot monitor %1.").arg(m_url.toLocalFile()));
+
   if(status == QPdfDocument::Status::Ready)
     {
       m_search_model->setSearchString("");
@@ -954,8 +960,8 @@ void wise_pdf_view::slot_search_view_selected
 void wise_pdf_view::slot_select_page(int value)
 {
   m_pdf_view->pageNavigator()->jump(-1 + value, QPointF());
+  m_save_page_timer.start();
   prepare_widget_states();
-  save_setting("page", value);
 }
 
 void wise_pdf_view::slot_select_page(void)
