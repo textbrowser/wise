@@ -701,7 +701,7 @@ void wise::slot_save_recent_file(const QImage &image, const QUrl &url)
 	query.prepare
 	  ("INSERT OR REPLACE INTO wise_recent_files "
 	   "(file_name, image) VALUES (?, ?)");
-	query.addBindValue(QFileInfo(url.path()).absoluteFilePath());
+	query.addBindValue(QFileInfo(url.toLocalFile()).absoluteFilePath());
 	query.addBindValue(bytes.toBase64());
 	query.exec();
       }

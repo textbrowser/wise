@@ -101,7 +101,7 @@ void wise_pdf_view_search_view_item_delegate::paint
       auto const bold_width = QFontMetrics(bold_font).
 	horizontalAdvance(bold_text);
       auto const prefix_suffix_width =
-	(-bold_width - label_width + option.rect.width()) / 2;
+	(qMax(0, -bold_width - label_width + option.rect.width())) / 2;
 
       painter->setFont(bold_font);
       painter->drawText
@@ -160,7 +160,7 @@ void wise_pdf_view_view::keyPressEvent(QKeyEvent *event)
 	    {
 	      if(event->key() == Qt::Key_End)
 		emit jump_to_end();
-	      else
+	      else if(event->key() == Qt::Key_Home)
 		emit jump_to_beginning();
 	    }
 	}
@@ -187,8 +187,9 @@ wise_pdf_view::wise_pdf_view(const QUrl &url, QWidget *parent):QWidget(parent)
   qRegisterMetaType<QPdfDocument::Status> ("QPdfDocumentStatus");
   m_bookmark_model = new QPdfBookmarkModel(this);
   m_bookmark_model->setDocument(m_document = new QPdfDocument(this));
-  m_file_system_watcher.addPath(url.path()) ?
-    (void) 0 : (void) (qDebug() << tr("Cannot monitor %1.").arg(url.path()));
+  m_file_system_watcher.addPath(url.toLocalFile()) ?
+    (void) 0 :
+    (void) (qDebug() << tr("Cannot monitor %1.").arg(url.toLocalFile()));
   m_page_renderer = new QPdfPageRenderer(this);
   m_page_renderer->setDocument(m_document);
   m_page_renderer->setRenderMode(wise_settings::render_mode());
@@ -414,7 +415,7 @@ QVariant wise_pdf_view::restore_setting
 	query.prepare
 	  ("SELECT value FROM wise_file_settings WHERE "
 	   "file_name = ? AND key = ?");
-	query.addBindValue(QFileInfo(m_url.path()).absoluteFilePath());
+	query.addBindValue(QFileInfo(m_url.toLocalFile()).absoluteFilePath());
 	query.addBindValue(key.trimmed());
 
 	if(query.exec() && query.next())
@@ -611,7 +612,7 @@ void wise_pdf_view::save_setting(const QString &key, const QVariant &value)
 	query.prepare
 	  ("INSERT OR REPLACE INTO wise_file_settings "
 	   "(file_name, key, value) VALUES (?, ?, ?)");
-	query.addBindValue(QFileInfo(m_url.path()).absoluteFilePath());
+	query.addBindValue(QFileInfo(m_url.toLocalFile()).absoluteFilePath());
 	query.addBindValue(key.trimmed());
 	query.addBindValue(value);
 	query.exec();
@@ -663,7 +664,7 @@ void wise_pdf_view::slot_document_status_changed(QPdfDocument::Status status)
 
 void wise_pdf_view::slot_file_changed(const QString &path)
 {
-  m_ui.reload_frame->setVisible(m_url.path() == path);
+  m_ui.reload_frame->setVisible(m_url.toLocalFile() == path);
 }
 
 void wise_pdf_view::slot_first_page(void)
@@ -683,7 +684,7 @@ void wise_pdf_view::slot_load_document(void)
   m_ui.error_frame->setVisible(false);
   m_ui.password_frame->setVisible(false);
 
-  switch(m_document->load(m_url.path()))
+  switch(m_document->load(m_url.toLocalFile()))
     {
     case QPdfDocument::Error::DataNotYetAvailable:
       {
@@ -769,7 +770,8 @@ void wise_pdf_view::slot_password_changed(void)
   m_document->setPassword(m_ui.password->text());
   m_ui.password->setFocus();
   m_ui.password_frame->setVisible
-    (m_document->load(m_url.path()) == QPdfDocument::Error::IncorrectPassword);
+    (m_document->load
+    (m_url.toLocalFile()) == QPdfDocument::Error::IncorrectPassword);
 }
 
 void wise_pdf_view::slot_print(QPrinter *printer)

@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
     if(!argv || !argv[i])
       continue;
 
+  QDir().mkpath(wise::home_path());
 #if defined(Q_OS_ANDROID)
 #else
   QCoreApplication::setAttribute(Qt::AA_DontUseNativeDialogs, true);
@@ -61,14 +62,6 @@ int main(int argc, char *argv[])
 
   qputenv("QT_STYLE_OVERRIDE", variable);
 
-  QApplication application(argc, argv);
-
-  application.setWindowIcon(QIcon(":/wise.png"));
-
-  QDir dir;
-
-  dir.mkdir(wise::home_path());
-
 #ifdef Q_OS_MACOS
   /*
   ** Eliminate pool errors on MacOS.
@@ -76,6 +69,10 @@ int main(int argc, char *argv[])
 
   CocoaInitializer ci;
 #endif
+
+  QApplication application(argc, argv);
+
+  application.setWindowIcon(QIcon(":/wise.png"));
 
   int rc = 0;
 
@@ -93,7 +90,8 @@ int main(int argc, char *argv[])
 #ifdef Q_OS_ANDROID
   auto activity = QJniObject(QNativeInterface::QAndroidApplication::context());
 
-  activity.callMethod<void> ("finishAndRemoveTask");
+  if(activity.isValid())
+    activity.callMethod<void> ("finishAndRemoveTask");
 #endif
   return rc;
 }
