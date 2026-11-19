@@ -34,6 +34,7 @@
 #include <QPdfDocument>
 #include <QPdfView>
 #include <QStyledItemDelegate>
+#include <QTimer>
 #include <QUrl>
 
 class QPdfBookmarkModel;
@@ -91,6 +92,7 @@ class wise_pdf_view: public QWidget
   QPdfDocument *m_document;
   QPdfPageRenderer *m_page_renderer;
   QPdfSearchModel *m_search_model;
+  QTimer m_save_page_timer;
   QUrl m_url;
   Ui_wise_pdf_view m_ui;
   wise_pdf_view_view *m_pdf_view;
@@ -117,6 +119,7 @@ class wise_pdf_view: public QWidget
   void slot_print(QPrinter *printer);
   void slot_print(void);
   void slot_reload_document(void);
+  void slot_save_page(void);
   void slot_scrolled(int value);
   void slot_search(void);
   void slot_search_count_changed(void);

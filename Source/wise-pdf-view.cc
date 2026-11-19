@@ -200,6 +200,8 @@ wise_pdf_view::wise_pdf_view(const QUrl &url, QWidget *parent):QWidget(parent)
   m_pdf_view->setSearchModel(m_search_model = new QPdfSearchModel(this));
   m_pdf_view->setZoomMode(QPdfView::ZoomMode::FitToWidth);
   m_search_model->setDocument(m_document);
+  m_save_page_timer.setInterval(2500);
+  m_save_page_timer.setSingleShot(true);
   m_ui.setupUi(this);
   m_ui.case_sensitive->setVisible(false);
   m_ui.contents->setModel(m_bookmark_model);
@@ -215,6 +217,10 @@ wise_pdf_view::wise_pdf_view(const QUrl &url, QWidget *parent):QWidget(parent)
 	  SIGNAL(fileChanged(const QString &)),
 	  this,
 	  SLOT(slot_file_changed(const QString &)));
+  connect(&m_save_page_timer,
+	  &QTimer::timeout,
+	  this,
+	  &wise_pdf_view::slot_save_page);
   connect(m_document,
 	  SIGNAL(statusChanged(QPdfDocument::Status)),
 	  this,
@@ -393,6 +399,7 @@ wise_pdf_view::wise_pdf_view(const QUrl &url, QWidget *parent):QWidget(parent)
 
 wise_pdf_view::~wise_pdf_view()
 {
+  slot_save_page();
 }
 
 QVariant wise_pdf_view::restore_setting
@@ -855,12 +862,17 @@ void wise_pdf_view::slot_reload_document(void)
   QTimer::singleShot(10, this, SLOT(slot_load_document(void)));
 }
 
+void wise_pdf_view::slot_save_page(void)
+{
+  save_setting("page", m_ui.page->value());
+}
+
 void wise_pdf_view::slot_scrolled(int value)
 {
   Q_UNUSED(value);
+  m_save_page_timer.start();
   m_ui.page->setValue(1 + m_pdf_view->pageNavigator()->currentPage());
   prepare_widget_states();
-  save_setting("page", m_ui.page->value());
 }
 
 void wise_pdf_view::slot_search(void)
