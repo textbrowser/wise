@@ -258,7 +258,7 @@ void wise::prepare_pages_menu(void)
 
   for(int i = 0; i < m_ui.tab->count(); i++)
     {
-      auto action = new QAction(m_ui.tab->tabText(i), this);
+      auto action = new QAction(m_ui.tab->tabText(i), m_ui.menu_Pages);
 
       action->setCheckable(true);
       action->setChecked(i == m_ui.tab->currentIndex());
@@ -395,11 +395,12 @@ void wise::slot_about_to_show_recent_files_menu(void)
 	      QFileInfo const fileInfo(query.value(0).toString());
 
 	      if(fileInfo.isReadable())
-		action = new QAction(query.value(0).toString(), this);
+		action = new QAction
+		  (query.value(0).toString(), m_ui.menu_Recent_Files);
 	      else
 		action = new QAction
-		  (tr("(NOT READABLE) %1").
-		   arg(query.value(0).toString()), this);
+		  (tr("(NOT READABLE) %1").arg(query.value(0).toString()),
+		   m_ui.menu_Recent_Files);
 
 	      action->setData(query.value(0).toString());
 	      connect(action,
