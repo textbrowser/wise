@@ -236,7 +236,8 @@ void wise_recent_files_view::slot_populate
       item->setData(Qt::UserRole, vector.at(i).second);
       item->setGraphicsEffect(effect);
       item->setPixmap
-	(QFileInfo(vector.at(i).second).isReadable() ?
+	(QFileInfo(vector.at(i).second).isReadable() &&
+	 item->pixmap().isNull() == false ?
 	 item->pixmap() : missing);
       item->set_file_name(vector.at(i).second);
       scene()->addItem(item);
