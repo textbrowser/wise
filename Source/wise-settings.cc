@@ -124,7 +124,7 @@ void wise_settings::restore(void)
     {
       auto const key(QString("settings/%1").arg(check_box->objectName()));
 
-      check_box->setChecked(QSettings().value(key).toInt());
+      check_box->setChecked(QSettings().value(key, 0).toInt());
     }
 
   foreach(auto combination_box, findChildren<QComboBox *> ())
