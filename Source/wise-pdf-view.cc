@@ -763,7 +763,7 @@ void wise_pdf_view::slot_page_mode_activated(void)
   if(!action)
     return;
 
-  if(action && action->text() == tr("Multiple"))
+  if(action->text() == tr("Multiple"))
     m_pdf_view->setPageMode(QPdfView::PageMode::MultiPage);
   else
     m_pdf_view->setPageMode(QPdfView::PageMode::SinglePage);
