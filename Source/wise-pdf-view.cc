@@ -46,9 +46,9 @@
 #include <QSqlQuery>
 #include <QTimer>
 
-qreal static maximum_zoom_factor = 16.0;
-qreal static minimum_zoom_factor = 0.25;
-qreal static zoom_constant = 2.0;
+const qreal static maximum_zoom_factor = 16.0;
+const qreal static minimum_zoom_factor = 0.25;
+const qreal static zoom_constant = 2.0;
 
 static bool numeric_sort(const QString &string_1, const QString &string_2)
 {
