@@ -81,8 +81,8 @@ void wise_recent_files_view::enterEvent(QEnterEvent *event)
 
 void wise_recent_files_view::gather(void)
 {
-  QString const connection_name("gather");
   QVectorQPairQImageQString vector;
+  auto const connection_name(wise::database_connection_name());
 
   {
     auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));

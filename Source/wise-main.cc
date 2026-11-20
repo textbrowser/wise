@@ -33,6 +33,7 @@
 #include <QJniObject>
 #endif
 #include <QSettings>
+#include <QStyleFactory>
 
 #ifdef Q_OS_MACOS
 #include "CocoaInitializer.h"
@@ -40,10 +41,6 @@
 
 int main(int argc, char *argv[])
 {
-  for(int i = 0; i < argc; i++)
-    if(!argv || !argv[i])
-      continue;
-
   QDir().mkpath(wise::home_path());
 #if defined(Q_OS_ANDROID)
 #else
@@ -60,7 +57,8 @@ int main(int argc, char *argv[])
   auto const variable
     (QSettings().value("settings/style_override").toByteArray().trimmed());
 
-  qputenv("QT_STYLE_OVERRIDE", variable);
+  if(QStyleFactory::keys().contains(variable))
+    qputenv("QT_STYLE_OVERRIDE", variable);
 
 #ifdef Q_OS_MACOS
   /*

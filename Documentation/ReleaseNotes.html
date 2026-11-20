@@ -10,10 +10,10 @@
 	  QFileSystemWatcher::addPath().</li>
 	<li>Create CocoaInitializer before QApplication.</li>
 	<li>Decrease the number of database writes by saving
-	  the current page via a timer.</li>
+	  a PDF file's current page via a timer.</li>
 	<li>Disable links access in the release notes QTextBrowser object.</li>
 	<li>Limit of 1000 recent files.</li>
-	<li>Prefer QDir().mkpath() for creating the wise directory.</li>
+	<li>Prefer QDir().mkpath() for creating the local wise directory.</li>
 	<li>Prefer QUrl::toLocalFile() instead of QUrl::path().</li>
 	<li>Prevent negative prefix_suffix_width.</li>
 	<li>Properly process Ctrl + Home for single-page view.</li>
@@ -26,6 +26,9 @@
 	<li>Review validity of QJniObject before issuing callMethod().</li>
 	<li>Terminate the foreach() in wise_pdf_view::slot_print() if
 	  QPrinter::newPage() fails.</li>
+	<li>Unique database names.</li>
+	<li>Verify that settings/style_override exists in
+	  QStyleFactory::keys() before setting QT_STYLE_OVERRIDE.</li>
       </ul>
     </p>
     <h4><u>2026.11.17 Release</u></h4>

@@ -41,6 +41,8 @@
 #include <QSqlQuery>
 #include <QTextBrowser>
 
+QAtomicInteger<quint64> wise::s_database_id = 0;
+
 wise::wise(void):QMainWindow(nullptr)
 {
   m_settings = new wise_settings(this);
@@ -160,6 +162,11 @@ wise::~wise()
 {
 }
 
+QString wise::database_connection_name(void)
+{
+  return QString("database_%1").arg(s_database_id.fetchAndAddOrdered(1));
+}
+
 QString wise::home_path(void)
 {
 #ifdef Q_OS_WINDOWS
@@ -174,7 +181,7 @@ void wise::add_pdf_page(const QString &file_name)
   if(file_name.isEmpty())
     return;
 
-  QString const connection_name("add_pdf_page");
+  auto const connection_name(database_connection_name());
 
   {
     auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));
@@ -368,7 +375,7 @@ void wise::slot_about_to_show_recent_files_menu(void)
 	  this,
 	  &wise::slot_clear_recent_files);
 
-  QString const connection_name("slot_about_to_show_recent_files_menu");
+  auto const connection_name(database_connection_name());
 
   {
     auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));
@@ -422,7 +429,7 @@ void wise::slot_clear_recent_files(void)
 {
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
-  QString const connection_name("slot_clear_recent_files");
+  auto const connection_name(database_connection_name());
 
   {
     auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));
@@ -499,7 +506,7 @@ void wise::slot_forget_recent_file(const QString &file_name)
 {
   QApplication::setOverrideCursor(Qt::WaitCursor);
 
-  QString connection_name("slot_forget_recent_file");
+  auto const connection_name(database_connection_name());
 
   {
     auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));
@@ -680,7 +687,7 @@ void wise::slot_release_notes(void)
 
 void wise::slot_save_recent_file(const QImage &image, const QUrl &url)
 {
-  QString const connection_name("slot_save_recent_file");
+  auto const connection_name(database_connection_name());
 
   {
     auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));

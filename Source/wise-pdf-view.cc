@@ -406,8 +406,8 @@ wise_pdf_view::~wise_pdf_view()
 QVariant wise_pdf_view::restore_setting
 (const QString &key, const QVariant &default_value) const
 {
-  QString const connection_name("restore_setting");
   QVariant value(default_value);
+  auto const connection_name(wise::database_connection_name());
 
   {
     auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));
@@ -600,7 +600,7 @@ void wise_pdf_view::save_setting(const QString &key, const QVariant &value)
   if(key.trimmed().isEmpty() || value.isNull())
     return;
 
-  QString const connection_name("save_setting");
+  auto const connection_name(wise::database_connection_name());
 
   {
     auto db(QSqlDatabase::addDatabase("QSQLITE", connection_name));

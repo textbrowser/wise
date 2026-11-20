@@ -30,6 +30,7 @@
 
 #include "ui_wise.h"
 
+#include <QAtomicInteger>
 #include <QTimer>
 
 #define WISE_VERSION_STRING "2026.11.21"
@@ -44,9 +45,11 @@ class wise: public QMainWindow
  public:
   wise(void);
   ~wise();
+  QString static database_connection_name(void);
   QString static home_path(void);
 
  private:
+  QAtomicInteger<quint64> static s_database_id;
   QTimer m_timer;
   Ui_wise m_ui;
   wise_settings *m_settings;
