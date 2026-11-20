@@ -52,7 +52,7 @@ QTabBar *wise_tab::tab_bar(void) const
 
 void wise_tab::set_push_button(QPushButton *push_button, const int index)
 {
-  if(index < 0 || push_button == nullptr)
+  if(count() <= index || index < 0 || push_button == nullptr)
     return;
 
   auto const position = m_tab_bar->preferred_close_button_position_opposite();
