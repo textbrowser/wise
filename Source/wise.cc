@@ -46,7 +46,7 @@ wise::wise(void):QMainWindow(nullptr)
   m_settings = new wise_settings(this);
   m_settings->setVisible(false);
 #ifdef Q_OS_ANDROID
-  m_timer.start(50);
+  m_timer.start(5000);
 #endif
   m_ui.setupUi(this);
   m_ui.action_Close_Page->setEnabled(false);
@@ -283,7 +283,6 @@ void wise::prepare_pages_menu(void)
 
 void wise::process_terminal(void)
 {
-  QApplication::processEvents();
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
   auto const list(QApplication::arguments());
@@ -556,11 +555,9 @@ void wise::slot_open_pdf_files(void)
 #endif
   dialog.setWindowIcon(windowIcon());
   dialog.setWindowTitle(tr("Wise: Open PDF Files"));
-  QApplication::processEvents();
 
   if(dialog.exec() == QDialog::Accepted)
     {
-      QApplication::processEvents();
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
       auto const list(dialog.selectedFiles());
@@ -570,8 +567,6 @@ void wise::slot_open_pdf_files(void)
 
       QApplication::restoreOverrideCursor();
     }
-  else
-    QApplication::processEvents();
 }
 
 void wise::slot_page_moved(int from, int to)
@@ -603,7 +598,6 @@ void wise::slot_print(void)
 void wise::slot_process_events(void)
 {
   repaint();
-  QApplication::processEvents();
 }
 
 void wise::slot_quit(void)

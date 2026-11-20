@@ -858,9 +858,7 @@ void wise_pdf_view::slot_print(void)
 #endif
   new QShortcut(tr("Ctrl+W"), dialog.data(), SLOT(close(void)));
   new QShortcut(tr("Esc"), dialog.data(), SLOT(close(void)));
-  QApplication::processEvents();
   dialog->exec();
-  QApplication::processEvents();
 }
 
 void wise_pdf_view::slot_reload_document(void)
