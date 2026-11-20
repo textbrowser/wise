@@ -670,6 +670,8 @@ void wise::slot_release_notes(void)
 
       auto text_browser = new QTextBrowser(this);
 
+      text_browser->setOpenExternalLinks(false);
+      text_browser->setOpenLinks(false);
       text_browser->setSource(QUrl::fromUserInput("qrc:/ReleaseNotes.html"));
       frame->layout()->addWidget(text_browser);
     }
