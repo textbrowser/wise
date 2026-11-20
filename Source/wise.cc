@@ -383,8 +383,10 @@ void wise::slot_about_to_show_recent_files_menu(void)
 
 	query.setForwardOnly(true);
 
-	if(query.exec("SELECT file_name FROM wise_recent_files "
-		      "ORDER BY file_name"))
+	if(query.exec("SELECT SUBSTR(file_name, 1, 10000) "
+		      "FROM wise_recent_files "
+		      "ORDER BY file_name "
+		      "LIMIT 1000"))
 	  while(query.next())
 	    {
 	      if(m_ui.menu_Recent_Files->actions().size() == 1)

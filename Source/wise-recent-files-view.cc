@@ -62,6 +62,12 @@ wise_recent_files_view::wise_recent_files_view(QWidget *parent):
   QTimer::singleShot(50, this, SLOT(slot_gather(void)));
 }
 
+wise_recent_files_view::~wise_recent_files_view()
+{
+  m_gather_future.cancel();
+  m_gather_future.waitForFinished();
+}
+
 QAction *wise_recent_files_view::menu_action(void) const
 {
   return m_menu_action;
@@ -75,7 +81,7 @@ void wise_recent_files_view::enterEvent(QEnterEvent *event)
 
 void wise_recent_files_view::gather(void)
 {
-  QString connection_name("gather");
+  QString const connection_name("gather");
   QVectorQPairQImageQString vector;
 
   {
@@ -90,8 +96,11 @@ void wise_recent_files_view::gather(void)
 
 	query.setForwardOnly(true);
 
-	if(query.exec("SELECT file_name, image FROM wise_recent_files "
-		      "ORDER BY file_name"))
+	if(query.exec("SELECT SUBSTR(file_name, 1, 10000), "
+		      "SUBSTR(image, 1, 16777216) "
+		      "FROM wise_recent_files "
+		      "ORDER BY file_name "
+		      "LIMIT 1000"))
 	  while(m_gather_future.isCanceled() == false && query.next())
 	    {
 	      QFileInfo const file_info(query.value(0).toString());

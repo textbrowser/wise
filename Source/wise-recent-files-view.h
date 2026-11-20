@@ -233,6 +233,7 @@ class wise_recent_files_view: public QGraphicsView
 
  public:
   wise_recent_files_view(QWidget *parent);
+  ~wise_recent_files_view();
   QAction *menu_action(void) const;
 
  public slots:

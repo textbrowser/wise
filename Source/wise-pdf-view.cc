@@ -421,7 +421,7 @@ QVariant wise_pdf_view::restore_setting
 
 	query.setForwardOnly(true);
 	query.prepare
-	  ("SELECT value FROM wise_file_settings WHERE "
+	  ("SELECT SUBSTR(value, 1, 10000) FROM wise_file_settings WHERE "
 	   "file_name = ? AND key = ?");
 	query.addBindValue(QFileInfo(m_url.toLocalFile()).absoluteFilePath());
 	query.addBindValue(key.trimmed());
