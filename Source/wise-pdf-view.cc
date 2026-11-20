@@ -826,7 +826,8 @@ void wise_pdf_view::slot_print(QPrinter *printer)
   foreach(auto const i, pages)
     {
       if(i != pages.at(0))
-	printer->newPage();
+	if(!printer->newPage())
+	  break;
 
       auto const size(2 * m_document->pagePointSize(i).toSize());
 

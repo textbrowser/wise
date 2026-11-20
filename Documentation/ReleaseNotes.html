@@ -22,6 +22,8 @@
 	  SUBSTR(image, 1, 16777216), and SUBSTR(value, 1, 10000)
 	  from SQLite.</li>
 	<li>Review validity of QJniObject before issuing callMethod().</li>
+	<li>Terminate the foreach() in wise_pdf_view::slot_print() if
+	  QPrinter::newPage() fails.</li>
       </ul>
     </p>
     <h4><u>2026.11.17 Release</u></h4>
