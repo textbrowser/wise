@@ -4,7 +4,7 @@ QMAKE_EXTRA_TARGETS += dmg
 }
 
 unix {
-purge.commands      = find . -name \'*~\' -exec rm {} \;
+purge.commands      = find . -name '*~' -exec rm {} \\;
 QMAKE_EXTRA_TARGETS += purge
 }
 
@@ -177,13 +177,6 @@ RC_FILE = Icons/wise.rc
 }
 
 INCLUDEPATH += Source
-LIBS              += -framework AppKit -framework Cocoa
-OBJECTIVE_HEADERS += Source/CocoaInitializer.h
-OBJECTIVE_SOURCES += Source/CocoaInitializer.mm
-} else {
-LIBS +=
-}
-
 MOC_DIR     = Temporary/moc
 OBJECTS_DIR = Temporary/obj
 RCC_DIR     = Temporary/rcc
