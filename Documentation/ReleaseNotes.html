@@ -8,10 +8,11 @@
 	  Wait until the task is finished.</li>
 	<li>Convert a URL to a local file before passing it to
 	  QFileSystemWatcher::addPath().</li>
-	<li>Create CocoaInitializer before QApplication.</li>
 	<li>Decrease the number of database writes by saving
 	  a PDF file's current page via a timer.</li>
 	<li>Disable links access in the release notes QTextBrowser object.</li>
+	<li>Initialize settings/style_override to Fusion on MacOS and Windows
+	  if the setting is not defined.</li>
 	<li>Limit of 1000 recent files.</li>
 	<li>Prefer QDir().mkpath() for creating the local wise directory.</li>
 	<li>Prefer QUrl::toLocalFile() instead of QUrl::path().</li>
@@ -19,6 +20,7 @@
 	<li>Properly process Ctrl + Home for single-page view.</li>
 	<li>QAction objects will be children of the menus in which the objects
 	  reside.</li>
+	<li>Removed CocoaInitializer on MacOS.</li>
 	<li>Removed all instances of QApplication::processEvents().</li>
 	<li>Retrieve only SUBSTR(file_name, 1, 10000),
 	  SUBSTR(image, 1, 16777216), and SUBSTR(value, 1, 10000)

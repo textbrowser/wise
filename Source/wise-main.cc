@@ -35,10 +35,6 @@
 #include <QSettings>
 #include <QStyleFactory>
 
-#ifdef Q_OS_MACOS
-#include "CocoaInitializer.h"
-#endif
-
 int main(int argc, char *argv[])
 {
   QDir().mkpath(wise::home_path());
@@ -54,19 +50,16 @@ int main(int argc, char *argv[])
   QSettings::setPath
     (QSettings::IniFormat, QSettings::UserScope, wise::home_path());
 
+#if defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
+  if(!QSettings().contains("settings/style_override"))
+    QSettings().setValue("settings/style_override", "Fusion");
+#endif
+
   auto const variable
     (QSettings().value("settings/style_override").toByteArray().trimmed());
 
   if(QStyleFactory::keys().contains(variable))
     qputenv("QT_STYLE_OVERRIDE", variable);
-
-#ifdef Q_OS_MACOS
-  /*
-  ** Eliminate pool errors on MacOS.
-  */
-
-  CocoaInitializer ci;
-#endif
 
   QApplication application(argc, argv);
 

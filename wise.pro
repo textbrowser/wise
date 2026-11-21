@@ -177,8 +177,6 @@ RC_FILE = Icons/wise.rc
 }
 
 INCLUDEPATH += Source
-
-macx {
 LIBS              += -framework AppKit -framework Cocoa
 OBJECTIVE_HEADERS += Source/CocoaInitializer.h
 OBJECTIVE_SOURCES += Source/CocoaInitializer.mm
