@@ -97,7 +97,7 @@ QMAKE_CXXFLAGS_RELEASE += -Wall \
                           -std=c++20
 contains(QMAKE_HOST.arch, x86_64) {
 QMAKE_MACOSX_DEPLOYMENT_TARGET = 12.0
-else {
+} else {
 QMAKE_MACOSX_DEPLOYMENT_TARGET = 14.4
 }
 } else:win32 {
