@@ -4,7 +4,7 @@ QMAKE_EXTRA_TARGETS += dmg
 }
 
 unix {
-purge.commands      = find . -name '*~' -exec rm {} \\;
+purge.commands      = find . -name \'*~\' -exec rm {} \\;
 QMAKE_EXTRA_TARGETS += purge
 }
 
