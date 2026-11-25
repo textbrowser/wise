@@ -829,10 +829,13 @@ void wise_pdf_view::slot_print(QPrinter *printer)
 	if(!printer->newPage())
 	  break;
 
-      auto const size(2 * m_document->pagePointSize(i).toSize());
+      auto const image
+	(m_document->render(i,
+			    2 * m_document->pagePointSize(i).toSize(),
+			    wise_settings::render_options()));
 
-      painter.drawImage
-	(rect, m_document->render(i, size, wise_settings::render_options()));
+      if(!image.isNull())
+	painter.drawImage(rect, image);
     }
 
   QApplication::restoreOverrideCursor();
