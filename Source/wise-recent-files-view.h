@@ -128,8 +128,6 @@ class wise_recent_files_view_item: public QObject, public QGraphicsPixmapItem
 	     const QStyleOptionGraphicsItem *option,
 	     QWidget *widget)
   {
-    Q_UNUSED(option);
-
     if(!painter)
       {
 	QGraphicsPixmapItem::paint(painter, option, widget);
