@@ -52,12 +52,12 @@ cp -r ./opt/wise wise-debian.d/opt/.
 
 if [ $architecture = "arm64" ]
 then
-    fakeroot dpkg-deb --build wise-debian.d Wise-2026.11.22_PiOS_arm64.deb
+    fakeroot dpkg-deb --build wise-debian.d Wise-2026.11.25_PiOS_arm64.deb
 elif [ $architecture = "armhf" ]
 then
-    fakeroot dpkg-deb --build wise-debian.d Wise-2026.11.22_PiOS_arm32.deb
+    fakeroot dpkg-deb --build wise-debian.d Wise-2026.11.25_PiOS_arm32.deb
 else
-    fakeroot dpkg-deb --build wise-debian.d Wise-2026.11.22_Kubuntu_amd64.deb
+    fakeroot dpkg-deb --build wise-debian.d Wise-2026.11.25_Kubuntu_amd64.deb
 fi
 
 make distclean

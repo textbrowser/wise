@@ -64,6 +64,6 @@ then
     exit 1
 fi
 
-mv Wise.d.dmg Wise-2026.11.22_Universal.dmg
+mv Wise.d.dmg Wise-2026.11.25_Universal.dmg
 make distclean 1>/dev/null 2>/dev/null
 rm -fr ./Wise.d
