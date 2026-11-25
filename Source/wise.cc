@@ -181,6 +181,9 @@ void wise::add_pdf_page(const QString &file_name)
   if(file_name.isEmpty())
     return;
 
+  if(!QFileInfo(file_name).isFile())
+    return;
+
   auto const connection_name(database_connection_name());
 
   {
