@@ -6,9 +6,49 @@ Wise is a <b>wonderfully</b>-<b>interactive</b> and <b>simple</b>
 <li>Qt 6.8 LTS and newer are necessary.</li>
 </ul>
 
-<b>Version 2026.10.03 is the newest LTS release.</b>
+<b>Version 2026.11.25 is the newest LTS release.</b>
 
 <b>Release Notes</b>
+
+<p><b>2026.11.25 Release</b></p>
+<ul>
+<li>Accept only files in wise::add_pdf_page().</li>
+<li>Cancel the task in wise_recent_files_view's destructor.
+  Wait until the task is finished.</li>
+<li>Convert a URL to a local file before passing it to
+  QFileSystemWatcher::addPath().</li>
+<li>Decrease the number of database writes by saving
+  a PDF file's current page via a timer.</li>
+<li>Disable links access in the release notes QTextBrowser object.</li>
+<li>Do not paint an empty image in wise_pdf_view::slot_print(). The
+  render() method may fail.</li>
+<li>Find Next and Find Previous states must be revised whenever
+  search results count changes.</li>
+<li>Initialize settings/style_override to Fusion on MacOS and Windows
+  if the setting is not defined.</li>
+<li>Limit of 1000 recent files.</li>
+<li>MacOS deployment target (QMAKE_MACOSX_DEPLOYMENT_TARGET) is
+  now 14.4 for Apple Silicon.</li>
+<li>Prefer QDir().mkpath() for creating the local wise directory.</li>
+<li>Prefer QUrl::toLocalFile() instead of QUrl::path().</li>
+<li>Prevent negative prefix_suffix_width.</li>
+<li>Properly process Ctrl + Home for single-page view.</li>
+<li>QAction objects will be children of the menus in which the objects
+  reside.</li>
+<li>Removed CocoaInitializer on MacOS.</li>
+<li>Removed all instances of QApplication::processEvents().</li>
+<li>Retrieve only SUBSTR(file_name, 1, 10000),
+  SUBSTR(image, 1, 16777216), and SUBSTR(value, 1, 10000)
+  from SQLite.</li>
+<li>Review validity of QJniObject before issuing callMethod().</li>
+<li>Terminate the foreach() in wise_pdf_view::slot_print() if
+  QPrinter::newPage() fails.</li>
+<li>Unique database names.</li>
+<li>Verify that settings/style_override exists in
+  QStyleFactory::keys() before setting QT_STYLE_OVERRIDE.</li>
+<li>Yet another LTS release: Kubuntu 26.04 AMD64, PiOS 13 ARM64,
+ MacOS 15 Universal, Windows 11 AMD64.</li>
+</ul>
 
 <p><b>2026.11.17 Release</b></p>
 <ul>
