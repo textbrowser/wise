@@ -912,6 +912,8 @@ void wise_pdf_view::slot_search_count_changed(void)
       m_ui.search_view->setCurrentIndex
 	(m_ui.search_view->currentIndex().isValid() == false ?
 	 m_search_model->index(0, 0) : m_ui.search_view->currentIndex());
+      slot_search_view_selected
+	(m_ui.search_view->selectionModel()->currentIndex(), QModelIndex());
     }
 }
 
