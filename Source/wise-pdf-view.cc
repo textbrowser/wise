@@ -1040,7 +1040,10 @@ void wise_pdf_view::slot_view_size_activated(void)
 
 void wise_pdf_view::slot_zoom_in(void)
 {
-  m_pdf_view->setZoomFactor(m_pdf_view->zoomFactor() * zoom_constant);
+  m_pdf_view->setZoomFactor
+    (qBound(minimum_zoom_factor,
+	    m_pdf_view->zoomFactor() * zoom_constant,
+	    maximum_zoom_factor));
   m_pdf_view->setZoomMode(QPdfView::ZoomMode::Custom);
   m_ui.zoom_out->setEnabled(true);
   prepare_view_size();
@@ -1051,7 +1054,10 @@ void wise_pdf_view::slot_zoom_in(void)
 
 void wise_pdf_view::slot_zoom_out(void)
 {
-  m_pdf_view->setZoomFactor(m_pdf_view->zoomFactor() / zoom_constant);
+  m_pdf_view->setZoomFactor
+    (qBound(minimum_zoom_factor,
+	    m_pdf_view->zoomFactor() / zoom_constant,
+	    maximum_zoom_factor));
   m_pdf_view->setZoomMode(QPdfView::ZoomMode::Custom);
   m_ui.zoom_in->setEnabled(true);
   prepare_view_size();
